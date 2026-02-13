@@ -1,0 +1,36 @@
+{
+  "title": "Repro Repair No Chart",
+  "metadata": { "author": "PPTMCP", "created": "2026-02-11T00:00:00Z" },
+  "slides": [
+    {
+      "id": "repro-no-chart",
+      "title": "No Chart",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.05 },
+      "regions": {
+        "canvas": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 },
+        "anchor": { "col": 2, "row": 2, "colSpan": 4, "rowSpan": 2 }
+      },
+      "elements": [
+        {
+          "type": "connector",
+          "id": "conn_1",
+          "region": "canvas",
+          "z": 110,
+          "start": { "type": "region", "targetRegion": "anchor", "point": "e" },
+          "end": { "type": "region", "targetRegion": "anchor", "point": "s" },
+          "style": { "widthPt": 1 }
+        },
+        {
+          "type": "callout",
+          "id": "callout_1",
+          "region": "canvas",
+          "z": 120,
+          "anchor": { "type": "region", "targetRegion": "anchor", "point": "ne" },
+          "box": { "wIn": 2.2, "hIn": 0.8, "placement": "auto", "paddingPt": 6 },
+          "text": { "value": "Lines only", "style": { "fontSize": 12 } },
+          "leader": { "style": "line", "endCap": "none" }
+        }
+      ]
+    }
+  ]
+}

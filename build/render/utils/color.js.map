@@ -1,0 +1,1 @@
+{"version":3,"file":"color.js","sourceRoot":"","sources":["../../../src/render/utils/color.ts"],"names":[],"mappings":"AAAA,MAAM,UAAU,cAAc,CAAC,KAAyB,EAAE,QAAgB;IACxE,IAAI,CAAC,KAAK,IAAI,OAAO,KAAK,KAAK,QAAQ,EAAE,CAAC;QACxC,OAAO,QAAQ,CAAC;IAClB,CAAC;IACD,OAAO,KAAK,CAAC,OAAO,CAAC,GAAG,EAAE,EAAE,CAAC,CAAC,WAAW,EAAE,CAAC;AAC9C,CAAC"}

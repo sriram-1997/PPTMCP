@@ -1,0 +1,32 @@
+{
+  "title": "Callouts v0 Fail - No Placement",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-11T00:00:00Z"
+  },
+  "slides": [
+    {
+      "id": "callouts-fail-placement",
+      "title": "No Feasible Placement",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.05
+      },
+      "regions": {
+        "tiny": { "col": 0, "row": 0, "colSpan": 2, "rowSpan": 2 },
+        "target": { "col": 0, "row": 0, "colSpan": 2, "rowSpan": 2 }
+      },
+      "elements": [
+        {
+          "type": "callout",
+          "region": "tiny",
+          "anchor": { "type": "region", "targetRegion": "target", "point": "center" },
+          "box": { "wIn": 4.0, "hIn": 2.0, "placement": "auto" },
+          "text": { "value": "Too large to fit." },
+          "leader": { "style": "line", "endCap": "none" }
+        }
+      ]
+    }
+  ]
+}

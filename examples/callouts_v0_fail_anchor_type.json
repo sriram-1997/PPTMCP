@@ -1,0 +1,32 @@
+{
+  "title": "Callouts v0 Fail - Anchor Type",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-11T00:00:00Z"
+  },
+  "slides": [
+    {
+      "id": "callouts-fail-anchor",
+      "title": "Anchor Type Not Supported",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.05
+      },
+      "regions": {
+        "canvas": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 },
+        "target": { "col": 2, "row": 2, "colSpan": 8, "rowSpan": 4 }
+      },
+      "elements": [
+        {
+          "type": "callout",
+          "region": "canvas",
+          "anchor": { "type": "chart_point", "targetRegion": "target", "point": "ne" },
+          "box": { "wIn": 2.0, "hIn": 0.8, "placement": "ne" },
+          "text": { "value": "This should fail." },
+          "leader": { "style": "line", "endCap": "none" }
+        }
+      ]
+    }
+  ]
+}

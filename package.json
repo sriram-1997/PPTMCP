@@ -9,7 +9,17 @@
     "start": "node build/index.js",
     "dev": "tsc --watch",
     "sse": "npx supergateway --stdio \"node build/index.js\" --port 3100",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "render": "npm run build && node scripts/render-cli.mjs",
+    "smoke:layout": "npm run build && node scripts/render-cli.mjs examples/pptmcp_case_mode_v0.1.json out/layout-smoke.pptx --no-pdf",
+    "smoke:charts": "npm run build && node scripts/render-cli.mjs examples/charts_smoke.json out/charts-smoke.pptx --no-pdf --expect-error=chart_type_not_supported",
+    "smoke:callouts:good": "npm run build && node scripts/render-cli.mjs examples/callouts_v0_good.json out/callouts-v0-good.pptx --no-pdf",
+    "smoke:callouts:fail-anchor": "npm run build && node scripts/render-cli.mjs examples/callouts_v0_fail_anchor_type.json out/callouts-v0-fail-anchor.pptx --no-pdf --expect-error=anchor_type_not_supported",
+    "smoke:callouts:fail-placement": "npm run build && node scripts/render-cli.mjs examples/callouts_v0_fail_no_placement.json out/callouts-v0-fail-placement.pptx --no-pdf --expect-error=callout_no_feasible_placement",
+    "smoke:repair-lines": "npm run build && node scripts/render-cli.mjs examples/repro_repair_min.json out/repro-repair-min.pptx --no-pdf && node scripts/render-cli.mjs examples/repro_repair_no_chart.json out/repro-repair-no-chart.pptx --no-pdf && node scripts/render-cli.mjs examples/repro_repair_no_lines.json out/repro-repair-no-lines.pptx --no-pdf && node scripts/render-cli.mjs examples/repro_connector_directional.json out/repro-connector-directional.pptx --no-pdf",
+    "smoke:themes": "npm run build && node scripts/render-cli.mjs examples/themes/readability_matrix.json out/readability_light.pptx --no-pdf && node scripts/render-cli.mjs examples/themes/readability_matrix_dark.json out/readability_dark.pptx --no-pdf"
+    ,
+    "smoke:image": "npm run build && node scripts/render-cli.mjs examples/themes/image_smoke.json out/image-smoke.pptx --no-pdf"
   },
   "keywords": [
     "mcp",
@@ -36,6 +46,7 @@
   "homepage": "https://github.com/guangxiangdebizi/ppt-mcp#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "0.6.0",
+    "pptx-automizer": "^0.8.1",
     "pptxgenjs": "^3.12.0"
   },
   "devDependencies": {

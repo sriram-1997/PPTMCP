@@ -1,0 +1,26 @@
+﻿{
+  "title": "Repro Callout No Leader",
+  "metadata": { "author": "PPTMCP", "created": "2026-02-11T00:00:00Z" },
+  "slides": [
+    {
+      "id": "repro-callout-no-leader",
+      "title": "Callout Only",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.05 },
+      "regions": {
+        "chart": { "col": 0, "row": 1, "colSpan": 7, "rowSpan": 5 },
+        "canvas": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 }
+      },
+      "elements": [
+        {
+          "type": "callout",
+          "id": "callout_1",
+          "region": "canvas",
+          "z": 120,
+          "anchor": { "type": "region", "targetRegion": "chart", "point": "ne" },
+          "box": { "wIn": 2.2, "hIn": 0.8, "placement": "auto", "paddingPt": 6 },
+          "text": { "value": "No leader", "style": { "fontSize": 12 } }
+        }
+      ]
+    }
+  ]
+}

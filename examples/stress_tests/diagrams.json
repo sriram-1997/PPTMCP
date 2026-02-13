@@ -1,0 +1,85 @@
+{
+  "title": "Stress Test - Diagrams",
+  "metadata": {
+    "author": "PPTMCP Stress Suite",
+    "created": "2026-02-11T00:00:00Z"
+  },
+  "slides": [
+    {
+      "id": "diagrams-1",
+      "title": "Process Flow Diagram Attempt",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.06
+      },
+      "regions": {
+        "header": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "canvas": { "col": 0, "row": 1, "colSpan": 12, "rowSpan": 7 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "header",
+          "content": "Diagram stress: boxes + arrows + hierarchy",
+          "style": { "fontSize": 18, "bold": true }
+        },
+        {
+          "type": "diagram",
+          "region": "canvas",
+          "content": {
+            "diagramType": "process_flow",
+            "nodes": [
+              { "id": "n1", "label": "Ingest", "shape": "box" },
+              { "id": "n2", "label": "Transform", "shape": "box" },
+              { "id": "n3", "label": "Validate", "shape": "diamond" },
+              { "id": "n4", "label": "Publish", "shape": "box" }
+            ],
+            "edges": [
+              { "from": "n1", "to": "n2", "arrow": true },
+              { "from": "n2", "to": "n3", "arrow": true },
+              { "from": "n3", "to": "n4", "arrow": true }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "diagrams-2",
+      "title": "Hierarchy Diagram Attempt",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.06
+      },
+      "regions": {
+        "header": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "canvas": { "col": 1, "row": 1, "colSpan": 10, "rowSpan": 7 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "header",
+          "content": "Hierarchy stress: parent-child branches",
+          "style": { "fontSize": 18, "bold": true }
+        },
+        {
+          "type": "diagram",
+          "region": "canvas",
+          "content": {
+            "diagramType": "hierarchy",
+            "root": {
+              "id": "ceo",
+              "label": "Executive Sponsor",
+              "children": [
+                { "id": "ops", "label": "Operations Lead" },
+                { "id": "prod", "label": "Product Lead" },
+                { "id": "data", "label": "Data Lead" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

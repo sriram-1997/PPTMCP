@@ -1,0 +1,36 @@
+{
+  "title": "Image Smoke",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-12T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "image-smoke",
+      "title": "Image Smoke",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.05
+      },
+      "regions": {
+        "image": {
+          "col": 2,
+          "row": 1,
+          "colSpan": 8,
+          "rowSpan": 6
+        }
+      },
+      "elements": [
+        {
+          "type": "image",
+          "region": "image",
+          "src": "../assets/pptmcp_mark.png",
+          "fit": "contain",
+          "variant": "surface"
+        }
+      ]
+    }
+  ]
+}

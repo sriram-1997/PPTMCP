@@ -1,0 +1,202 @@
+{
+  "title": "Line Direction Quadrants",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-12T00:00:00Z"
+  },
+  "slides": [
+    {
+      "id": "line-direction-quadrants",
+      "title": "Line Direction Quadrants",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.05
+      },
+      "regions": {
+        "canvas": {
+          "col": 0,
+          "row": 0,
+          "colSpan": 12,
+          "rowSpan": 8
+        },
+        "anchor": {
+          "col": 5,
+          "row": 3,
+          "colSpan": 2,
+          "rowSpan": 2
+        },
+        "ne": {
+          "col": 9,
+          "row": 1,
+          "colSpan": 2,
+          "rowSpan": 1
+        },
+        "se": {
+          "col": 9,
+          "row": 5,
+          "colSpan": 2,
+          "rowSpan": 1
+        },
+        "nw": {
+          "col": 1,
+          "row": 1,
+          "colSpan": 2,
+          "rowSpan": 1
+        },
+        "sw": {
+          "col": 1,
+          "row": 5,
+          "colSpan": 2,
+          "rowSpan": 1
+        },
+        "ne_label": {
+          "col": 9,
+          "row": 0,
+          "colSpan": 2,
+          "rowSpan": 1
+        },
+        "se_label": {
+          "col": 9,
+          "row": 6,
+          "colSpan": 2,
+          "rowSpan": 1
+        },
+        "nw_label": {
+          "col": 1,
+          "row": 0,
+          "colSpan": 2,
+          "rowSpan": 1
+        },
+        "sw_label": {
+          "col": 1,
+          "row": 6,
+          "colSpan": 2,
+          "rowSpan": 1
+        }
+      },
+      "elements": [
+        {
+          "type": "connector",
+          "id": "line_ne",
+          "region": "canvas",
+          "z": 100,
+          "start": {
+            "type": "region",
+            "targetRegion": "anchor",
+            "point": "center"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "ne",
+            "point": "center"
+          },
+          "style": {
+            "widthPt": 1,
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "connector",
+          "id": "line_se",
+          "region": "canvas",
+          "z": 100,
+          "start": {
+            "type": "region",
+            "targetRegion": "anchor",
+            "point": "center"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "se",
+            "point": "center"
+          },
+          "style": {
+            "widthPt": 1,
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "connector",
+          "id": "line_nw",
+          "region": "canvas",
+          "z": 100,
+          "start": {
+            "type": "region",
+            "targetRegion": "anchor",
+            "point": "center"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "nw",
+            "point": "center"
+          },
+          "style": {
+            "widthPt": 1,
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "connector",
+          "id": "line_sw",
+          "region": "canvas",
+          "z": 100,
+          "start": {
+            "type": "region",
+            "targetRegion": "anchor",
+            "point": "center"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "sw",
+            "point": "center"
+          },
+          "style": {
+            "widthPt": 1,
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "text",
+          "region": "ne_label",
+          "content": "NE",
+          "style": {
+            "fontSize": 12,
+            "bold": true,
+            "color": "#000000"
+          }
+        },
+        {
+          "type": "text",
+          "region": "se_label",
+          "content": "SE",
+          "style": {
+            "fontSize": 12,
+            "bold": true,
+            "color": "#000000"
+          }
+        },
+        {
+          "type": "text",
+          "region": "nw_label",
+          "content": "NW",
+          "style": {
+            "fontSize": 12,
+            "bold": true,
+            "color": "#000000"
+          }
+        },
+        {
+          "type": "text",
+          "region": "sw_label",
+          "content": "SW",
+          "style": {
+            "fontSize": 12,
+            "bold": true,
+            "color": "#000000"
+          }
+        }
+      ]
+    }
+  ]
+}

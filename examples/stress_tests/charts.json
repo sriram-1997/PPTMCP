@@ -1,0 +1,125 @@
+{
+  "title": "Stress Test - Charts",
+  "metadata": {
+    "author": "PPTMCP Stress Suite",
+    "created": "2026-02-11T00:00:00Z"
+  },
+  "slides": [
+    {
+      "id": "charts-1",
+      "title": "Column Chart (Pass) + Non-Column (Fail)",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.06
+      },
+      "regions": {
+        "header": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "left": { "col": 0, "row": 1, "colSpan": 6, "rowSpan": 7 },
+        "right": { "col": 6, "row": 1, "colSpan": 6, "rowSpan": 7 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "header",
+          "content": "Chart Stress: v0 column pass + non-column fail",
+          "style": { "fontSize": 20, "bold": true }
+        },
+        {
+          "type": "chart",
+          "region": "left",
+          "content": {
+            "chartType": "column",
+            "title": "Revenue by Region",
+            "dataSeries": [
+              {
+                "name": "FY25",
+                "data": [
+                  ["North", 102],
+                  ["South", 98],
+                  ["East", 121],
+                  ["West", 87]
+                ]
+              },
+              {
+                "name": "FY26",
+                "data": [
+                  ["North", 119],
+                  ["South", 110],
+                  ["East", 138],
+                  ["West", 96]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "chart",
+          "region": "right",
+          "content": {
+            "chartType": "line",
+            "title": "Monthly Conversion Trend",
+            "dataSeries": [
+              {
+                "name": "Pipeline A",
+                "data": [
+                  ["Jan", 12],
+                  ["Feb", 14],
+                  ["Mar", 13],
+                  ["Apr", 15]
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "charts-2",
+      "title": "Series Limit + Misalignment",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.06
+      },
+      "regions": {
+        "header": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "left": { "col": 0, "row": 1, "colSpan": 6, "rowSpan": 7 },
+        "right": { "col": 6, "row": 1, "colSpan": 6, "rowSpan": 7 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "header",
+          "content": "Series count >2 and category mismatch",
+          "style": { "fontSize": 18, "bold": true }
+        },
+        {
+          "type": "chart",
+          "region": "left",
+          "content": {
+            "chartType": "column",
+            "title": "Too Many Series",
+            "dataSeries": [
+              { "name": "A", "data": [["Q1", 1], ["Q2", 2]] },
+              { "name": "B", "data": [["Q1", 2], ["Q2", 3]] },
+              { "name": "C", "data": [["Q1", 3], ["Q2", 4]] }
+            ]
+          }
+        },
+        {
+          "type": "chart",
+          "region": "right",
+          "content": {
+            "chartType": "column",
+            "title": "Misaligned Categories",
+            "dataSeries": [
+              { "name": "Series 1", "data": [["Q1", 10], ["Q2", 12]] },
+              { "name": "Series 2", "data": [["Q1", 11], ["Q3", 13]] }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

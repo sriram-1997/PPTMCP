@@ -1,0 +1,97 @@
+{
+  "title": "Stress Test - Tables",
+  "metadata": {
+    "author": "PPTMCP Stress Suite",
+    "created": "2026-02-11T00:00:00Z"
+  },
+  "slides": [
+    {
+      "id": "tables-1",
+      "title": "Dense Table with Multiline Cells",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.05
+      },
+      "regions": {
+        "header": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "table_region": { "col": 0, "row": 1, "colSpan": 12, "rowSpan": 7 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "header",
+          "content": "Dense numeric + multiline table stress",
+          "style": { "fontSize": 18, "bold": true }
+        },
+        {
+          "type": "table",
+          "region": "table_region",
+          "style": {
+            "fontSize": 11,
+            "headerFontSize": 12,
+            "minFont": 10,
+            "cellPaddingPt": 2
+          },
+          "content": {
+            "headers": ["Product", "Q1", "Q2", "Q3", "Q4", "Notes"],
+            "rows": [
+              ["Alpha", "120.43", "132.10", "141.22", "150.90", "Steady growth\nNo major variance"],
+              ["Beta", "98.12", "102.87", "107.63", "114.20", "Seasonal swings\nChannel shift"],
+              ["Gamma", "76.04", "80.11", "84.08", "89.77", "Margin pressure\nHigher freight"],
+              ["Delta", "143.88", "149.20", "154.90", "160.15", "Enterprise ramp-up"],
+              ["Epsilon", "65.50", "69.14", "72.98", "77.05", "Pilot cohort expanding"],
+              ["Zeta", "188.34", "191.26", "196.71", "202.09", "Large strategic wins"],
+              ["Eta", "54.21", "58.92", "60.43", "64.88", "Data quality cleanup"],
+              ["Theta", "111.11", "115.45", "121.08", "127.10", "Contract renewals on track"],
+              ["Iota", "44.39", "46.08", "48.15", "52.04", "Low volume\nHigh volatility"],
+              ["Kappa", "210.22", "214.85", "223.10", "231.77", "Cross-sell acceleration"]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "tables-2",
+      "title": "Merged Cell Attempt (Expected Failure)",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.05
+      },
+      "regions": {
+        "header": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "table_region": { "col": 1, "row": 1, "colSpan": 10, "rowSpan": 6 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "header",
+          "content": "Attempting merged cells via rowSpan/colSpan",
+          "style": { "fontSize": 16, "bold": true }
+        },
+        {
+          "type": "table",
+          "region": "table_region",
+          "content": {
+            "headers": ["Region", "Channel", "Q1", "Q2"],
+            "rows": [
+              [
+                { "text": "North America", "rowSpan": 2, "style": { "bold": true } },
+                "Direct",
+                "45.1",
+                "47.9"
+              ],
+              [
+                { "text": "Merged partner row", "colSpan": 2, "style": { "bold": false } },
+                "49.2",
+                "50.4",
+                "overflow"
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

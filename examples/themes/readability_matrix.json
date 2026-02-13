@@ -1,0 +1,212 @@
+{
+  "title": "Theme Readability Matrix",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-12T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "readability-matrix",
+      "title": "Readability Matrix",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.05
+      },
+      "regions": {
+        "header": {
+          "col": 0,
+          "row": 0,
+          "colSpan": 12,
+          "rowSpan": 1
+        },
+        "chart": {
+          "col": 0,
+          "row": 1,
+          "colSpan": 7,
+          "rowSpan": 4
+        },
+        "table": {
+          "col": 7,
+          "row": 1,
+          "colSpan": 5,
+          "rowSpan": 3
+        },
+        "body": {
+          "col": 0,
+          "row": 5,
+          "colSpan": 7,
+          "rowSpan": 2
+        },
+        "footer": {
+          "col": 0,
+          "row": 7,
+          "colSpan": 12,
+          "rowSpan": 1
+        },
+        "canvas": {
+          "col": 0,
+          "row": 1,
+          "colSpan": 12,
+          "rowSpan": 5
+        },
+        "image": {
+          "col": 7,
+          "row": 4,
+          "colSpan": 5,
+          "rowSpan": 2
+        }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "header",
+          "content": "Theme Readability Matrix",
+          "style": {
+            "fontSize": 24,
+            "bold": true
+          }
+        },
+        {
+          "type": "text",
+          "region": "body",
+          "content": "Body text checks legibility against the slide background and surface colors.",
+          "style": {
+            "fontSize": 14
+          }
+        },
+        {
+          "type": "table",
+          "region": "table",
+          "content": {
+            "headers": [
+              "Metric",
+              "Value"
+            ],
+            "rows": [
+              [
+                "Conversion",
+                "18%"
+              ],
+              [
+                "Retention",
+                "92%"
+              ],
+              [
+                "Churn",
+                "4%"
+              ]
+            ]
+          }
+        },
+        {
+          "type": "chart",
+          "region": "chart",
+          "content": {
+            "chartType": "column",
+            "title": "Quarterly Revenue",
+            "dataSeries": [
+              {
+                "name": "Plan",
+                "data": [
+                  [
+                    "Q1",
+                    12
+                  ],
+                  [
+                    "Q2",
+                    16
+                  ],
+                  [
+                    "Q3",
+                    18
+                  ],
+                  [
+                    "Q4",
+                    20
+                  ]
+                ]
+              },
+              {
+                "name": "Actual",
+                "data": [
+                  [
+                    "Q1",
+                    10
+                  ],
+                  [
+                    "Q2",
+                    14
+                  ],
+                  [
+                    "Q3",
+                    17
+                  ],
+                  [
+                    "Q4",
+                    19
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "callout",
+          "id": "callout_1",
+          "region": "canvas",
+          "z": 120,
+          "anchor": {
+            "type": "region",
+            "targetRegion": "chart",
+            "point": "ne"
+          },
+          "box": {
+            "wIn": 2.4,
+            "hIn": 0.9,
+            "placement": "auto",
+            "paddingPt": 6
+          },
+          "text": {
+            "value": "Callout text stays readable",
+            "style": {
+              "fontSize": 12
+            }
+          },
+          "leader": {
+            "style": "line",
+            "endCap": "none"
+          }
+        },
+        {
+          "type": "connector",
+          "id": "connector_1",
+          "region": "canvas",
+          "z": 110,
+          "start": {
+            "type": "region",
+            "targetRegion": "chart",
+            "point": "e"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "table",
+            "point": "w"
+          },
+          "style": {
+            "widthPt": 1
+          }
+        },
+        {
+          "type": "image",
+          "id": "image_1",
+          "region": "image",
+          "src": "../assets/pptmcp_mark.png",
+          "fit": "contain",
+          "variant": "elevated"
+        }
+      ]
+    }
+  ]
+}
