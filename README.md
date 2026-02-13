@@ -271,3 +271,85 @@ This project is licensed under the **Apache License 2.0** - see the [LICENSE](LI
 [🐛 Report Bug](https://github.com/guangxiangdebizi/PPT-MCP/issues) • [✨ Request Feature](https://github.com/guangxiangdebizi/PPT-MCP/issues) • [📖 Documentation](https://github.com/guangxiangdebizi/PPT-MCP)
 
 </div>
+## Deterministic Layout (render_pptmcp)
+- JSON-driven, grid/region-based layout with strict validation
+- Supported elements: text, tables, column charts, callouts (box + leader), connectors (straight line)
+- Determinism > expressiveness; no absolute positioning in specs
+
+Example: callout (region anchor only)
+```json
+{
+  "type": "callout",
+  "region": "canvas",
+  "z": 120,
+  "anchor": { "type": "region", "targetRegion": "chart", "point": "ne" },
+  "box": { "wIn": 2.2, "hIn": 0.8, "placement": "auto", "paddingPt": 6 },
+  "text": { "value": "Margin inflects here (+210 bps).", "style": { "fontSize": 12 } },
+  "leader": { "style": "line", "endCap": "none" }
+}
+```
+
+Example: connector (region anchors only)
+```json
+{
+  "type": "connector",
+  "region": "canvas",
+  "z": 110,
+  "start": { "type": "region", "targetRegion": "chart", "point": "e" },
+  "end": { "type": "region", "targetRegion": "table", "point": "w" },
+  "style": { "widthPt": 1 }
+}
+```
+
+Error codes (render_pptmcp):
+- `layer_z_invalid`
+- `anchor_type_not_supported`
+- `anchor_region_not_found`
+- `callout_missing_box_dims`
+- `callout_no_feasible_placement`
+- `callout_box_outside_region`
+- `callout_leader_style_not_supported`
+- `callout_leader_endcap_not_supported`
+- `connector_outside_region`
+- `absolute_position_forbidden`
+## Theme / Style Tokens v0
+
+Theme is a pure style layer (colors/fonts only). Geometry and layout are unchanged.
+
+Example:
+```json
+{
+  "theme": "consulting_light_v1",
+  "styleTokens": {
+    "color.accent": "#10B981",
+    "chart.palette": ["#10B981", "#F97316"]
+  }
+}
+```
+
+Token keys (v0):
+- `color.background`
+- `color.surface`
+- `color.text_primary`
+- `color.text_secondary`
+- `color.border_default`
+- `color.primary`
+- `color.accent`
+- `chart.palette`
+- `type.font_family_primary`
+- `type.font_family_secondary`
+- `type.body_size`
+- `type.small_size`
+- `type.weight_medium`
+- `type.weight_bold`
+- `shape.border_width_default`
+
+Rules:
+- Unknown token keys hard-fail with `unknown_style_token`.
+- Invalid token values hard-fail with `style_token_invalid`.
+- Missing theme file hard-fails with `theme_not_found`.
+- Chart text/legend uses `color.text_primary`. Axis/gridlines use `color.border_default`. Chart/plot area fill uses `color.background`.
+
+Verification (manual):
+- Render `examples/themes/theme_default.json` and `examples/themes/theme_dark.json`.
+- Compare slide background and chart series colors by unzipping the PPTX (`ppt/slides/slide1.xml`, `ppt/charts/chart1.xml`) or via the `--unzip-out` helper.
