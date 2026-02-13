@@ -1,0 +1,26 @@
+{
+  "title": "Repro Connector Directional",
+  "metadata": { "author": "PPTMCP", "created": "2026-02-11T00:00:00Z" },
+  "slides": [
+    {
+      "id": "repro-connector-directional",
+      "title": "Directional Connector",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.05 },
+      "regions": {
+        "canvas": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 },
+        "anchor": { "col": 2, "row": 2, "colSpan": 4, "rowSpan": 2 }
+      },
+      "elements": [
+        {
+          "type": "connector",
+          "id": "conn_dir",
+          "region": "canvas",
+          "z": 110,
+          "start": { "type": "region", "targetRegion": "anchor", "point": "e" },
+          "end": { "type": "region", "targetRegion": "anchor", "point": "w" },
+          "style": { "widthPt": 1 }
+        }
+      ]
+    }
+  ]
+}

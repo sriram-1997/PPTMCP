@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-// Dynamic import for pptx-automizer
+// 动态加载 pptx-automizer，避免在未使用时引入重量级依赖
 let Automizer;
 async function loadAutomizer() {
     if (!Automizer) {
@@ -11,58 +11,56 @@ async function loadAutomizer() {
 }
 export const pptEditorAdvanced = {
     name: "edit_presentation_advanced",
-    description: "Advanced editing of existing PowerPoint presentations with full read/write capabilities",
+    description: "使用 pptx-automizer 对现有 PowerPoint 进行真实的读写编辑（新增/复制/替换文本等）",
     parameters: {
         type: "object",
         properties: {
             file_path: {
                 type: "string",
-                description: "Path to the existing presentation file"
+                description: "要编辑的现有演示文稿路径"
             },
             operation: {
                 type: "string",
-                description: "Type of edit operation",
+                description: "编辑操作类型",
                 enum: ["add_slide", "modify_text", "add_text", "duplicate_slide", "delete_slide", "replace_text", "add_image"]
             },
             slide_index: {
                 type: "number",
-                description: "Slide index to edit (1-based)"
+                description: "要编辑的页码（1 基）"
             },
             content: {
                 type: "object",
-                description: "Content to add or modify based on operation type",
+                description: "根据操作类型传入的内容参数",
                 properties: {
-                    text: { type: "string", description: "Text content" },
-                    old_text: { type: "string", description: "Text to replace (for replace_text operation)" },
-                    new_text: { type: "string", description: "New text content (for replace_text operation)" },
-                    title: { type: "string", description: "Slide title" },
-                    template_slide: { type: "number", description: "Template slide index to copy from (for add_slide)" },
-                    image_path: { type: "string", description: "Path to image file" },
+                    text: { type: "string", description: "文本内容" },
+                    old_text: { type: "string", description: "要被替换的旧文本（replace_text）" },
+                    new_text: { type: "string", description: "替换后的新文本（replace_text）" },
+                    title: { type: "string", description: "新页标题或提示" },
+                    template_slide: { type: "number", description: "从哪一页复制作为模板（add_slide）" },
+                    image_path: { type: "string", description: "图片路径（add_image）" },
                     position: {
                         type: "object",
                         properties: {
-                            x: { type: "number", description: "X position" },
-                            y: { type: "number", description: "Y position" },
-                            width: { type: "number", description: "Width" },
-                            height: { type: "number", description: "Height" }
+                            x: { type: "number", description: "X 坐标" },
+                            y: { type: "number", description: "Y 坐标" },
+                            width: { type: "number", description: "宽度" },
+                            height: { type: "number", description: "高度" }
                         }
                     }
                 }
             },
             output_path: {
                 type: "string",
-                description: "Output file path (optional, defaults to overwriting original)"
+                description: "输出文件路径（可选，默认覆盖原文件）"
             }
         },
         required: ["file_path", "operation"]
     },
     async run(args) {
         try {
-            // Validate file exists
             if (!fs.existsSync(args.file_path)) {
                 throw new Error(`File not found: ${args.file_path}`);
             }
-            // Load and initialize automizer
             const AutomizerClass = await loadAutomizer();
             const automizer = new AutomizerClass({
                 templateDir: path.dirname(args.file_path),
@@ -95,11 +93,11 @@ export const pptEditorAdvanced = {
             return {
                 content: [{
                         type: "text",
-                        text: `✅ **PowerPoint Edit Successful**\n\n` +
-                            `**Operation:** ${args.operation}\n` +
-                            `**Source file:** ${args.file_path}\n` +
-                            `**Output file:** ${args.output_path || args.file_path}\n` +
-                            `**Details:** ${result.message || 'Edit completed successfully'}`
+                        text: `✅ **PowerPoint 编辑成功**\n\n` +
+                            `**操作:** ${args.operation}\n` +
+                            `**源文件:** ${args.file_path}\n` +
+                            `**输出文件:** ${outputPath}\n` +
+                            `**详情:** ${result.message || '编辑完成'}`
                     }]
             };
         }
@@ -107,7 +105,7 @@ export const pptEditorAdvanced = {
             return {
                 content: [{
                         type: "text",
-                        text: `❌ **Edit operation failed:** ${error instanceof Error ? error.message : String(error)}`
+                        text: `❌ **编辑失败:** ${error instanceof Error ? error.message : String(error)}`
                     }],
                 isError: true
             };
@@ -115,77 +113,58 @@ export const pptEditorAdvanced = {
     },
     async addSlide(automizer, templateName, outputPath, args) {
         const pres = automizer.loadRoot(templateName);
-        // Get all slide numbers from the template
         const slideNumbers = await pres.getAllSlideNumbers();
         const templateSlideIndex = args.content?.template_slide || slideNumbers[0] || 1;
-        // Add a slide based on the template
         pres.addSlide(templateName, templateSlideIndex);
-        // Generate the output
         const jszip = await pres.getJSZip();
         const buffer = await jszip.generateAsync({ type: 'nodebuffer' });
-        // Write to file
         fs.writeFileSync(outputPath, buffer);
-        return { message: `Added new slide${args.content?.title ? ` with title: ${args.content.title}` : ''}` };
+        return { message: `已新增一页${args.content?.title ? `：${args.content.title}` : ''}` };
     },
     async replaceText(automizer, templateName, outputPath, args) {
         const pres = automizer.loadRoot(templateName);
         const oldText = args.content?.old_text || args.content?.text;
         const newText = args.content?.new_text || args.content?.text;
         if (oldText && newText) {
-            // Add all slides from template first
             const slideNumbers = await pres.getAllSlideNumbers();
             for (const slideNum of slideNumbers) {
                 pres.addSlide(templateName, slideNum);
             }
-            // Replace text across all slides
             pres.addText(newText, (textElement) => {
-                textElement.replaceText([{
-                        replace: oldText,
-                        by: newText
-                    }]);
+                textElement.replaceText([{ replace: oldText, by: newText }]);
             });
         }
-        // Generate the output
         const jszip = await pres.getJSZip();
         const buffer = await jszip.generateAsync({ type: 'nodebuffer' });
-        // Write to file
         fs.writeFileSync(outputPath, buffer);
-        return { message: `Replaced "${oldText}" with "${newText}"` };
+        return { message: `已将 "${oldText}" 替换为 "${newText}"` };
     },
     async addText(automizer, templateName, outputPath, args) {
         const pres = automizer.loadRoot(templateName);
-        // Add all slides from template first
         const slideNumbers = await pres.getAllSlideNumbers();
         for (const slideNum of slideNumbers) {
             pres.addSlide(templateName, slideNum);
         }
-        // Note: Adding new text elements requires more complex implementation
-        // For now, we'll just copy the slides
-        // Generate the output
+        // 备注：精准定位新增文本需要更复杂的定位实现，当前先复制全部页结构
         const jszip = await pres.getJSZip();
         const buffer = await jszip.generateAsync({ type: 'nodebuffer' });
-        // Write to file
         fs.writeFileSync(outputPath, buffer);
-        return { message: `Text addition prepared (advanced text positioning requires additional implementation)` };
+        return { message: `文本添加准备完成（精确定位需进一步实现）` };
     },
     async duplicateSlide(automizer, templateName, outputPath, args) {
         const pres = automizer.loadRoot(templateName);
         const slideIndex = args.slide_index || 1;
-        // Add all slides from template first
         const slideNumbers = await pres.getAllSlideNumbers();
         for (const slideNum of slideNumbers) {
             pres.addSlide(templateName, slideNum);
         }
-        // Add the specified slide again to duplicate it
         if (slideNumbers.includes(slideIndex)) {
             pres.addSlide(templateName, slideIndex);
         }
-        // Generate the output
         const jszip = await pres.getJSZip();
         const buffer = await jszip.generateAsync({ type: 'nodebuffer' });
-        // Write to file
         fs.writeFileSync(outputPath, buffer);
-        return { message: `Duplicated slide ${slideIndex}` };
+        return { message: `已复制第 ${slideIndex} 页` };
     }
 };
 //# sourceMappingURL=ppt-editor-advanced.js.map

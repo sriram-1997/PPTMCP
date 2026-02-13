@@ -1,0 +1,75 @@
+{
+  "title": "Stress Test - Shapes",
+  "metadata": {
+    "author": "PPTMCP Stress Suite",
+    "created": "2026-02-11T00:00:00Z"
+  },
+  "slides": [
+    {
+      "id": "shapes-1",
+      "title": "Layered Shapes and Opacity",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.05
+      },
+      "regions": {
+        "header": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "canvas": { "col": 0, "row": 1, "colSpan": 12, "rowSpan": 7 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "header",
+          "content": "Shape stress: layering + opacity + formatting",
+          "style": { "fontSize": 18, "bold": true }
+        },
+        {
+          "type": "shape",
+          "region": "canvas",
+          "content": {
+            "shapeType": "rect",
+            "layers": [
+              { "name": "base", "fill": "#003366", "opacity": 0.35, "x": 0.5, "y": 1.2, "w": 4.8, "h": 2.8 },
+              { "name": "overlay", "fill": "#00AA88", "opacity": 0.45, "x": 2.3, "y": 2.1, "w": 4.8, "h": 2.8 },
+              { "name": "top", "fill": "#FF9900", "opacity": 0.55, "x": 4.1, "y": 3.0, "w": 4.8, "h": 2.8 }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "shapes-2",
+      "title": "Boolean-Like Shape Operations",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.05
+      },
+      "regions": {
+        "header": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "canvas": { "col": 2, "row": 1, "colSpan": 8, "rowSpan": 6 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "header",
+          "content": "Boolean-like constructs (union/intersect/subtract)",
+          "style": { "fontSize": 16, "bold": true }
+        },
+        {
+          "type": "shape",
+          "region": "canvas",
+          "content": {
+            "shapeType": "boolean_ops",
+            "operations": [
+              { "op": "union", "inputs": ["circleA", "circleB"], "output": "union1" },
+              { "op": "intersect", "inputs": ["rectA", "rectB"], "output": "intersection1" },
+              { "op": "subtract", "inputs": ["donutOuter", "donutInner"], "output": "ring1" }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

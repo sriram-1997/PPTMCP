@@ -1,0 +1,22 @@
+{
+  "name": "consulting_light_v1",
+  "tokens": {
+    "color.background": "#FFFFFF",
+    "color.surface": "#E9EFF8",
+    "color.surface_elevated": "#F5F7FB",
+    "color.surface_accent": "#E3ECFF",
+    "color.text_primary": "#000000",
+    "color.text_secondary": "#4B5563",
+    "color.border_default": "#BFC7D5",
+    "color.primary": "#000000",
+    "color.accent": "#4472C4",
+    "chart.palette": ["#4472C4", "#ED7D31", "#A5A5A5", "#FFC000", "#5B9BD5"],
+    "type.font_family_primary": "Calibri",
+    "type.font_family_secondary": "Calibri",
+    "type.body_size": 16,
+    "type.small_size": 11,
+    "type.weight_medium": 500,
+    "type.weight_bold": 700,
+    "shape.border_width_default": 1
+  }
+}

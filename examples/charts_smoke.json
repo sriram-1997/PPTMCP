@@ -1,0 +1,46 @@
+{
+  "title": "Charts Smoke",
+  "metadata": {
+    "author": "PPTMCP Smoke",
+    "created": "2026-02-11T00:00:00Z"
+  },
+  "slides": [
+    {
+      "id": "charts-smoke",
+      "title": "Column Pass + Non-Column Fail",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.06
+      },
+      "regions": {
+        "left": { "col": 0, "row": 0, "colSpan": 6, "rowSpan": 8 },
+        "right": { "col": 6, "row": 0, "colSpan": 6, "rowSpan": 8 }
+      },
+      "elements": [
+        {
+          "type": "chart",
+          "region": "left",
+          "content": {
+            "chartType": "column",
+            "title": "Quarterly Sales",
+            "dataSeries": [
+              { "name": "A", "data": [["Q1", 10], ["Q2", 12], ["Q3", 11], ["Q4", 14]] }
+            ]
+          }
+        },
+        {
+          "type": "chart",
+          "region": "right",
+          "content": {
+            "chartType": "line",
+            "title": "Non-Column Should Fail",
+            "dataSeries": [
+              { "name": "A", "data": [["Q1", 10], ["Q2", 12]] }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

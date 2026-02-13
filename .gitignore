@@ -1,6 +1,24 @@
-/MCP_Complete_Presentation.pptx
-/MCP_Detailed_Guide.pptx
-/MCP__Model_Context_Protocol____.pptx
-/user_data_analysis.pptx
-/~$MCP__Model_Context_Protocol____.pptx
-/~$user_data_analysis.pptx
+# Node
+node_modules/
+dist/
+coverage/
+.env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Generated outputs
+out/
+unzip-out/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Generated drafts (adjust if you want)
+docs/generated/
+*.draft.md
+*.txt

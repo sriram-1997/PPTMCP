@@ -1,0 +1,95 @@
+{
+  "title": "Theme Default",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-12T00:00:00Z"
+  },
+  "slides": [
+    {
+      "id": "theme-default",
+      "title": "Theme Default",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.05
+      },
+      "regions": {
+        "header": {
+          "col": 0,
+          "row": 0,
+          "colSpan": 12,
+          "rowSpan": 1
+        },
+        "chart": {
+          "col": 1,
+          "row": 2,
+          "colSpan": 10,
+          "rowSpan": 5
+        }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "header",
+          "content": "Theme Default",
+          "style": {
+            "fontSize": 20,
+            "bold": true
+          }
+        },
+        {
+          "type": "chart",
+          "region": "chart",
+          "content": {
+            "chartType": "column",
+            "title": "Palette Check",
+            "dataSeries": [
+              {
+                "name": "A",
+                "data": [
+                  [
+                    "Q1",
+                    10
+                  ],
+                  [
+                    "Q2",
+                    12
+                  ],
+                  [
+                    "Q3",
+                    11
+                  ],
+                  [
+                    "Q4",
+                    14
+                  ]
+                ]
+              },
+              {
+                "name": "B",
+                "data": [
+                  [
+                    "Q1",
+                    8
+                  ],
+                  [
+                    "Q2",
+                    9
+                  ],
+                  [
+                    "Q3",
+                    7
+                  ],
+                  [
+                    "Q4",
+                    10
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+﻿{
+  "title": "Repro Chart Only",
+  "metadata": { "author": "PPTMCP", "created": "2026-02-11T00:00:00Z" },
+  "slides": [
+    {
+      "id": "repro-chart-only",
+      "title": "Chart Only",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.05 },
+      "regions": {
+        "chart": { "col": 0, "row": 1, "colSpan": 7, "rowSpan": 5 },
+        "canvas": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 }
+      },
+      "elements": [
+        {
+          "type": "chart",
+          "region": "chart",
+          "z": 0,
+          "content": {
+            "chartType": "column",
+            "title": "Quarterly Sales",
+            "dataSeries": [
+              { "name": "A", "data": [["Q1", 10], ["Q2", 12], ["Q3", 11], ["Q4", 14]] }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
