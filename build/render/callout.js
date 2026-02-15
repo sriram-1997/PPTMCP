@@ -1,8 +1,9 @@
 import { resolveElementStyleDefaults } from "../theme/styleDefaults.js";
 import { prepareTextElement } from "./text.js";
-import { normalizeLineRect } from "./connector.js";
-import { isBoxInside, nearestPointOnBoxPerimeter, resolveRegionAnchor } from "./slide.js";
-const DEFAULT_CALLOUT_PADDING_PT = 6;
+import { lineRectFromPoints, renderArrowHeads } from "./connector.js";
+import { isBoxInside, resolveRegionAnchor } from "./slide.js";
+import { resolveIconData } from "./utils/icons.js";
+import { ptToIn } from "./utils/units.js";
 const CALLOUT_GAP_PT = 6;
 function resolveCalloutBoxPosition(args) {
     const gapIn = CALLOUT_GAP_PT / 72;
@@ -69,34 +70,77 @@ export function prepareCalloutElement(args) {
         }
         box = { x: args.bbox.x, y: args.bbox.y, width: boxW, height: boxH };
     }
-    const leaderEnd = args.element.leader ? nearestPointOnBoxPerimeter(box, anchor) : null;
-    const leaderRectResult = leaderEnd ? normalizeLineRect(anchor, leaderEnd) : null;
-    const leaderFlipV = leaderRectResult ? leaderRectResult.flipV : false;
-    const leaderFlipH = leaderRectResult ? leaderRectResult.flipH : false;
-    if (leaderRectResult?.error) {
-        args.hardErrors.push(`Slide ${args.slideIndex + 1} element ${args.elementIndex + 1}: ${leaderRectResult.error}`);
-    }
     const leaderDefaults = defaults.strokeStyle;
-    const leaderStyle = leaderEnd
-        ? {
-            color: leaderDefaults?.color ?? args.theme.callout.leader,
-            widthPt: leaderDefaults?.widthPt ?? args.theme.shape.borderWidth,
-            startArrow: leaderDefaults?.startArrow ?? "none",
-            endArrow: leaderDefaults?.endArrow ?? "none",
+    const leaderColor = leaderDefaults?.color ?? args.theme.callout.leader;
+    const leaderWidthPt = leaderDefaults?.widthPt ?? args.theme.strokeScale.normal;
+    const leaderStartArrow = args.element.leader?.startArrow ?? leaderDefaults?.startArrow ?? "none";
+    const leaderEndArrow = args.element.leader?.endArrow ?? leaderDefaults?.endArrow ?? "none";
+    const hasLeader = Boolean(args.element.leader);
+    const content = args.element.content;
+    const usingContent = Boolean(content);
+    const textValue = content ? content.text : (args.element.text?.value ?? "");
+    let textBox = box;
+    let iconBox;
+    let iconData;
+    let textElement;
+    if (usingContent) {
+        const paddingPt = args.element.box.paddingPt ?? (args.theme.spaceScale[3] ?? 0);
+        const iconName = content?.icon;
+        const iconSizePt = iconName ? (args.theme.spaceScale[4] ?? args.theme.spaceScale[3] ?? 0) : 0;
+        const iconGapPt = iconName ? (args.theme.spaceScale[2] ?? args.theme.spaceScale[1] ?? 0) : 0;
+        const contentWidthIn = box.width - ptToIn(paddingPt * 2);
+        const contentHeightIn = box.height - ptToIn(paddingPt * 2);
+        textBox = {
+            x: box.x + ptToIn(paddingPt + iconSizePt + iconGapPt),
+            y: box.y + ptToIn(paddingPt),
+            width: Math.max(0, contentWidthIn - ptToIn(iconSizePt + iconGapPt)),
+            height: Math.max(0, contentHeightIn),
+        };
+        if (iconName) {
+            const iconResult = resolveIconData({ name: iconName, color: args.theme.text.colorPrimary });
+            if (iconResult.error || !iconResult.data) {
+                args.hardErrors.push(`Slide ${args.slideIndex + 1} element ${args.elementIndex + 1}: icon_not_found`);
+            }
+            else {
+                iconData = iconResult.data;
+                const iconSizeIn = ptToIn(iconSizePt);
+                const contentHeightPt = contentHeightIn * 72;
+                const iconY = box.y + ptToIn(paddingPt) + ptToIn(Math.max(0, (contentHeightPt - iconSizePt) / 2));
+                iconBox = {
+                    x: box.x + ptToIn(paddingPt),
+                    y: iconY,
+                    width: iconSizeIn,
+                    height: iconSizeIn,
+                };
+            }
         }
-        : undefined;
-    const leaderStartArrow = args.element.leader?.startArrow ?? leaderStyle?.startArrow ?? "none";
-    const leaderEndArrow = args.element.leader?.endArrow ?? leaderStyle?.endArrow ?? "none";
-    const textElement = {
-        type: "text",
-        region: args.element.region,
-        content: args.element.text.value,
-        style: {
-            ...args.element.text.style,
-            paddingPt: args.element.box.paddingPt ?? DEFAULT_CALLOUT_PADDING_PT,
-            color: args.element.text.style?.color ?? (defaults.textStyle?.color ?? args.theme.callout.textColor),
-        },
-    };
+        const bodyFont = args.theme.fontScale.body;
+        const bodyBold = bodyFont.weight >= args.theme.type.weightBold;
+        textElement = {
+            type: "text",
+            region: args.element.region,
+            content: textValue,
+            style: {
+                fontSize: bodyFont.size,
+                bold: bodyBold,
+                color: defaults.textStyle?.color ?? args.theme.text.colorPrimary,
+                paddingPt: 0,
+            },
+        };
+    }
+    else {
+        const legacyPaddingPt = args.element.box.paddingPt ?? (args.theme.spaceScale[3] ?? 0);
+        textElement = {
+            type: "text",
+            region: args.element.region,
+            content: textValue,
+            style: {
+                ...args.element.text?.style,
+                paddingPt: legacyPaddingPt,
+                color: args.element.text?.style?.color ?? (defaults.textStyle?.color ?? args.theme.callout.textColor),
+            },
+        };
+    }
     const preparedText = prepareTextElement({
         slide: args.slide,
         slideIndex: args.slideIndex,
@@ -105,7 +149,7 @@ export function prepareCalloutElement(args) {
         z: args.z,
         order: args.order,
         id: `${args.id}::text`,
-        bbox: box,
+        bbox: textBox,
         theme: args.theme,
         allowOverflow: args.allowOverflow,
         validationReport: args.validationReport,
@@ -119,51 +163,54 @@ export function prepareCalloutElement(args) {
         id: args.id,
         region: args.element.region,
         variant: args.element.variant,
+        anchor,
         box,
         boxStyle: defaults.boxStyle
             ? { fill: defaults.boxStyle.fill, border: defaults.boxStyle.border, borderWidth: defaults.boxStyle.borderWidth }
             : undefined,
+        icon: iconBox && iconData ? { bbox: iconBox, data: iconData } : undefined,
         text: preparedText,
-        leader: leaderEnd
+        leader: hasLeader
             ? {
                 start: anchor,
-                end: leaderEnd,
+                end: anchor,
             }
             : undefined,
-        leaderStyle: leaderEnd
+        leaderStyle: hasLeader
             ? {
-                color: leaderStyle?.color ?? args.theme.callout.leader,
-                widthPt: leaderStyle?.widthPt ?? args.theme.shape.borderWidth,
+                color: leaderColor,
+                widthPt: leaderWidthPt,
                 startArrow: leaderStartArrow,
                 endArrow: leaderEndArrow,
             }
             : undefined,
-        leaderRect: leaderRectResult?.rect,
-        leaderFlipV: leaderEnd ? leaderFlipV : undefined,
-        leaderFlipH: leaderEnd ? leaderFlipH : undefined,
     };
 }
 export function renderCalloutElement(slide, shapeType, element, theme) {
     if (element.leader) {
         const leaderStyle = element.leaderStyle;
+        const lineStart = element.leaderLineStart ?? element.leader.start;
+        const lineEnd = element.leaderLineEnd ?? element.leader.end;
+        const rect = element.leaderRect ?? lineRectFromPoints(lineStart, lineEnd).rect;
         slide.addShape(shapeType.line, {
-            x: element.leaderRect?.x ?? element.leader.start.x,
-            y: element.leaderRect?.y ?? element.leader.start.y,
-            w: element.leaderRect?.width ?? element.leader.end.x - element.leader.start.x,
-            h: element.leaderRect?.height ?? element.leader.end.y - element.leader.start.y,
+            x: rect.x,
+            y: rect.y,
+            w: rect.width,
+            h: rect.height,
             flipV: element.leaderFlipV === true,
             flipH: element.leaderFlipH === true,
             line: {
                 color: leaderStyle?.color ?? theme.callout.leader,
-                width: leaderStyle?.widthPt ?? theme.shape.borderWidth,
-                beginArrowType: leaderStyle?.startArrow ?? "none",
-                endArrowType: leaderStyle?.endArrow ?? "none",
+                width: leaderStyle?.widthPt ?? theme.strokeScale.normal,
             },
         });
+        if (element.leaderArrowHeads && element.leaderArrowHeads.length > 0) {
+            renderArrowHeads(slide, shapeType, element.leaderArrowHeads);
+        }
     }
     const boxFill = element.boxStyle?.fill ?? theme.callout.fill;
     const boxBorder = element.boxStyle?.border ?? theme.callout.border;
-    const boxBorderWidth = element.boxStyle?.borderWidth ?? theme.shape.borderWidth;
+    const boxBorderWidth = element.boxStyle?.borderWidth ?? theme.strokeScale.thin;
     slide.addShape(shapeType.rect, {
         x: element.box.x,
         y: element.box.y,
@@ -172,11 +219,21 @@ export function renderCalloutElement(slide, shapeType, element, theme) {
         fill: { color: boxFill },
         line: { color: boxBorder, width: boxBorderWidth },
     });
+    if (element.icon) {
+        slide.addImage({
+            data: element.icon.data,
+            x: element.icon.bbox.x,
+            y: element.icon.bbox.y,
+            w: element.icon.bbox.width,
+            h: element.icon.bbox.height,
+        });
+    }
     slide.addText(element.text.content, {
         x: element.text.bbox.x,
         y: element.text.bbox.y,
         w: element.text.bbox.width,
         h: element.text.bbox.height,
+        fontFace: element.text.fontFace,
         fontSize: element.text.fontSize,
         bold: element.text.style.bold,
         italic: element.text.style.italic,

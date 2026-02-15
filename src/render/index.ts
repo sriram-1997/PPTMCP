@@ -1,4 +1,4 @@
-﻿import * as fs from "fs";
+import * as fs from "fs";
 import * as path from "path";
 import pptxgen from "pptxgenjs";
 import { exportToPdf } from "../tools/export-pdf.js";
@@ -7,12 +7,19 @@ import type { ConcreteTheme } from "../theme/types.js";
 import type { IntegrityDebugReport, RenderResult, SlideProgramSpec, ValidationReportEntry } from "./types.js";
 import { validateSpec } from "./validate.js";
 import { buildIntegrityDebug, prepareSlides } from "./slide.js";
+import { resolveGeometryV1 } from "./geometry.js";
+import { compileTemplateSpec } from "../templates/compiler.js";
 import { renderTextElement } from "./text.js";
 import { renderTableElement } from "./table.js";
 import { renderChartElement } from "./chart.js";
+import { renderListElement } from "./list.js";
+import { renderCardElement } from "./card.js";
 import { renderCalloutElement } from "./callout.js";
 import { renderConnectorElement } from "./connector.js";
+import { renderEdgeElement } from "./edge.js";
 import { renderImageElement } from "./image.js";
+import { renderIconElement } from "./icon.js";
+import { renderNodeElement } from "./node.js";
 
 async function renderPptmcp(args: {
   spec_path: string;
@@ -34,23 +41,34 @@ async function renderPptmcp(args: {
   const validationReport: ValidationReportEntry[] = [];
   const hardErrors: string[] = [];
 
-  let spec: SlideProgramSpec;
+  let rawSpec: unknown;
   try {
-    spec = JSON.parse(fs.readFileSync(args.spec_path, "utf-8")) as SlideProgramSpec;
+    rawSpec = JSON.parse(fs.readFileSync(args.spec_path, "utf-8"));
   } catch (error) {
     throw new Error(
       `Failed to parse spec JSON: ${error instanceof Error ? error.message : String(error)}`
     );
   }
+  const rawSpecObj =
+    rawSpec && typeof rawSpec === "object" && !Array.isArray(rawSpec)
+      ? (rawSpec as SlideProgramSpec)
+      : ({} as SlideProgramSpec);
+  const theme: ConcreteTheme = resolveConcreteTheme({
+    themeInput: rawSpecObj.theme,
+    styleTokensInput: rawSpecObj.styleTokens,
+  });
+
+  const compiled = compileTemplateSpec({ spec: rawSpec, theme, strict });
+  if (compiled.errors.length > 0 || !compiled.spec) {
+    throw new Error(`Spec validation failed:\n${compiled.errors.join("\n")}`);
+  }
+
+  const spec: SlideProgramSpec = compiled.spec;
 
   const validation = validateSpec(spec, strict);
   if (!validation.valid) {
     throw new Error(`Spec validation failed:\n${validation.errors.join("\n")}`);
   }
-  const theme: ConcreteTheme = resolveConcreteTheme({
-    themeInput: spec.theme,
-    styleTokensInput: spec.styleTokens,
-  });
 
   const preparedSlides = prepareSlides({
     spec,
@@ -63,9 +81,13 @@ async function renderPptmcp(args: {
     hardErrors,
   });
 
+  resolveGeometryV1({ slides: preparedSlides, warnings, hardErrors });
+
   if (hardErrors.length > 0) {
-    throw new Error(`Layout validation failed:\n${hardErrors.join("\n")}`);
+    throw new Error(`Layout validation failed:
+${hardErrors.join("\n")}`);
   }
+
 
   let integrityDebug: IntegrityDebugReport | undefined;
   if (debugIntegrity) {
@@ -76,7 +98,7 @@ async function renderPptmcp(args: {
   pres.layout = "LAYOUT_WIDE";
   pres.author = spec.metadata?.author || "PPTMCP";
   pres.title = spec.title;
-  pres.theme = { headFontFace: theme.text.fontFamily, bodyFontFace: theme.text.fontFamily };
+  pres.theme = { headFontFace: theme.fontScale.title.family, bodyFontFace: theme.fontScale.body.family };
   const shapeType = pres.ShapeType;
 
   const outputDir = path.dirname(args.output_path);
@@ -89,17 +111,27 @@ async function renderPptmcp(args: {
     slide.background = { color: theme.slide.background };
     slidePlan.elements.forEach((element) => {
       if (element.kind === "text") {
-        renderTextElement(slide, element);
+        renderTextElement(slide, shapeType, element);
+      } else if (element.kind === "list") {
+        renderListElement(slide, shapeType, element);
+      } else if (element.kind === "card") {
+        renderCardElement(slide, shapeType, element);
       } else if (element.kind === "table") {
         renderTableElement(slide, element);
       } else if (element.kind === "chart") {
-        renderChartElement(slide, element, theme);
+        renderChartElement(slide, shapeType, element, theme);
+      } else if (element.kind === "node") {
+        renderNodeElement(slide, shapeType, element);
+      } else if (element.kind === "edge") {
+        renderEdgeElement(slide, shapeType, element);
       } else if (element.kind === "connector") {
         renderConnectorElement(slide, shapeType, element);
       } else if (element.kind === "callout") {
         renderCalloutElement(slide, shapeType, element, theme);
       } else if (element.kind === "image") {
         renderImageElement(slide, shapeType, element);
+      } else if (element.kind === "icon") {
+        renderIconElement(slide, shapeType, element);
       }
     });
   });

@@ -1,0 +1,167 @@
+{
+  "title": "Geometry Arrowheads Diagonal",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-13T00:00:00Z"
+  },
+  "slides": [
+    {
+      "id": "arrowheads-diagonal-long",
+      "title": "Arrowheads Diagonal Long",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.05 },
+      "regions": {
+        "canvas": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 },
+        "anchor": { "col": 5, "row": 3, "colSpan": 2, "rowSpan": 2 },
+        "ne": { "col": 9, "row": 1, "colSpan": 2, "rowSpan": 1 },
+        "se": { "col": 9, "row": 6, "colSpan": 2, "rowSpan": 1 },
+        "nw": { "col": 1, "row": 1, "colSpan": 2, "rowSpan": 1 },
+        "sw": { "col": 1, "row": 6, "colSpan": 2, "rowSpan": 1 },
+        "ne_label": { "col": 9, "row": 0, "colSpan": 2, "rowSpan": 1 },
+        "se_label": { "col": 9, "row": 7, "colSpan": 2, "rowSpan": 1 },
+        "nw_label": { "col": 1, "row": 0, "colSpan": 2, "rowSpan": 1 },
+        "sw_label": { "col": 1, "row": 7, "colSpan": 2, "rowSpan": 1 }
+      },
+      "elements": [
+        {
+          "type": "connector",
+          "id": "diag_ne_long",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "anchor", "point": "center" },
+          "end": { "type": "region", "targetRegion": "ne", "point": "center" },
+          "style": { "widthPt": 2, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "diag_se_long",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "anchor", "point": "center" },
+          "end": { "type": "region", "targetRegion": "se", "point": "center" },
+          "style": { "widthPt": 2, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "diag_nw_long",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "anchor", "point": "center" },
+          "end": { "type": "region", "targetRegion": "nw", "point": "center" },
+          "style": { "widthPt": 2, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "diag_sw_long",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "anchor", "point": "center" },
+          "end": { "type": "region", "targetRegion": "sw", "point": "center" },
+          "style": { "widthPt": 2, "endArrow": "triangle" }
+        },
+        {
+          "type": "text",
+          "region": "ne_label",
+          "content": "NE",
+          "style": { "fontSize": 12, "bold": true, "color": "#000000" }
+        },
+        {
+          "type": "text",
+          "region": "se_label",
+          "content": "SE",
+          "style": { "fontSize": 12, "bold": true, "color": "#000000" }
+        },
+        {
+          "type": "text",
+          "region": "nw_label",
+          "content": "NW",
+          "style": { "fontSize": 12, "bold": true, "color": "#000000" }
+        },
+        {
+          "type": "text",
+          "region": "sw_label",
+          "content": "SW",
+          "style": { "fontSize": 12, "bold": true, "color": "#000000" }
+        }
+      ]
+    },
+    {
+      "id": "arrowheads-diagonal-short",
+      "title": "Arrowheads Diagonal Short",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.05 },
+      "regions": {
+        "canvas": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 },
+        "anchor": { "col": 5, "row": 3, "colSpan": 2, "rowSpan": 2 },
+        "ne": { "col": 7, "row": 2, "colSpan": 1, "rowSpan": 1 },
+        "se": { "col": 7, "row": 5, "colSpan": 1, "rowSpan": 1 },
+        "nw": { "col": 4, "row": 2, "colSpan": 1, "rowSpan": 1 },
+        "sw": { "col": 4, "row": 5, "colSpan": 1, "rowSpan": 1 },
+        "ne_label": { "col": 7, "row": 1, "colSpan": 1, "rowSpan": 1 },
+        "se_label": { "col": 7, "row": 6, "colSpan": 1, "rowSpan": 1 },
+        "nw_label": { "col": 4, "row": 1, "colSpan": 1, "rowSpan": 1 },
+        "sw_label": { "col": 4, "row": 6, "colSpan": 1, "rowSpan": 1 }
+      },
+      "elements": [
+        {
+          "type": "connector",
+          "id": "diag_ne_short",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "anchor", "point": "center" },
+          "end": { "type": "region", "targetRegion": "ne", "point": "center" },
+          "style": { "widthPt": 2, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "diag_se_short",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "anchor", "point": "center" },
+          "end": { "type": "region", "targetRegion": "se", "point": "center" },
+          "style": { "widthPt": 2, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "diag_nw_short",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "anchor", "point": "center" },
+          "end": { "type": "region", "targetRegion": "nw", "point": "center" },
+          "style": { "widthPt": 2, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "diag_sw_short",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "anchor", "point": "center" },
+          "end": { "type": "region", "targetRegion": "sw", "point": "center" },
+          "style": { "widthPt": 2, "endArrow": "triangle" }
+        },
+        {
+          "type": "text",
+          "region": "ne_label",
+          "content": "NE short",
+          "style": { "fontSize": 10, "bold": true, "color": "#000000" }
+        },
+        {
+          "type": "text",
+          "region": "se_label",
+          "content": "SE short",
+          "style": { "fontSize": 10, "bold": true, "color": "#000000" }
+        },
+        {
+          "type": "text",
+          "region": "nw_label",
+          "content": "NW short",
+          "style": { "fontSize": 10, "bold": true, "color": "#000000" }
+        },
+        {
+          "type": "text",
+          "region": "sw_label",
+          "content": "SW short",
+          "style": { "fontSize": 10, "bold": true, "color": "#000000" }
+        }
+      ]
+    }
+  ]
+}

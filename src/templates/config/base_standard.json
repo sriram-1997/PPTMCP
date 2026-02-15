@@ -1,0 +1,32 @@
+{
+  "id": "base_standard",
+  "title": "Base Standard",
+  "grid": {
+    "cols": 12,
+    "rows": 8,
+    "gutter": 0.050131233595799074
+  },
+  "layers": [
+    {
+      "id": "background",
+      "z": 0
+    },
+    {
+      "id": "content",
+      "z": 100
+    },
+    {
+      "id": "foreground",
+      "z": 200
+    }
+  ],
+  "defaultSlots": {
+    "text": "text.body",
+    "padding": 2,
+    "stroke": "stroke.normal"
+  },
+  "policies": {
+    "requireAllPlaceholders": true
+  },
+  "placeholders": []
+}

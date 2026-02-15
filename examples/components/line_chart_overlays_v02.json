@@ -1,0 +1,42 @@
+{
+  "title": "Line Chart Overlays v0.2",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-14T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "line-chart-overlays",
+      "title": "Line Chart Overlays v0.2",
+      "grid": { "cols": 6, "rows": 4, "gutter": 0.2 },
+      "regions": {
+        "chart": { "col": 0, "row": 0, "colSpan": 6, "rowSpan": 4 }
+      },
+      "elements": [
+        {
+          "type": "chart",
+          "region": "chart",
+          "chartType": "line",
+          "data": {
+            "labels": ["Q1", "Q2", "Q3", "Q4", "Q5"],
+            "series": [
+              { "name": "Series A", "values": [12, 18, 16, 22, 24] },
+              { "name": "Series B", "values": [9, 14, 13, 17, 20] }
+            ]
+          },
+          "options": {
+            "showGrid": true,
+            "showMarkers": true,
+            "smooth": false,
+            "yAxisZero": true
+          },
+          "overlays": {
+            "averageLine": true,
+            "trendLine": true
+          }
+        }
+      ]
+    }
+  ]
+}

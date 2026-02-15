@@ -1,0 +1,31 @@
+{
+  "title": "Line Chart Mismatch",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-13T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "chart-mismatch",
+      "title": "Line Chart Mismatch",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "chart": { "col": 1, "row": 1, "colSpan": 10, "rowSpan": 6 }
+      },
+      "elements": [
+        {
+          "type": "chart",
+          "region": "chart",
+          "chartType": "line",
+          "data": {
+            "labels": ["Jan", "Feb", "Mar"],
+            "series": [
+              { "name": "Series A", "values": [10, 12] }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

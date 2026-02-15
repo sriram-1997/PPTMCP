@@ -1,0 +1,57 @@
+{
+  "title": "Card Overflow",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-13T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "card-overflow",
+      "title": "Card Overflow",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "card": { "col": 2, "row": 3, "colSpan": 8, "rowSpan": 2 }
+      },
+      "elements": [
+        {
+          "type": "card",
+          "region": "card",
+          "variant": "surface",
+          "style": {
+            "bg": "surface",
+            "border": "default",
+            "radius": "md",
+            "padding": "md",
+            "shadow": "none",
+            "accent": { "edge": "left", "color": "accent", "width": 6 }
+          },
+          "header": {
+            "title": "Overflow Test Header",
+            "subtitle": "Subtitle that adds height",
+            "icon": "target"
+          },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "bullet": { "size": "md", "gap": 8, "color": "text" },
+              "indent": { "left": 0, "hanging": 18 },
+              "lineGap": 6,
+              "items": [
+                { "text": "Item one with enough text to wrap onto another line." },
+                { "text": "Item two with more text to force additional height." },
+                { "text": "Item three continues to expand the body." }
+              ]
+            }
+          ],
+          "footer": {
+            "strip": true,
+            "label": "Footer",
+            "text": "Footer text should overflow."
+          }
+        }
+      ]
+    }
+  ]
+}

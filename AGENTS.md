@@ -147,9 +147,61 @@ region.height = rowSpan * cell_height + (rowSpan-1) * gutter
   }
 }
 ```
-**Status**: Supported in v0 with strict constraints (column only).
+Line chart (v0.1):
+```json
+{
+  "type": "chart",
+  "region": "region-name",
+  "chartType": "line",
+  "data": {
+    "labels": ["Jan", "Feb", "Mar"],
+    "series": [
+      { "name": "Series A", "values": [10, 15, 12] }
+    ]
+  },
+  "options": { "showGrid": true, "showMarkers": true, "smooth": false, "yAxisZero": true }
+}
+```
+**Status**: Supported in v0/v0.1 with strict constraints (column + line only).
 
-### Theme / Style Tokens v1
+#### List Element
+```json
+{
+  "type": "list",
+  "region": "region-name",
+  "style": "dot",
+  "bullet": { "size": "md", "gap": 10, "color": "text" },
+  "indent": { "left": 0, "hanging": 18 },
+  "lineGap": 6,
+  "items": [
+    { "text": "**Bold lead** - supporting explanation" }
+  ]
+}
+```
+
+#### Card Element
+```json
+{
+  "type": "card",
+  "region": "region-name",
+  "variant": "surface",
+  "style": {
+    "bg": "surface",
+    "border": "default",
+    "radius": "md",
+    "padding": "md",
+    "shadow": "sm",
+    "accent": { "edge": "left", "color": "accent", "width": 6 }
+  },
+  "header": { "title": "Title", "subtitle": "Optional subtitle", "icon": "target" },
+  "body": [
+    { "type": "list", "style": "dot", "items": [{ "text": "First point" }] }
+  ],
+  "footer": { "strip": true, "label": "Key Takeaway", "text": "Concise insight sentence." }
+}
+```
+
+### Theme / Style Tokens v2
 
 Theme is a pure style layer. It does not change geometry or layout behavior.
 
@@ -161,7 +213,7 @@ Theme is a pure style layer. It does not change geometry or layout behavior.
 { "theme": { "name": "consulting_light_v1", "overrides": { "color.accent": "#10B981" } } }
 ```
 
-**Token keys (v0):**
+**Token keys (v2):**
 - `color.background`
 - `color.surface`
 - `color.surface_elevated`
@@ -169,16 +221,37 @@ Theme is a pure style layer. It does not change geometry or layout behavior.
 - `color.text_primary`
 - `color.text_secondary`
 - `color.border_default`
+- `color.table_header_fill`
+- `color.table_body_fill`
+- `color.table_header_text`
+- `color.table_body_text`
+- `color.table_border`
 - `color.primary`
 - `color.accent`
 - `chart.palette` (array of `#RRGGBB`)
-- `type.font_family_primary`
-- `type.font_family_secondary`
-- `type.body_size`
-- `type.small_size`
-- `type.weight_medium`
-- `type.weight_bold`
-- `shape.border_width_default`
+- `font_scale.title.family`
+- `font_scale.title.size`
+- `font_scale.title.weight`
+- `font_scale.subtitle.family`
+- `font_scale.subtitle.size`
+- `font_scale.subtitle.weight`
+- `font_scale.body.family`
+- `font_scale.body.size`
+- `font_scale.body.weight`
+- `font_scale.caption.family`
+- `font_scale.caption.size`
+- `font_scale.caption.weight`
+- `space_scale.0` .. `space_scale.5`
+- `stroke_scale.thin`
+- `stroke_scale.normal`
+- `stroke_scale.heavy`
+- `type.font_family_primary` (legacy)
+- `type.font_family_secondary` (legacy)
+- `type.body_size` (legacy)
+- `type.small_size` (legacy)
+- `type.weight_medium` (legacy)
+- `type.weight_bold` (legacy)
+- `shape.border_width_default` (legacy)
 
 **Rules:**
 - Unknown token keys hard-fail with `unknown_style_token`.
@@ -218,7 +291,7 @@ Style defaults: use `src/theme/styleDefaults.ts` to resolve variant-based defaul
 }
 ```
 
-#### Image Element (v0)
+#### Image Element (v1)
 ```json
 {
   "type": "image",
@@ -226,17 +299,58 @@ Style defaults: use `src/theme/styleDefaults.ts` to resolve variant-based defaul
   "src": "relative/or/absolute/path.png",
   "fit": "contain",
   "variant": "elevated",
+  "opacity": 0.95,
+  "crop": { "left": 0.05, "right": 0.05, "top": 0.05, "bottom": 0.05 },
+  "overlaySurfaceSlot": "surface.background",
+  "overlayOpacity": 0.3,
+  "borderRadiusPt": 12,
   "style": { "borderColor": "#D1D5DB", "borderWidthPt": 1 }
 }
 ```
 
+#### Icon Element (v0)
+```json
+{
+  "type": "icon",
+  "region": "content",
+  "name": "growth",
+  "sizeToken": 2,
+  "colorSlot": "text.body",
+  "align": "center",
+  "verticalAlign": "middle"
+}
+```
+
+
+#### Template Slide (v1, compile-to-regions)
+Templates allow slides to reference a named template (from `src/templates/config`) or provide an inline template object. Templates compile deterministically into standard `grid`/`regions`/`elements` before rendering.
+
+Example:
+```json
+{
+  "id": "slide-1",
+  "title": "Template Slide",
+  "template": "title_slide",
+  "fills": {
+    "title": { "content": "Templates v1" },
+    "subtitle": { "content": "Compiled to regions" }
+  }
+}
+```
+
+Rules:
+- `template` must be a string id or inline template object.
+- `fills` keys must match template placeholder ids.
+- Slot overrides only: `textStyleSlot`, `paddingSlot`, `strokeSlot`. Raw style values are rejected.
+- Template inheritance is single-level (`extends`), cycles hard-fail.
+
 ### Element Validation Rules
 
 1. **Region Reference**: All elements must have a valid `region` that exists in the slide's `regions` object.
-2. **Unsupported Types**: If `type` is not in {text, table, chart, callout, connector}, hard-fail with actionable error.
+2. **Unsupported Types**: If `type` is not in {text, list, card, table, chart, callout, connector, image, icon}, hard-fail with actionable error.
 3. **Missing Fields**: If required fields (type, region, content) are missing, hard-fail.
-4. **Chart Types**: Only `chartType="column"` is supported. Anything else hard-fails with `chart_type_not_supported`.
-5. **Chart Data**: `dataSeries` must be 1-2 series, categories must align across series, and data points must be `[label, number]`. Invalid data hard-fails with `chart_data_invalid`.
+4. **Chart Types**: Only `chartType="column"` and `chartType="line"` are supported. Anything else hard-fails with `chart_type_not_supported`.
+5. **Chart Data**: Column charts use `dataSeries` (1-2 series, aligned categories, `[label, number]` points) and invalid data hard-fails with `chart_data_invalid`. Line charts require `data.labels` plus `data.series[].values` length matches; empty series hard-fails with `chart_no_series`; non-numeric values hard-fail with `chart_invalid_value`.
 6. **Chart Density**: Category count > 25 hard-fails unless `allow_dense_charts` is enabled.
 7. **Label Constraints**: Long labels in narrow charts hard-fail unless `allow_dense_charts` is enabled.
 8. **Anchors**: Callout/connector anchors must be `type="region"` only; other types hard-fail with `anchor_type_not_supported`.
@@ -295,7 +409,7 @@ Style defaults: use `src/theme/styleDefaults.ts` to resolve variant-based defaul
      - Render via appropriate operation:
        - Text -> `edit_presentation` op=add_text
        - Table -> `edit_presentation` op=add_table (or hard-fail if unsupported)
-       - Chart -> `pptxgenjs` addChart (column only), or hard-fail on unsupported chart types/data
+       - Chart -> `pptxgenjs` addChart (column + line), or hard-fail on unsupported chart types/data
        - Callout -> box + text + straight leader line (region-bounded)
        - Connector -> straight line between two region anchors (region-bounded)
 4. Return result with warnings array
@@ -387,9 +501,16 @@ npm run smoke:callouts:fail-placement
 ## Supported Visual Capabilities (v0)
 
 - **Charts**: Yes, with constraints.
-  - Supported: column charts only (`chartType="column"`), 1-2 series, aligned categories.
-  - Constraints: max 25 categories unless `allow_dense_charts=true`; long labels require sufficiently wide regions.
+  - Supported: column charts (`chartType="column"`), 1-2 series, aligned categories.
+  - Supported: line charts v0.1 (`chartType="line"`), multiple series with aligned labels.
+  - Constraints: max 25 categories for column charts unless `allow_dense_charts=true`; long labels require sufficiently wide regions.
   - Unsupported: other chart types hard-fail with `chart_type_not_supported`.
+- **Lists**: Yes, with constraints.
+  - Supported: dot, number, icon, none; inline **bold** runs only; hanging indent.
+  - Constraints: invalid bullet styles hard-fail (`invalid_bullet_style`); missing icon hard-fails (`missing_icon`).
+- **Cards**: Yes, with constraints.
+  - Supported: header/body/footer zones, accent edge, footer strip, list body content.
+  - Constraints: overflow hard-fails with `card_overflow`.
 - **Callouts**: Yes, with constraints.
   - Supported: box + text + straight leader line; region-only anchors.
   - Constraints: box must fit region; auto placement uses deterministic order.
@@ -402,7 +523,11 @@ npm run smoke:callouts:fail-placement
   - Unsupported: merged cells (`rowSpan`/`colSpan`) must hard-fail.
 - **Images**: Yes, with constraints.
   - Supported: `contain` or `cover` fit inside a region; optional surface-backed box via `variant`.
-  - Constraints: `src` must exist; only PNG/JPG/JPEG supported.
+  - Supported: optional `opacity`, `crop`, `borderRadiusPt`; optional full-slide overlay via `overlaySurfaceSlot` + `overlayOpacity`.
+  - Constraints: `src` must exist; only PNG/JPG/JPEG supported. Overlay only allowed for full-slide images.
+- **Icons**: Yes, with constraints.
+  - Supported: registry-backed SVG icons (`src/assets/icons` + `src/assets/iconRegistry.json`).
+  - Constraints: name must exist in registry; size comes from `space_scale[sizeToken]`; color from `text.*` slot.
 - **Diagrams**: No. Diagram DSL/object elements are unsupported and must hard-fail.
 - **Advanced shape ops**: Unsupported. Layered/boolean shape operations are out of scope and must hard-fail.
 
@@ -415,11 +540,12 @@ PPTMCP prioritizes structural clarity, deterministic layout behavior, and strict
 
 ## Known Limitations & Future Work
 
-1. **Charts**: Only column charts are supported in v0; other types remain unsupported.
+1. **Charts**: Column charts (v0) and line charts (v0.1) only; other types remain unsupported.
 2. **Tables**: Depends on `add_table` support in `edit_presentation`. If missing, hard-fail.
-3. **Images**: Supported with constraints; only PNG/JPG/JPEG and `contain|cover` fit.
-4. **Custom Fonts**: Text content uses available system fonts; specifying unavailable fonts is a warning, not an error.
-5. **Video/Animations**: Not supported. Hard-fail.
+3. **Images**: Supported with constraints; only PNG/JPG/JPEG, `contain|cover`, optional crop/opacity/border radius, full-slide overlay only.
+4. **Icons**: Registry-backed only; no arbitrary SVG injection from spec.
+5. **Custom Fonts**: Text content uses available system fonts; specifying unavailable fonts is a warning, not an error.
+6. **Video/Animations**: Not supported. Hard-fail.
 
 ## Feedback & Issues
 

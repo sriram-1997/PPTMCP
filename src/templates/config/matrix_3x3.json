@@ -1,0 +1,58 @@
+{
+  "id": "matrix_3x3",
+  "title": "Matrix 3x3",
+  "extends": "base_standard",
+  "policies": {
+    "requireAllPlaceholders": false
+  },
+  "placeholders": [
+    {
+      "id": "header",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 0,
+        "colSpan": 12,
+        "rowSpan": 1
+      },
+      "layer": "content",
+      "policies": {
+        "required": false
+      },
+      "styleSlots": {
+        "text": "text.title",
+        "padding": 2
+      }
+    },
+    {
+      "id": "metrics",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 1,
+        "colSpan": 12,
+        "rowSpan": 7
+      },
+      "layer": "content",
+      "layoutMode": "grid",
+      "gridRows": 3,
+      "gridCols": 3,
+      "gapToken": 0,
+      "allowedKinds": ["text", "chart", "table", "image"],
+      "minItems": 0,
+      "maxItems": 9,
+      "styleSlots": {
+        "text": "text.body",
+        "padding": 3
+      }
+    }
+  ],
+  "variants": {
+    "compact": {
+      "placeholders": [
+        { "id": "header", "paddingToken": 1 },
+        { "id": "metrics", "paddingToken": 0, "gapToken": 0 }
+      ]
+    }
+  }
+}

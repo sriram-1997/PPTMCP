@@ -1,0 +1,55 @@
+{
+  "title": "Card v1",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-13T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "card-v1",
+      "title": "Card v1",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "card": { "col": 1, "row": 1, "colSpan": 10, "rowSpan": 6 }
+      },
+      "elements": [
+        {
+          "type": "card",
+          "region": "card",
+          "variant": "surface",
+          "style": {
+            "bg": "surface",
+            "border": "default",
+            "radius": "md",
+            "padding": "md",
+            "shadow": "sm",
+            "accent": { "edge": "left", "color": "accent", "width": 6 }
+          },
+          "header": {
+            "title": "Key Takeaway",
+            "subtitle": "Retention improved across cohorts",
+            "icon": "target"
+          },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "bullet": { "size": "md", "gap": 8, "color": "text" },
+              "indent": { "left": 0, "hanging": 18 },
+              "lineGap": 6,
+              "items": [
+                { "text": "**Q2 retention** rose 8 points after onboarding fixes." },
+                { "text": "Activation quality continues to drive higher LTV." }
+              ]
+            }
+          ],
+          "footer": {
+            "strip": true,
+            "text": "Focus on onboarding clarity and time-to-value."
+          }
+        }
+      ]
+    }
+  ]
+}

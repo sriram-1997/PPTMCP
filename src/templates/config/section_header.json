@@ -1,0 +1,40 @@
+{
+  "id": "section_header",
+  "title": "Section Header",
+  "extends": "base_standard",
+  "placeholders": [
+    {
+      "id": "title",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 3,
+        "colSpan": 12,
+        "rowSpan": 2
+      },
+      "layer": "content",
+      "styleSlots": {
+        "text": "text.title",
+        "padding": 2
+      }
+    },
+    {
+      "id": "subtitle",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 5,
+        "colSpan": 12,
+        "rowSpan": 1
+      },
+      "layer": "content",
+      "styleSlots": {
+        "text": "text.subtitle",
+        "padding": 1
+      },
+      "policies": {
+        "required": false
+      }
+    }
+  ]
+}

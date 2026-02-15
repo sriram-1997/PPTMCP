@@ -1,0 +1,36 @@
+{
+  "title": "Table Comparison v1.1 (Light)",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-14T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "table-comparison-light",
+      "title": "Table Comparison v1.1",
+      "grid": { "cols": 6, "rows": 4, "gutter": 0.2 },
+      "regions": {
+        "content": { "col": 0, "row": 0, "colSpan": 6, "rowSpan": 4 }
+      },
+      "elements": [
+        {
+          "type": "table",
+          "region": "content",
+          "emphasisColumn": 2,
+          "rowStriping": true,
+          "columnAlign": ["left", "center", "center"],
+          "content": {
+            "headers": ["Capability", "Standard", "Enterprise"],
+            "rows": [
+              ["Data sources", "8", "Unlimited"],
+              ["Automations", "Basic", "Advanced"],
+              ["Support", "Email", "Dedicated"],
+              ["SLA", "99.5%", "99.9%"]
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

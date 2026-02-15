@@ -92,6 +92,33 @@ function validateTableElementSchema(element, elemPrefix, strict, errors) {
         return;
     }
     const expectedCols = Array.isArray(content.headers) ? content.headers.length : 0;
+    if (typeof element.emphasisColumn !== "undefined") {
+        const emphasisColumn = element.emphasisColumn;
+        if (typeof emphasisColumn !== "number" || !Number.isInteger(emphasisColumn) || emphasisColumn < 1) {
+            errors.push(`${elemPrefix} table_emphasis_invalid`);
+        }
+        else if (expectedCols > 0 && emphasisColumn > expectedCols) {
+            errors.push(`${elemPrefix} table_emphasis_invalid`);
+        }
+    }
+    if (typeof element.rowStriping !== "undefined" && typeof element.rowStriping !== "boolean") {
+        errors.push(`${elemPrefix} table_row_striping_invalid`);
+    }
+    if (typeof element.columnAlign !== "undefined") {
+        if (!Array.isArray(element.columnAlign)) {
+            errors.push(`${elemPrefix} table_alignment_invalid`);
+        }
+        else if (expectedCols > 0 && element.columnAlign.length !== expectedCols) {
+            errors.push(`${elemPrefix} table_alignment_invalid`);
+        }
+        else {
+            element.columnAlign.forEach((value) => {
+                if (typeof value !== "string" || !["left", "center", "right"].includes(value)) {
+                    errors.push(`${elemPrefix} table_alignment_invalid`);
+                }
+            });
+        }
+    }
     content.rows.forEach((row, rowIdx) => {
         if (!Array.isArray(row)) {
             errors.push(`${elemPrefix} Table row ${rowIdx + 1} must be an array`);
@@ -215,23 +242,172 @@ function validateTableElementSchema(element, elemPrefix, strict, errors) {
             }
         }
     }
+    if (strict) {
+        const allowedTableFields = new Set([
+            "type",
+            "region",
+            "content",
+            "style",
+            "emphasisColumn",
+            "rowStriping",
+            "columnAlign",
+            "variant",
+            "z",
+        ]);
+        for (const key of Object.keys(element)) {
+            if (!allowedTableFields.has(key)) {
+                errors.push(`${elemPrefix} Unknown field '${key}'`);
+            }
+        }
+    }
 }
 function validateChartElementSchema(element, elemPrefix, strict, errors) {
+    const overlaysRaw = element.overlays;
+    const hasOverlays = typeof overlaysRaw !== "undefined";
+    const overlays = isPlainObject(overlaysRaw) ? overlaysRaw : null;
+    if (hasOverlays && !overlays) {
+        errors.push(`${elemPrefix} chart_overlay_invalid`);
+    }
+    const chartType = typeof element.chartType === "string"
+        ? element.chartType
+        : isPlainObject(element.content) && typeof element.content.chartType === "string"
+            ? element.content.chartType
+            : null;
+    if (!chartType) {
+        errors.push(`${elemPrefix} chart_data_invalid (chartType must be a string)`);
+        return;
+    }
+    if (chartType === "line") {
+        if (!isPlainObject(element.data)) {
+            errors.push(`${elemPrefix} chart_data_invalid (data must be an object)`);
+            return;
+        }
+        const data = element.data;
+        if (!Array.isArray(data.labels)) {
+            errors.push(`${elemPrefix} chart_data_invalid (labels must be an array)`);
+            return;
+        }
+        data.labels.forEach((label, idx) => {
+            if (typeof label !== "string") {
+                errors.push(`${elemPrefix} chart_data_invalid (label ${idx + 1} must be a string)`);
+            }
+        });
+        if (!Array.isArray(data.series)) {
+            errors.push(`${elemPrefix} chart_no_series`);
+            return;
+        }
+        if (data.series.length === 0) {
+            errors.push(`${elemPrefix} chart_no_series`);
+            return;
+        }
+        const labels = data.labels;
+        data.series.forEach((rawSeries, seriesIdx) => {
+            if (!isPlainObject(rawSeries)) {
+                errors.push(`${elemPrefix} chart_data_invalid (series ${seriesIdx + 1} must be an object)`);
+                return;
+            }
+            const series = rawSeries;
+            if (typeof series.name !== "string") {
+                errors.push(`${elemPrefix} chart_data_invalid (series ${seriesIdx + 1} name must be a string)`);
+            }
+            if (!Array.isArray(series.values)) {
+                errors.push(`${elemPrefix} chart_data_invalid (series ${seriesIdx + 1} values must be an array)`);
+                return;
+            }
+            if (series.values.length !== labels.length) {
+                errors.push(`${elemPrefix} chart_data_length_mismatch`);
+            }
+            series.values.forEach((value) => {
+                if (typeof value !== "number" || !Number.isFinite(value)) {
+                    errors.push(`${elemPrefix} chart_invalid_value`);
+                }
+            });
+        });
+        if (strict) {
+            const allowedChartFields = new Set([
+                "type",
+                "region",
+                "chartType",
+                "data",
+                "options",
+                "overlays",
+                "title",
+                "variant",
+                "z",
+            ]);
+            for (const key of Object.keys(element)) {
+                if (!allowedChartFields.has(key)) {
+                    errors.push(`${elemPrefix} Unknown field '${key}'`);
+                }
+            }
+            const allowedDataFields = new Set(["labels", "series"]);
+            for (const key of Object.keys(data)) {
+                if (!allowedDataFields.has(key)) {
+                    errors.push(`${elemPrefix} Unknown chart data field '${key}'`);
+                }
+            }
+            if (element.options) {
+                if (!isPlainObject(element.options)) {
+                    errors.push(`${elemPrefix} chart_data_invalid (options must be an object)`);
+                }
+                else {
+                    const options = element.options;
+                    const allowedOptionFields = new Set(["showGrid", "showMarkers", "smooth", "yAxisZero"]);
+                    for (const key of Object.keys(options)) {
+                        if (!allowedOptionFields.has(key)) {
+                            errors.push(`${elemPrefix} Unknown chart options field '${key}'`);
+                        }
+                    }
+                    if (typeof options.showGrid !== "undefined" && typeof options.showGrid !== "boolean") {
+                        errors.push(`${elemPrefix} chart_data_invalid (options.showGrid must be boolean)`);
+                    }
+                    if (typeof options.showMarkers !== "undefined" && typeof options.showMarkers !== "boolean") {
+                        errors.push(`${elemPrefix} chart_data_invalid (options.showMarkers must be boolean)`);
+                    }
+                    if (typeof options.smooth !== "undefined" && typeof options.smooth !== "boolean") {
+                        errors.push(`${elemPrefix} chart_data_invalid (options.smooth must be boolean)`);
+                    }
+                    if (typeof options.yAxisZero !== "undefined" && typeof options.yAxisZero !== "boolean") {
+                        errors.push(`${elemPrefix} chart_data_invalid (options.yAxisZero must be boolean)`);
+                    }
+                }
+            }
+        }
+        if (hasOverlays) {
+            const averageLine = overlays?.averageLine;
+            const trendLine = overlays?.trendLine;
+            if (typeof averageLine !== "undefined" && typeof averageLine !== "boolean") {
+                errors.push(`${elemPrefix} chart_overlay_invalid`);
+            }
+            if (typeof trendLine !== "undefined" && typeof trendLine !== "boolean") {
+                errors.push(`${elemPrefix} chart_overlay_invalid`);
+            }
+            if ((averageLine === true || trendLine === true) && labels.length < 2) {
+                errors.push(`${elemPrefix} chart_overlay_invalid`);
+            }
+            if (strict && overlays) {
+                const allowedOverlayFields = new Set(["averageLine", "trendLine"]);
+                for (const key of Object.keys(overlays)) {
+                    if (!allowedOverlayFields.has(key)) {
+                        errors.push(`${elemPrefix} chart_overlay_invalid`);
+                    }
+                }
+            }
+        }
+        return;
+    }
+    if (hasOverlays) {
+        errors.push(`${elemPrefix} chart_overlay_invalid`);
+    }
+    if (chartType !== "column") {
+        errors.push(`${elemPrefix} chart_type_not_supported (only 'column' and 'line' are supported in v0.1)`);
+        return;
+    }
     if (!isPlainObject(element.content)) {
         errors.push(`${elemPrefix} chart_data_invalid (content must be an object)`);
         return;
     }
     const content = element.content;
-    // Validate chartType
-    if (typeof content.chartType !== "string") {
-        errors.push(`${elemPrefix} chart_data_invalid (chartType must be a string)`);
-        return;
-    }
-    if (content.chartType !== "column") {
-        errors.push(`${elemPrefix} chart_type_not_supported (only 'column' is supported in v0)`);
-        return;
-    }
-    // Validate dataSeries
     if (!Array.isArray(content.dataSeries)) {
         errors.push(`${elemPrefix} chart_data_invalid (dataSeries must be an array)`);
         return;
@@ -240,7 +416,6 @@ function validateChartElementSchema(element, elemPrefix, strict, errors) {
         errors.push(`${elemPrefix} chart_series_limit_exceeded (1-2 series required, got ${content.dataSeries.length})`);
         return;
     }
-    // Validate series structure and alignment
     let expectedCategories = null;
     content.dataSeries.forEach((rawSeries, seriesIdx) => {
         if (!isPlainObject(rawSeries)) {
@@ -276,7 +451,6 @@ function validateChartElementSchema(element, elemPrefix, strict, errors) {
                 categories.push(label);
             }
         });
-        // Validate category alignment across series
         if (seriesIdx === 0) {
             expectedCategories = categories;
         }
@@ -289,6 +463,282 @@ function validateChartElementSchema(element, elemPrefix, strict, errors) {
         for (const key of Object.keys(content)) {
             if (!allowedChartContentFields.has(key)) {
                 errors.push(`${elemPrefix} Unknown chart content field '${key}'`);
+            }
+        }
+        const allowedChartFields = new Set(["type", "region", "content", "chartType", "variant", "z", "title", "overlays"]);
+        for (const key of Object.keys(element)) {
+            if (!allowedChartFields.has(key)) {
+                errors.push(`${elemPrefix} Unknown field '${key}'`);
+            }
+        }
+    }
+}
+function validateListElementSchema(element, elemPrefix, strict, errors, nested) {
+    if (!nested && ("x" in element || "y" in element || "w" in element || "h" in element)) {
+        errors.push(`${elemPrefix} absolute_position_forbidden`);
+    }
+    if (typeof element.style !== "undefined" && !["dot", "number", "icon", "none"].includes(String(element.style))) {
+        errors.push(`${elemPrefix} invalid_bullet_style`);
+    }
+    if (!Array.isArray(element.items) || element.items.length === 0) {
+        errors.push(`${elemPrefix} list_items_invalid`);
+    }
+    else {
+        element.items.forEach((item, idx) => {
+            if (!isPlainObject(item)) {
+                errors.push(`${elemPrefix} list_item_invalid (${idx + 1})`);
+                return;
+            }
+            const text = item.text;
+            if (typeof text !== "string") {
+                errors.push(`${elemPrefix} list_item_invalid (${idx + 1})`);
+            }
+        });
+    }
+    if (typeof element.bullet !== "undefined") {
+        if (!isPlainObject(element.bullet)) {
+            errors.push(`${elemPrefix} list_bullet_invalid`);
+        }
+        else {
+            const bullet = element.bullet;
+            if (typeof bullet.size !== "undefined" && !["sm", "md"].includes(String(bullet.size))) {
+                errors.push(`${elemPrefix} list_bullet_invalid`);
+            }
+            if (typeof bullet.gap !== "undefined" && typeof bullet.gap !== "number") {
+                errors.push(`${elemPrefix} list_bullet_invalid`);
+            }
+            if (typeof bullet.color !== "undefined" && !["text", "muted", "primary"].includes(String(bullet.color))) {
+                errors.push(`${elemPrefix} list_bullet_invalid`);
+            }
+            if (element.style === "icon" && typeof bullet.icon !== "string") {
+                errors.push(`${elemPrefix} icon_not_found`);
+            }
+            if (element.style === "icon" && typeof bullet.color !== "undefined") {
+                if (!["text", "muted"].includes(String(bullet.color))) {
+                    errors.push(`${elemPrefix} list_icon_style_invalid`);
+                }
+            }
+        }
+    }
+    else if (element.style === "icon") {
+        errors.push(`${elemPrefix} icon_not_found`);
+    }
+    if (typeof element.indent !== "undefined") {
+        if (!isPlainObject(element.indent)) {
+            errors.push(`${elemPrefix} list_indent_invalid`);
+        }
+        else {
+            const indent = element.indent;
+            if (typeof indent.left !== "undefined" && typeof indent.left !== "number") {
+                errors.push(`${elemPrefix} list_indent_invalid`);
+            }
+            if (typeof indent.hanging !== "undefined" && typeof indent.hanging !== "number") {
+                errors.push(`${elemPrefix} list_indent_invalid`);
+            }
+        }
+    }
+    if (typeof element.lineGap !== "undefined" && typeof element.lineGap !== "number") {
+        errors.push(`${elemPrefix} list_line_gap_invalid`);
+    }
+    if (strict) {
+        const allowedFields = new Set(["type", "region", "style", "bullet", "indent", "lineGap", "items", "z"]);
+        for (const key of Object.keys(element)) {
+            if (!allowedFields.has(key)) {
+                errors.push(`${elemPrefix} Unknown field '${key}'`);
+            }
+        }
+    }
+}
+function validateNodeElementSchema(element, elemPrefix, strict, errors) {
+    if ("x" in element || "y" in element || "w" in element || "h" in element) {
+        errors.push(`${elemPrefix} absolute_position_forbidden`);
+    }
+    if (typeof element.id !== "string" || element.id.trim().length === 0) {
+        errors.push(`${elemPrefix} node_id_invalid`);
+    }
+    if (element.shape !== "rounded-rect") {
+        errors.push(`${elemPrefix} node_shape_invalid`);
+    }
+    if (typeof element.label !== "string") {
+        errors.push(`${elemPrefix} node_label_invalid`);
+    }
+    if (typeof element.icon !== "undefined" && typeof element.icon !== "string") {
+        errors.push(`${elemPrefix} node_icon_invalid`);
+    }
+    if (typeof element.paddingToken !== "undefined") {
+        const paddingToken = element.paddingToken;
+        if (typeof paddingToken !== "number" || !Number.isInteger(paddingToken) || paddingToken < 0 || paddingToken > 5) {
+            errors.push(`${elemPrefix} node_padding_invalid`);
+        }
+    }
+    if (strict) {
+        const allowedFields = new Set([
+            "type",
+            "id",
+            "region",
+            "shape",
+            "variant",
+            "icon",
+            "label",
+            "paddingToken",
+            "z",
+        ]);
+        for (const key of Object.keys(element)) {
+            if (!allowedFields.has(key)) {
+                errors.push(`${elemPrefix} Unknown field '${key}'`);
+            }
+        }
+    }
+}
+function validateEdgeElementSchema(element, elemPrefix, strict, errors, nodeIds) {
+    if ("x" in element || "y" in element || "w" in element || "h" in element) {
+        errors.push(`${elemPrefix} absolute_position_forbidden`);
+    }
+    if (typeof element.startNode !== "string" || element.startNode.trim().length === 0) {
+        errors.push(`${elemPrefix} edge_node_not_found`);
+    }
+    else if (!nodeIds.has(element.startNode)) {
+        errors.push(`${elemPrefix} edge_node_not_found`);
+    }
+    if (typeof element.endNode !== "string" || element.endNode.trim().length === 0) {
+        errors.push(`${elemPrefix} edge_node_not_found`);
+    }
+    else if (!nodeIds.has(element.endNode)) {
+        errors.push(`${elemPrefix} edge_node_not_found`);
+    }
+    if (typeof element.arrow !== "undefined" && !["none", "triangle"].includes(String(element.arrow))) {
+        errors.push(`${elemPrefix} edge_arrow_invalid`);
+    }
+    if (typeof element.strokeSlot !== "undefined" &&
+        !["stroke.thin", "stroke.normal", "stroke.heavy"].includes(String(element.strokeSlot))) {
+        errors.push(`${elemPrefix} edge_stroke_invalid`);
+    }
+    if (strict) {
+        const allowedFields = new Set([
+            "type",
+            "id",
+            "region",
+            "startNode",
+            "endNode",
+            "arrow",
+            "strokeSlot",
+            "variant",
+            "z",
+        ]);
+        for (const key of Object.keys(element)) {
+            if (!allowedFields.has(key)) {
+                errors.push(`${elemPrefix} Unknown field '${key}'`);
+            }
+        }
+    }
+}
+function validateCardElementSchema(element, elemPrefix, strict, errors) {
+    if ("x" in element || "y" in element || "w" in element || "h" in element) {
+        errors.push(`${elemPrefix} absolute_position_forbidden`);
+    }
+    if (typeof element.variant !== "undefined" && !["surface", "elevated", "accent"].includes(String(element.variant))) {
+        errors.push(`${elemPrefix} style_variant_invalid`);
+    }
+    if (typeof element.style !== "undefined") {
+        if (!isPlainObject(element.style)) {
+            errors.push(`${elemPrefix} card_style_invalid`);
+        }
+        else {
+            const style = element.style;
+            if (typeof style.bg !== "undefined" &&
+                !["background", "surface", "elevated", "accent"].includes(String(style.bg))) {
+                errors.push(`${elemPrefix} card_style_invalid`);
+            }
+            if (typeof style.border !== "undefined" && !["default", "subtle", "none"].includes(String(style.border))) {
+                errors.push(`${elemPrefix} card_style_invalid`);
+            }
+            if (typeof style.radius !== "undefined" && !["sm", "md", "lg"].includes(String(style.radius))) {
+                errors.push(`${elemPrefix} card_style_invalid`);
+            }
+            if (typeof style.padding !== "undefined" && !["sm", "md", "lg"].includes(String(style.padding))) {
+                errors.push(`${elemPrefix} card_style_invalid`);
+            }
+            if (typeof style.shadow !== "undefined" && !["none", "sm"].includes(String(style.shadow))) {
+                errors.push(`${elemPrefix} card_style_invalid`);
+            }
+            if (typeof style.accent !== "undefined") {
+                if (!isPlainObject(style.accent)) {
+                    errors.push(`${elemPrefix} card_style_invalid`);
+                }
+                else {
+                    const accent = style.accent;
+                    if (typeof accent.edge !== "undefined" && !["left", "top", "none"].includes(String(accent.edge))) {
+                        errors.push(`${elemPrefix} card_style_invalid`);
+                    }
+                    if (typeof accent.color !== "undefined" && accent.color !== "accent") {
+                        errors.push(`${elemPrefix} card_style_invalid`);
+                    }
+                    if (typeof accent.width !== "undefined") {
+                        if (typeof accent.width !== "number" || !Number.isFinite(accent.width) || accent.width <= 0) {
+                            errors.push(`${elemPrefix} card_style_invalid`);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (typeof element.header !== "undefined") {
+        if (!isPlainObject(element.header)) {
+            errors.push(`${elemPrefix} card_header_invalid`);
+        }
+        else {
+            const header = element.header;
+            if (typeof header.title !== "string") {
+                errors.push(`${elemPrefix} card_header_invalid`);
+            }
+            if (typeof header.subtitle !== "undefined" && typeof header.subtitle !== "string") {
+                errors.push(`${elemPrefix} card_header_invalid`);
+            }
+            if (typeof header.icon !== "undefined" && typeof header.icon !== "string") {
+                errors.push(`${elemPrefix} card_header_invalid`);
+            }
+        }
+    }
+    if (!Array.isArray(element.body) || element.body.length === 0) {
+        errors.push(`${elemPrefix} card_body_invalid`);
+    }
+    else {
+        element.body.forEach((item, idx) => {
+            const bodyPrefix = `${elemPrefix} Body ${idx + 1}:`;
+            if (!isPlainObject(item)) {
+                errors.push(`${bodyPrefix} card_body_invalid`);
+                return;
+            }
+            const bodyItem = item;
+            if (bodyItem.type !== "list") {
+                errors.push(`${bodyPrefix} card_body_invalid`);
+                return;
+            }
+            validateListElementSchema(bodyItem, bodyPrefix, strict, errors, true);
+        });
+    }
+    if (typeof element.footer !== "undefined") {
+        if (!isPlainObject(element.footer)) {
+            errors.push(`${elemPrefix} card_footer_invalid`);
+        }
+        else {
+            const footer = element.footer;
+            if (typeof footer.strip !== "undefined" && typeof footer.strip !== "boolean") {
+                errors.push(`${elemPrefix} card_footer_invalid`);
+            }
+            if (typeof footer.label !== "undefined" && typeof footer.label !== "string") {
+                errors.push(`${elemPrefix} card_footer_invalid`);
+            }
+            if (typeof footer.text !== "undefined" && typeof footer.text !== "string") {
+                errors.push(`${elemPrefix} card_footer_invalid`);
+            }
+        }
+    }
+    if (strict) {
+        const allowedFields = new Set(["type", "region", "variant", "style", "header", "body", "footer", "z"]);
+        for (const key of Object.keys(element)) {
+            if (!allowedFields.has(key)) {
+                errors.push(`${elemPrefix} Unknown field '${key}'`);
             }
         }
     }
@@ -344,16 +794,45 @@ function validateCalloutElementSchema(element, elemPrefix, strict, errors) {
             errors.push(`${elemPrefix} callout_box_padding_invalid`);
         }
     }
-    if (!isPlainObject(element.text)) {
-        errors.push(`${elemPrefix} callout_text_invalid`);
+    const hasContent = typeof element.content !== "undefined";
+    const hasText = typeof element.text !== "undefined";
+    if (hasContent && hasText) {
+        errors.push(`${elemPrefix} callout_content_invalid`);
+    }
+    else if (hasContent) {
+        if (!isPlainObject(element.content)) {
+            errors.push(`${elemPrefix} callout_content_invalid`);
+        }
+        else {
+            const content = element.content;
+            if (typeof content.text !== "string") {
+                errors.push(`${elemPrefix} callout_content_invalid`);
+            }
+            if (typeof content.icon !== "undefined" && typeof content.icon !== "string") {
+                errors.push(`${elemPrefix} callout_content_invalid`);
+            }
+            if (strict) {
+                const allowedContentFields = new Set(["text", "icon"]);
+                for (const key of Object.keys(content)) {
+                    if (!allowedContentFields.has(key)) {
+                        errors.push(`${elemPrefix} callout_content_invalid`);
+                    }
+                }
+            }
+        }
     }
     else {
-        const text = element.text;
-        if (typeof text.value !== "string") {
+        if (!isPlainObject(element.text)) {
             errors.push(`${elemPrefix} callout_text_invalid`);
         }
-        if (typeof text.style !== "undefined" && !isPlainObject(text.style)) {
-            errors.push(`${elemPrefix} callout_text_style_invalid`);
+        else {
+            const text = element.text;
+            if (typeof text.value !== "string") {
+                errors.push(`${elemPrefix} callout_text_invalid`);
+            }
+            if (typeof text.style !== "undefined" && !isPlainObject(text.style)) {
+                errors.push(`${elemPrefix} callout_text_style_invalid`);
+            }
         }
     }
     if (typeof element.leader !== "undefined") {
@@ -377,7 +856,7 @@ function validateCalloutElementSchema(element, elemPrefix, strict, errors) {
         }
     }
     if (strict) {
-        const allowedFields = new Set(["type", "id", "region", "anchor", "box", "text", "leader", "variant", "z"]);
+        const allowedFields = new Set(["type", "id", "region", "anchor", "box", "text", "content", "leader", "variant", "z"]);
         for (const key of Object.keys(element)) {
             if (!allowedFields.has(key)) {
                 errors.push(`${elemPrefix} Unknown field '${key}'`);
@@ -437,6 +916,46 @@ function validateImageElementSchema(element, elemPrefix, strict, errors) {
     if (typeof element.fit !== "string" || !["contain", "cover"].includes(element.fit)) {
         errors.push(`${elemPrefix} image_fit_invalid`);
     }
+    if (typeof element.opacity !== "undefined") {
+        if (typeof element.opacity !== "number" || element.opacity < 0 || element.opacity > 1) {
+            errors.push(`${elemPrefix} image_opacity_invalid`);
+        }
+    }
+    if (typeof element.crop !== "undefined") {
+        if (!isPlainObject(element.crop)) {
+            errors.push(`${elemPrefix} image_crop_invalid`);
+        }
+        else {
+            const crop = element.crop;
+            const left = typeof crop.left === "number" ? crop.left : 0;
+            const right = typeof crop.right === "number" ? crop.right : 0;
+            const top = typeof crop.top === "number" ? crop.top : 0;
+            const bottom = typeof crop.bottom === "number" ? crop.bottom : 0;
+            const vals = [left, right, top, bottom];
+            if (vals.some((value) => value < 0 || value > 1 || !Number.isFinite(value))) {
+                errors.push(`${elemPrefix} image_crop_invalid`);
+            }
+            if (left + right >= 1 || top + bottom >= 1) {
+                errors.push(`${elemPrefix} image_crop_invalid`);
+            }
+        }
+    }
+    if (typeof element.overlaySurfaceSlot !== "undefined") {
+        if (typeof element.overlaySurfaceSlot !== "string" ||
+            !["surface.background", "surface.surface", "surface.elevated", "surface.accent"].includes(element.overlaySurfaceSlot)) {
+            errors.push(`${elemPrefix} image_overlay_invalid`);
+        }
+    }
+    if (typeof element.overlayOpacity !== "undefined") {
+        if (typeof element.overlayOpacity !== "number" || element.overlayOpacity < 0 || element.overlayOpacity > 1) {
+            errors.push(`${elemPrefix} image_overlay_invalid`);
+        }
+    }
+    if (typeof element.borderRadiusPt !== "undefined") {
+        if (typeof element.borderRadiusPt !== "number" || element.borderRadiusPt < 0) {
+            errors.push(`${elemPrefix} image_border_radius_invalid`);
+        }
+    }
     if (typeof element.style !== "undefined") {
         if (!isPlainObject(element.style)) {
             errors.push(`${elemPrefix} image_style_invalid`);
@@ -460,7 +979,59 @@ function validateImageElementSchema(element, elemPrefix, strict, errors) {
         }
     }
     if (strict) {
-        const allowedFields = new Set(["type", "id", "region", "src", "fit", "style", "variant", "z"]);
+        const allowedFields = new Set([
+            "type",
+            "id",
+            "region",
+            "src",
+            "fit",
+            "style",
+            "variant",
+            "opacity",
+            "crop",
+            "overlaySurfaceSlot",
+            "overlayOpacity",
+            "borderRadiusPt",
+            "z",
+        ]);
+        for (const key of Object.keys(element)) {
+            if (!allowedFields.has(key)) {
+                errors.push(`${elemPrefix} Unknown field '${key}'`);
+            }
+        }
+    }
+}
+function validateIconElementSchema(element, elemPrefix, strict, errors) {
+    if (typeof element.name !== "string" || element.name.trim().length === 0) {
+        errors.push(`${elemPrefix} icon_invalid`);
+    }
+    if (typeof element.sizeToken !== "number" || !Number.isInteger(element.sizeToken)) {
+        errors.push(`${elemPrefix} icon_invalid`);
+    }
+    const colorSlot = element.colorSlot;
+    if (typeof colorSlot !== "string" ||
+        !["text.title", "text.subtitle", "text.body", "text.caption"].includes(colorSlot)) {
+        errors.push(`${elemPrefix} icon_invalid`);
+    }
+    if (typeof element.align !== "undefined" && !["left", "center", "right"].includes(String(element.align))) {
+        errors.push(`${elemPrefix} icon_invalid`);
+    }
+    if (typeof element.verticalAlign !== "undefined" &&
+        !["top", "middle", "bottom"].includes(String(element.verticalAlign))) {
+        errors.push(`${elemPrefix} icon_invalid`);
+    }
+    if (strict) {
+        const allowedFields = new Set([
+            "type",
+            "id",
+            "region",
+            "name",
+            "sizeToken",
+            "colorSlot",
+            "align",
+            "verticalAlign",
+            "z",
+        ]);
         for (const key of Object.keys(element)) {
             if (!allowedFields.has(key)) {
                 errors.push(`${elemPrefix} Unknown field '${key}'`);
@@ -574,6 +1145,21 @@ export function validateSpec(spec, strict) {
             errors.push(`${prefix} Missing or invalid 'elements' array`);
             return;
         }
+        const nodeIds = new Set();
+        slide.elements.forEach((rawElement) => {
+            if (!rawElement || typeof rawElement !== "object") {
+                return;
+            }
+            const element = rawElement;
+            if (element.type === "node" && typeof element.id === "string" && element.id.trim().length > 0) {
+                if (nodeIds.has(element.id)) {
+                    errors.push(`${prefix} node_id_duplicate (${element.id})`);
+                }
+                else {
+                    nodeIds.add(element.id);
+                }
+            }
+        });
         slide.elements.forEach((rawElement, elementIdx) => {
             const elemPrefix = `${prefix} Element ${elementIdx + 1}:`;
             if (!rawElement || typeof rawElement !== "object") {
@@ -585,11 +1171,13 @@ export function validateSpec(spec, strict) {
                 errors.push(`${elemPrefix} Missing or invalid 'type'`);
                 return;
             }
-            if (!["text", "table", "chart", "callout", "connector", "image"].includes(element.type)) {
+            if (!["text", "list", "card", "table", "chart", "node", "edge", "callout", "connector", "image", "icon"].includes(element.type)) {
                 errors.push(`${elemPrefix} Unsupported element type '${element.type}'`);
                 return;
             }
-            if (typeof element.variant !== "undefined" && !isVariant(element.variant)) {
+            if (["text", "table", "chart", "node", "edge", "callout", "connector", "image", "icon"].includes(element.type) &&
+                typeof element.variant !== "undefined" &&
+                !isVariant(element.variant)) {
                 errors.push(`${elemPrefix} style_variant_invalid`);
             }
             if (typeof element.z !== "undefined" && !isInteger(element.z)) {
@@ -598,11 +1186,23 @@ export function validateSpec(spec, strict) {
             if (element.type === "text") {
                 validateTextElementSchema(element, elemPrefix, strict, errors);
             }
+            if (element.type === "list") {
+                validateListElementSchema(element, elemPrefix, strict, errors, false);
+            }
+            if (element.type === "card") {
+                validateCardElementSchema(element, elemPrefix, strict, errors);
+            }
             if (element.type === "table") {
                 validateTableElementSchema(element, elemPrefix, strict, errors);
             }
             if (element.type === "chart") {
                 validateChartElementSchema(element, elemPrefix, strict, errors);
+            }
+            if (element.type === "node") {
+                validateNodeElementSchema(element, elemPrefix, strict, errors);
+            }
+            if (element.type === "edge") {
+                validateEdgeElementSchema(element, elemPrefix, strict, errors, nodeIds);
             }
             if (element.type === "callout") {
                 validateCalloutElementSchema(element, elemPrefix, strict, errors);
@@ -625,6 +1225,9 @@ export function validateSpec(spec, strict) {
             if (element.type === "image") {
                 validateImageElementSchema(element, elemPrefix, strict, errors);
             }
+            if (element.type === "icon") {
+                validateIconElementSchema(element, elemPrefix, strict, errors);
+            }
             if (typeof element.region !== "string" || element.region.trim().length === 0) {
                 errors.push(`${elemPrefix} Missing or invalid 'region'`);
                 return;
@@ -632,7 +1235,13 @@ export function validateSpec(spec, strict) {
             if (!regions[element.region]) {
                 errors.push(`${elemPrefix} Region '${element.region}' not found in slide regions`);
             }
-            if (["text", "table", "chart"].includes(element.type) && typeof element.content === "undefined") {
+            if (element.type === "text" && typeof element.content === "undefined") {
+                errors.push(`${elemPrefix} Missing 'content'`);
+            }
+            if (element.type === "table" && typeof element.content === "undefined") {
+                errors.push(`${elemPrefix} Missing 'content'`);
+            }
+            if (element.type === "chart" && typeof element.content === "undefined" && typeof element.data === "undefined") {
                 errors.push(`${elemPrefix} Missing 'content'`);
             }
         });

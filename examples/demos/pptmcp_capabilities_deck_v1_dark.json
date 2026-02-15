@@ -1,0 +1,1541 @@
+{
+  "title": "PPTMCP Capabilities Deck v1",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-14T00:00:00Z"
+  },
+  "theme": "consulting_dark_v1",
+  "slides": [
+    {
+      "id": "slide-1",
+      "title": "Title + Hero",
+      "template": {
+        "id": "capabilities_title_hero",
+        "extends": "base_standard",
+        "placeholders": [
+          {
+            "id": "title",
+            "kind": "text",
+            "region": {
+              "col": 0,
+              "row": 0,
+              "colSpan": 8,
+              "rowSpan": 1
+            },
+            "layer": "content",
+            "styleSlots": {
+              "text": "text.title",
+              "padding": 1
+            }
+          },
+          {
+            "id": "subtitle",
+            "kind": "text",
+            "region": {
+              "col": 0,
+              "row": 1,
+              "colSpan": 8,
+              "rowSpan": 1
+            },
+            "layer": "content",
+            "styleSlots": {
+              "text": "text.subtitle",
+              "padding": 1
+            }
+          },
+          {
+            "id": "bullets",
+            "kind": "list",
+            "region": {
+              "col": 0,
+              "row": 2,
+              "colSpan": 7,
+              "rowSpan": 3
+            },
+            "layer": "content"
+          },
+          {
+            "id": "hero",
+            "kind": "image",
+            "region": {
+              "col": 7,
+              "row": 1,
+              "colSpan": 5,
+              "rowSpan": 4
+            },
+            "layer": "content"
+          },
+          {
+            "id": "takeaway",
+            "kind": "card",
+            "region": {
+              "col": 0,
+              "row": 5,
+              "colSpan": 12,
+              "rowSpan": 3
+            },
+            "layer": "content"
+          }
+        ]
+      },
+      "fills": {
+        "title": {
+          "content": "PPTMCP"
+        },
+        "subtitle": {
+          "content": "Deterministic slide generation engine for consulting-grade decks"
+        },
+        "bullets": {
+          "items": [
+            {
+              "kind": "list",
+              "style": "icon",
+              "bullet": {
+                "size": "md",
+                "gap": 8,
+                "color": "text",
+                "icon": "check"
+              },
+              "indent": {
+                "left": 0,
+                "hanging": 18
+              },
+              "lineGap": 6,
+              "items": [
+                {
+                  "text": "Template-first authoring that compiles to region-anchored layout with zero drift."
+                },
+                {
+                  "text": "Strict validation and geometry invariants keep outputs stable across runs and themes."
+                },
+                {
+                  "text": "Composable components: cards, lists, tables, charts, diagrams, callouts, icons, images."
+                }
+              ]
+            }
+          ]
+        },
+        "hero": {
+          "src": "../assets/pptmcp_mark.png",
+          "fit": "contain",
+          "variant": "surface",
+          "borderRadiusPt": 8
+        },
+        "takeaway": {
+          "variant": "accent",
+          "body": [
+            {
+              "type": "list",
+              "style": "none",
+              "items": [
+                {
+                  "text": "Determinism first: every spec produces the same deck, every time."
+                }
+              ]
+            }
+          ],
+          "footer": {
+            "strip": true,
+            "text": "Key takeaway: Production-ready deterministic slides."
+          }
+        }
+      }
+    },
+    {
+      "id": "slide-2",
+      "title": "Why PPTMCP",
+      "template": {
+        "id": "why_pptmcp",
+        "extends": "base_standard",
+        "placeholders": [
+          {
+            "id": "title",
+            "kind": "text",
+            "region": {
+              "col": 0,
+              "row": 0,
+              "colSpan": 12,
+              "rowSpan": 1
+            },
+            "layer": "content",
+            "styleSlots": {
+              "text": "text.title",
+              "padding": 1
+            }
+          },
+          {
+            "id": "left",
+            "kind": "text",
+            "region": {
+              "col": 0,
+              "row": 1,
+              "colSpan": 6,
+              "rowSpan": 6
+            },
+            "layer": "content",
+            "layoutMode": "vstack",
+            "gapToken": 2,
+            "allowedKinds": [
+              "text",
+              "list"
+            ],
+            "styleSlots": {
+              "text": "text.body",
+              "padding": 2
+            }
+          },
+          {
+            "id": "right",
+            "kind": "card",
+            "region": {
+              "col": 6,
+              "row": 1,
+              "colSpan": 6,
+              "rowSpan": 6
+            },
+            "layer": "content",
+            "layoutMode": "grid",
+            "gridRows": 2,
+            "gridCols": 2,
+            "gapToken": 2,
+            "allowedKinds": [
+              "card"
+            ]
+          },
+          {
+            "id": "callout",
+            "kind": "callout",
+            "region": {
+              "col": 0,
+              "row": 0,
+              "colSpan": 12,
+              "rowSpan": 8
+            },
+            "layer": "foreground",
+            "variant": "elevated",
+            "policies": {
+              "required": false
+            },
+            "anchor": {
+              "target": "right",
+              "anchor": "top"
+            },
+            "box": {
+              "wIn": 3.1,
+              "hIn": 0.8,
+              "placement": "s",
+              "paddingSlot": 2
+            },
+            "leader": {},
+            "styleSlots": {
+              "text": "text.caption"
+            }
+          }
+        ]
+      },
+      "fills": {
+        "title": {
+          "content": "Why PPTMCP"
+        },
+        "left": {
+          "items": [
+            {
+              "kind": "text",
+              "text": "Pain points",
+              "textStyleSlot": "text.subtitle"
+            },
+            {
+              "kind": "list",
+              "style": "number",
+              "bullet": {
+                "size": "md",
+                "gap": 6,
+                "color": "text"
+              },
+              "indent": {
+                "left": 0,
+                "hanging": 18
+              },
+              "lineGap": 6,
+              "items": [
+                {
+                  "text": "Manual slide production is slow, error-prone, and hard to scale across teams."
+                },
+                {
+                  "text": "Layout drift appears across themes, fonts, and PowerPoint versions."
+                },
+                {
+                  "text": "Lack of strict validation makes regressions invisible until late review."
+                },
+                {
+                  "text": "Automation pipelines lack deterministic rendering guarantees."
+                }
+              ]
+            }
+          ]
+        },
+        "right": {
+          "items": [
+            {
+              "kind": "card",
+              "variant": "surface",
+              "header": {
+                "title": "Deterministic"
+              },
+              "body": [
+                {
+                  "type": "list",
+                  "style": "dot",
+                  "items": [
+                    {
+                      "text": "Same spec, same PPTX output."
+                    },
+                    {
+                      "text": "Geometry v1 invariants prevent drift."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "card",
+              "variant": "elevated",
+              "header": {
+                "title": "Template-first"
+              },
+              "body": [
+                {
+                  "type": "list",
+                  "style": "dot",
+                  "items": [
+                    {
+                      "text": "Template v1 compiles to regions."
+                    },
+                    {
+                      "text": "No absolute positioning in specs."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "card",
+              "variant": "surface",
+              "header": {
+                "title": "Theme v2"
+              },
+              "body": [
+                {
+                  "type": "list",
+                  "style": "dot",
+                  "items": [
+                    {
+                      "text": "Semantic surfaces + tokens."
+                    },
+                    {
+                      "text": "Contrast enforcement built-in."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "card",
+              "variant": "accent",
+              "header": {
+                "title": "Strict schema"
+              },
+              "body": [
+                {
+                  "type": "list",
+                  "style": "dot",
+                  "items": [
+                    {
+                      "text": "Hard-fail on unknown fields."
+                    },
+                    {
+                      "text": "Explicit error codes for fixes."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "callout": {
+          "content": {
+            "icon": "bolt",
+            "text": "Strict schema + deterministic layout eliminate slide drift."
+          },
+          "leader": {}
+        }
+      }
+    },
+    {
+      "id": "slide-3",
+      "title": "System Architecture",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.1
+      },
+      "regions": {
+        "title": {
+          "col": 0,
+          "row": 0,
+          "colSpan": 12,
+          "rowSpan": 1
+        },
+        "canvas": {
+          "col": 0,
+          "row": 1,
+          "colSpan": 12,
+          "rowSpan": 7
+        },
+        "node_spec": {
+          "col": 0,
+          "row": 3,
+          "colSpan": 2,
+          "rowSpan": 2
+        },
+        "node_compile": {
+          "col": 2,
+          "row": 3,
+          "colSpan": 2,
+          "rowSpan": 2
+        },
+        "node_validate": {
+          "col": 4,
+          "row": 3,
+          "colSpan": 2,
+          "rowSpan": 2
+        },
+        "node_render": {
+          "col": 6,
+          "row": 3,
+          "colSpan": 2,
+          "rowSpan": 2
+        },
+        "node_output": {
+          "col": 8,
+          "row": 3,
+          "colSpan": 2,
+          "rowSpan": 2
+        }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "title",
+          "content": "System Architecture",
+          "style": {
+            "bold": true
+          }
+        },
+        {
+          "type": "edge",
+          "region": "canvas",
+          "startNode": "node_spec",
+          "endNode": "node_compile",
+          "arrow": "triangle",
+          "strokeSlot": "stroke.normal",
+          "z": 1
+        },
+        {
+          "type": "edge",
+          "region": "canvas",
+          "startNode": "node_compile",
+          "endNode": "node_validate",
+          "arrow": "none",
+          "strokeSlot": "stroke.normal",
+          "z": 1
+        },
+        {
+          "type": "edge",
+          "region": "canvas",
+          "startNode": "node_validate",
+          "endNode": "node_render",
+          "arrow": "triangle",
+          "strokeSlot": "stroke.normal",
+          "z": 1
+        },
+        {
+          "type": "edge",
+          "region": "canvas",
+          "startNode": "node_render",
+          "endNode": "node_output",
+          "arrow": "triangle",
+          "strokeSlot": "stroke.normal",
+          "z": 1
+        },
+        {
+          "type": "connector",
+          "region": "canvas",
+          "start": {
+            "type": "region",
+            "targetRegion": "node_validate",
+            "point": "s"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "node_output",
+            "point": "s"
+          },
+          "style": {
+            "widthPt": 1,
+            "endArrow": "triangle"
+          },
+          "z": 2
+        },
+        {
+          "type": "node",
+          "id": "node_spec",
+          "region": "node_spec",
+          "shape": "rounded-rect",
+          "variant": "surface",
+          "icon": "document",
+          "label": "Spec",
+          "paddingToken": 2,
+          "z": 10
+        },
+        {
+          "type": "node",
+          "id": "node_compile",
+          "region": "node_compile",
+          "shape": "rounded-rect",
+          "variant": "elevated",
+          "icon": "layers",
+          "label": "Template\\nCompile",
+          "paddingToken": 2,
+          "z": 10
+        },
+        {
+          "type": "node",
+          "id": "node_validate",
+          "region": "node_validate",
+          "shape": "rounded-rect",
+          "variant": "surface",
+          "icon": "shield",
+          "label": "Validate",
+          "paddingToken": 2,
+          "z": 10
+        },
+        {
+          "type": "node",
+          "id": "node_render",
+          "region": "node_render",
+          "shape": "rounded-rect",
+          "variant": "elevated",
+          "icon": "cog",
+          "label": "Render",
+          "paddingToken": 2,
+          "z": 10
+        },
+        {
+          "type": "node",
+          "id": "node_output",
+          "region": "node_output",
+          "shape": "rounded-rect",
+          "variant": "accent",
+          "label": "PPTX\\nPDF",
+          "paddingToken": 2,
+          "z": 10
+        },
+        {
+          "type": "callout",
+          "region": "canvas",
+          "variant": "surface",
+          "anchor": {
+            "type": "region",
+            "targetRegion": "node_validate",
+            "point": "ne",
+            "dxPt": 0,
+            "dyPt": 0
+          },
+          "box": {
+            "wIn": 2.6,
+            "hIn": 0.8,
+            "placement": "n",
+            "paddingPt": 6
+          },
+          "content": {
+            "icon": "shield",
+            "text": "Strict mode + geometry v1 keep output deterministic."
+          },
+          "leader": {
+            "style": "line"
+          },
+          "z": 20
+        }
+      ]
+    },
+    {
+      "id": "slide-4",
+      "title": "Capability Matrix",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.1
+      },
+      "regions": {
+        "title": {
+          "col": 0,
+          "row": 0,
+          "colSpan": 12,
+          "rowSpan": 1
+        },
+        "table": {
+          "col": 0,
+          "row": 1,
+          "colSpan": 12,
+          "rowSpan": 7
+        }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "title",
+          "content": "Capability Matrix",
+          "style": {
+            "bold": true
+          }
+        },
+        {
+          "type": "table",
+          "region": "table",
+          "emphasisColumn": 2,
+          "rowStriping": true,
+          "columnAlign": [
+            "left",
+            "center",
+            "center"
+          ],
+          "content": {
+            "headers": [
+              "Capability",
+              "PPTMCP",
+              "Legacy"
+            ],
+            "rows": [
+              [
+                "Templates",
+                "Yes",
+                "Manual"
+              ],
+              [
+                "Theme v2",
+                "Yes",
+                "Partial"
+              ],
+              [
+                "Icons",
+                "Yes",
+                "Manual"
+              ],
+              [
+                "Images",
+                "Yes",
+                "Manual"
+              ],
+              [
+                "Tables",
+                "Yes",
+                "Manual"
+              ],
+              [
+                "Charts",
+                "Yes",
+                "Limited"
+              ],
+              [
+                "Chart overlays",
+                "Yes",
+                "No"
+              ],
+              [
+                "Callouts",
+                "Yes",
+                "Manual"
+              ],
+              [
+                "Connectors",
+                "Yes",
+                "Manual"
+              ],
+              [
+                "Diagram primitives",
+                "Yes",
+                "No"
+              ],
+              [
+                "Strict validation",
+                "Yes",
+                "No"
+              ],
+              [
+                "PDF export",
+                "Best-effort",
+                "Manual"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "slide-5",
+      "title": "Charts Showcase",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.1
+      },
+      "regions": {
+        "title": {
+          "col": 0,
+          "row": 0,
+          "colSpan": 12,
+          "rowSpan": 1
+        },
+        "line_chart": {
+          "col": 0,
+          "row": 1,
+          "colSpan": 12,
+          "rowSpan": 3
+        },
+        "column_chart": {
+          "col": 0,
+          "row": 4,
+          "colSpan": 12,
+          "rowSpan": 3
+        },
+        "callout_zone": {
+          "col": 7,
+          "row": 1,
+          "colSpan": 5,
+          "rowSpan": 3
+        }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "title",
+          "content": "Charts Showcase",
+          "style": {
+            "bold": true
+          }
+        },
+        {
+          "type": "chart",
+          "region": "line_chart",
+          "chartType": "line",
+          "data": {
+            "labels": [
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "Q5"
+            ],
+            "series": [
+              {
+                "name": "Series A",
+                "values": [
+                  12,
+                  18,
+                  16,
+                  22,
+                  24
+                ]
+              },
+              {
+                "name": "Series B",
+                "values": [
+                  9,
+                  14,
+                  13,
+                  17,
+                  20
+                ]
+              }
+            ]
+          },
+          "options": {
+            "showGrid": true,
+            "showMarkers": true,
+            "smooth": false,
+            "yAxisZero": true
+          },
+          "overlays": {
+            "averageLine": true,
+            "trendLine": true
+          }
+        },
+        {
+          "type": "chart",
+          "region": "column_chart",
+          "content": {
+            "chartType": "column",
+            "title": "Adoption by Team",
+            "dataSeries": [
+              {
+                "name": "PPTMCP",
+                "data": [
+                  [
+                    "Ops",
+                    18
+                  ],
+                  [
+                    "Finance",
+                    14
+                  ],
+                  [
+                    "Product",
+                    22
+                  ],
+                  [
+                    "Sales",
+                    16
+                  ]
+                ]
+              },
+              {
+                "name": "Legacy",
+                "data": [
+                  [
+                    "Ops",
+                    8
+                  ],
+                  [
+                    "Finance",
+                    6
+                  ],
+                  [
+                    "Product",
+                    10
+                  ],
+                  [
+                    "Sales",
+                    7
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "callout",
+          "region": "callout_zone",
+          "anchor": {
+            "type": "region",
+            "targetRegion": "line_chart",
+            "point": "ne",
+            "dxPt": 0,
+            "dyPt": 0
+          },
+          "box": {
+            "wIn": 2.8,
+            "hIn": 0.8,
+            "placement": "sw",
+            "paddingPt": 6
+          },
+          "content": {
+            "icon": "chart-bar",
+            "text": "Overlays compute mean + least-squares trend, clipped to the plot area."
+          },
+          "leader": {
+            "style": "line"
+          },
+          "variant": "surface",
+          "z": 20
+        }
+      ]
+    },
+    {
+      "id": "slide-6",
+      "title": "Cards + Lists Showcase",
+      "template": {
+        "id": "cards_lists_showcase",
+        "extends": "base_standard",
+        "placeholders": [
+          {
+            "id": "title",
+            "kind": "text",
+            "region": {
+              "col": 0,
+              "row": 0,
+              "colSpan": 12,
+              "rowSpan": 1
+            },
+            "layer": "content",
+            "styleSlots": {
+              "text": "text.title",
+              "padding": 1
+            }
+          },
+          {
+            "id": "card_a",
+            "kind": "card",
+            "layer": "content",
+            "region": {
+              "col": 0,
+              "row": 1,
+              "colSpan": 4,
+              "rowSpan": 7
+            }
+          },
+          {
+            "id": "card_b",
+            "kind": "card",
+            "layer": "content",
+            "region": {
+              "col": 4,
+              "row": 1,
+              "colSpan": 4,
+              "rowSpan": 7
+            }
+          },
+          {
+            "id": "card_c",
+            "kind": "card",
+            "layer": "content",
+            "region": {
+              "col": 8,
+              "row": 1,
+              "colSpan": 4,
+              "rowSpan": 7
+            }
+          }
+        ]
+      },
+      "fills": {
+        "title": {
+          "content": "Cards + Lists Showcase"
+        },
+        "card_a": {
+          "variant": "surface",
+          "header": {
+            "title": "Layout Discipline",
+            "subtitle": "Dot + none bullets"
+          },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                {
+                  "text": "Dot bullets align to baseline and wrap cleanly for long sentences."
+                },
+                {
+                  "text": "Hanging indent keeps lines aligned under the text start."
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "style": "none",
+              "items": [
+                {
+                  "text": "No-bullet list preserves spacing while keeping a clean left edge."
+                }
+              ]
+            }
+          ],
+          "footer": {
+            "strip": true,
+            "text": "Takeaway: Alignment stable."
+          }
+        },
+        "card_b": {
+          "variant": "elevated",
+          "header": {
+            "title": "Ordered Steps",
+            "subtitle": "Numbered list"
+          },
+          "body": [
+            {
+              "type": "list",
+              "style": "number",
+              "items": [
+                {
+                  "text": "Author JSON spec with regions and templates."
+                },
+                {
+                  "text": "Compile, validate, and render deterministically."
+                },
+                {
+                  "text": "Ship PPTX and optional PDF outputs."
+                }
+              ]
+            }
+          ],
+          "footer": {
+            "strip": true,
+            "text": "Takeaway: Order stable."
+          }
+        },
+        "card_c": {
+          "variant": "accent",
+          "header": {
+            "title": "Icon Bullets",
+            "subtitle": "Registry-backed"
+          },
+          "body": [
+            {
+              "type": "list",
+              "style": "icon",
+              "bullet": {
+                "icon": "check",
+                "color": "text"
+              },
+              "items": [
+                {
+                  "text": "Icons resolve from registry with deterministic sizing."
+                },
+                {
+                  "text": "Wrapped text aligns to the same text start."
+                }
+              ]
+            }
+          ],
+          "footer": {
+            "strip": true,
+            "text": "Takeaway: Icons stable."
+          }
+        }
+      }
+    },
+    {
+      "id": "slide-7",
+      "title": "Templates + Themes Stress",
+      "template": {
+        "id": "templates_themes_stress",
+        "extends": "base_standard",
+        "placeholders": [
+          {
+            "id": "title",
+            "kind": "text",
+            "region": {
+              "col": 0,
+              "row": 0,
+              "colSpan": 12,
+              "rowSpan": 1
+            },
+            "layer": "content",
+            "styleSlots": {
+              "text": "text.title",
+              "padding": 1
+            }
+          },
+          {
+            "id": "grid",
+            "kind": "text",
+            "region": {
+              "col": 0,
+              "row": 1,
+              "colSpan": 12,
+              "rowSpan": 5
+            },
+            "layer": "content",
+            "layoutMode": "grid",
+            "gridRows": 3,
+            "gridCols": 3,
+            "gapToken": 1,
+            "allowedKinds": [
+              "text"
+            ],
+            "styleSlots": {
+              "text": "text.body",
+              "padding": 2
+            }
+          },
+          {
+            "id": "note",
+            "kind": "text",
+            "region": {
+              "col": 0,
+              "row": 7,
+              "colSpan": 12,
+              "rowSpan": 1
+            },
+            "layer": "content",
+            "styleSlots": {
+              "text": "text.caption",
+              "padding": 1
+            }
+          },
+          {
+            "id": "palette_surface",
+            "kind": "text",
+            "layer": "content",
+            "region": {
+              "col": 0,
+              "row": 6,
+              "colSpan": 4,
+              "rowSpan": 1
+            },
+            "styleSlots": {
+              "padding": 1,
+              "text": "text.caption"
+            }
+          },
+          {
+            "id": "palette_elevated",
+            "kind": "text",
+            "layer": "content",
+            "region": {
+              "col": 4,
+              "row": 6,
+              "colSpan": 4,
+              "rowSpan": 1
+            },
+            "styleSlots": {
+              "padding": 1,
+              "text": "text.caption"
+            }
+          },
+          {
+            "id": "palette_accent",
+            "kind": "text",
+            "layer": "content",
+            "region": {
+              "col": 8,
+              "row": 6,
+              "colSpan": 4,
+              "rowSpan": 1
+            },
+            "styleSlots": {
+              "padding": 1,
+              "text": "text.caption"
+            }
+          }
+        ]
+      },
+      "fills": {
+        "title": {
+          "content": "Templates + Themes Stress"
+        },
+        "grid": {
+          "items": [
+            {
+              "kind": "text",
+              "text": "Surface",
+              "variant": "surface"
+            },
+            {
+              "kind": "text",
+              "text": "Elevated",
+              "variant": "elevated"
+            },
+            {
+              "kind": "text",
+              "text": "Accent",
+              "variant": "accent"
+            },
+            {
+              "kind": "text",
+              "text": "Surface",
+              "variant": "surface"
+            },
+            {
+              "kind": "text",
+              "text": "Elevated",
+              "variant": "elevated"
+            },
+            {
+              "kind": "text",
+              "text": "Accent",
+              "variant": "accent"
+            },
+            {
+              "kind": "text",
+              "text": "Surface",
+              "variant": "surface"
+            },
+            {
+              "kind": "text",
+              "text": "Elevated",
+              "variant": "elevated"
+            },
+            {
+              "kind": "text",
+              "text": "Accent",
+              "variant": "accent"
+            }
+          ]
+        },
+        "note": {
+          "content": "Theme v2 enforces contrast thresholds. Tokens include background, border, primary."
+        },
+        "palette_surface": {
+          "content": "surface",
+          "variant": "surface"
+        },
+        "palette_elevated": {
+          "content": "elevated",
+          "variant": "elevated"
+        },
+        "palette_accent": {
+          "content": "accent",
+          "variant": "accent"
+        }
+      }
+    },
+    {
+      "id": "slide-8",
+      "title": "Stability & Determinism",
+      "template": {
+        "id": "stability_determinism",
+        "extends": "base_standard",
+        "placeholders": [
+          {
+            "id": "title",
+            "kind": "text",
+            "region": {
+              "col": 0,
+              "row": 0,
+              "colSpan": 12,
+              "rowSpan": 1
+            },
+            "layer": "content",
+            "styleSlots": {
+              "text": "text.title",
+              "padding": 1
+            }
+          },
+          {
+            "id": "callout",
+            "kind": "callout",
+            "region": {
+              "col": 0,
+              "row": 0,
+              "colSpan": 12,
+              "rowSpan": 8
+            },
+            "layer": "foreground",
+            "variant": "elevated",
+            "policies": {
+              "required": false
+            },
+            "anchor": {
+              "target": "right_table",
+              "anchor": "bottom"
+            },
+            "box": {
+              "wIn": 3.0,
+              "hIn": 0.8,
+              "placement": "n",
+              "paddingSlot": 2
+            },
+            "leader": {},
+            "styleSlots": {
+              "text": "text.caption"
+            }
+          },
+          {
+            "id": "left_title",
+            "kind": "text",
+            "layer": "content",
+            "region": {
+              "col": 0,
+              "row": 1,
+              "colSpan": 6,
+              "rowSpan": 1
+            },
+            "styleSlots": {
+              "padding": 2,
+              "text": "text.subtitle"
+            }
+          },
+          {
+            "id": "left_list",
+            "kind": "list",
+            "layer": "content",
+            "region": {
+              "col": 0,
+              "row": 2,
+              "colSpan": 6,
+              "rowSpan": 5
+            }
+          },
+          {
+            "id": "right_title",
+            "kind": "text",
+            "layer": "content",
+            "region": {
+              "col": 6,
+              "row": 1,
+              "colSpan": 6,
+              "rowSpan": 1
+            },
+            "styleSlots": {
+              "padding": 2,
+              "text": "text.subtitle"
+            }
+          },
+          {
+            "id": "right_list",
+            "kind": "list",
+            "layer": "content",
+            "region": {
+              "col": 6,
+              "row": 2,
+              "colSpan": 6,
+              "rowSpan": 2
+            }
+          },
+          {
+            "id": "right_table",
+            "kind": "table",
+            "layer": "content",
+            "region": {
+              "col": 6,
+              "row": 4,
+              "colSpan": 6,
+              "rowSpan": 4
+            }
+          }
+        ]
+      },
+      "fills": {
+        "title": {
+          "content": "Stability & Determinism"
+        },
+        "callout": {
+          "content": {
+            "icon": "shield",
+            "text": "No-repair PPTX policy + geometry v1 invariants protect downstream edits."
+          },
+          "leader": {}
+        },
+        "left_title": {
+          "content": "Determinism invariants"
+        },
+        "left_list": {
+          "items": [
+            {
+              "kind": "list",
+              "style": "dot",
+              "items": [
+                {
+                  "text": "Region-only geometry with EMU quantization."
+                },
+                {
+                  "text": "No auto-layout drift; layout is deterministic."
+                },
+                {
+                  "text": "Stable ordering via z + render order."
+                }
+              ]
+            }
+          ]
+        },
+        "right_title": {
+          "content": "Stability checks"
+        },
+        "right_list": {
+          "items": [
+            {
+              "kind": "list",
+              "style": "dot",
+              "items": [
+                {
+                  "text": "Integrity report for geometry bounds and NaN detection."
+                },
+                {
+                  "text": "Theme contrast validation at load time."
+                },
+                {
+                  "text": "Strict schema failures on unknown fields."
+                }
+              ]
+            }
+          ]
+        },
+        "right_table": {
+          "content": {
+            "headers": [
+              "Error code",
+              "Meaning"
+            ],
+            "rows": [
+              [
+                "theme_not_found",
+                "Missing theme file"
+              ],
+              [
+                "unknown_style_token",
+                "Invalid token key"
+              ],
+              [
+                "card_overflow",
+                "Card content too tall"
+              ],
+              [
+                "chart_invalid_value",
+                "Non-numeric data"
+              ],
+              [
+                "icon_not_found",
+                "Icon id missing"
+              ],
+              [
+                "anchor_type_not_supported",
+                "Anchor type rejected"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "slide-9",
+      "title": "Roadmap + Next Bets",
+      "template": {
+        "id": "roadmap_next_bets",
+        "extends": "base_standard",
+        "placeholders": [
+          {
+            "id": "title",
+            "kind": "text",
+            "region": {
+              "col": 0,
+              "row": 0,
+              "colSpan": 12,
+              "rowSpan": 1
+            },
+            "layer": "content",
+            "styleSlots": {
+              "text": "text.title",
+              "padding": 1
+            }
+          },
+          {
+            "id": "left",
+            "kind": "text",
+            "region": {
+              "col": 0,
+              "row": 1,
+              "colSpan": 6,
+              "rowSpan": 4
+            },
+            "layer": "content",
+            "layoutMode": "vstack",
+            "gapToken": 2,
+            "allowedKinds": [
+              "text",
+              "list"
+            ],
+            "styleSlots": {
+              "text": "text.body",
+              "padding": 2
+            }
+          },
+          {
+            "id": "right",
+            "kind": "text",
+            "region": {
+              "col": 6,
+              "row": 1,
+              "colSpan": 6,
+              "rowSpan": 4
+            },
+            "layer": "content",
+            "layoutMode": "vstack",
+            "gapToken": 2,
+            "allowedKinds": [
+              "text",
+              "list"
+            ],
+            "styleSlots": {
+              "text": "text.body",
+              "padding": 2
+            }
+          },
+          {
+            "id": "takeaway",
+            "kind": "card",
+            "region": {
+              "col": 0,
+              "row": 5,
+              "colSpan": 12,
+              "rowSpan": 3
+            },
+            "layer": "content"
+          }
+        ]
+      },
+      "fills": {
+        "title": {
+          "content": "Roadmap + Next Bets"
+        },
+        "left": {
+          "items": [
+            {
+              "kind": "text",
+              "text": "Near-term (next 3 iterations)",
+              "textStyleSlot": "text.subtitle"
+            },
+            {
+              "kind": "list",
+              "style": "dot",
+              "items": [
+                {
+                  "text": "Diagram primitives polish + expanded node shapes."
+                },
+                {
+                  "text": "Template catalog growth with more consulting layouts."
+                },
+                {
+                  "text": "More smokes and determinism reports in CI."
+                }
+              ]
+            }
+          ]
+        },
+        "right": {
+          "items": [
+            {
+              "kind": "text",
+              "text": "Medium-term bets",
+              "textStyleSlot": "text.subtitle"
+            },
+            {
+              "kind": "list",
+              "style": "dot",
+              "items": [
+                {
+                  "text": "Agentic platform integration with patch-based editing."
+                },
+                {
+                  "text": "Live COM preview mode (optional) for iteration loops."
+                },
+                {
+                  "text": "Capability-based naming migration plan."
+                }
+              ]
+            }
+          ]
+        },
+        "takeaway": {
+          "variant": "accent",
+          "body": [
+            {
+              "type": "list",
+              "style": "none",
+              "items": [
+                {
+                  "text": "Disciplined expansion, real-world decks, and stability first."
+                }
+              ]
+            }
+          ],
+          "footer": {
+            "strip": true,
+            "text": "Key takeaway: Disciplined expansion."
+          }
+        }
+      }
+    }
+  ]
+}

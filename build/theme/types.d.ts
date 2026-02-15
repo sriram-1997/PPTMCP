@@ -4,6 +4,11 @@ export interface ConcreteTheme {
         background: string;
     };
     surfaces: {
+        background: {
+            fill: string;
+            border: string;
+            textColor: string;
+        };
         surface: {
             fill: string;
             border: string;
@@ -24,6 +29,38 @@ export interface ConcreteTheme {
         fontFamily: string;
         colorPrimary: string;
         colorSecondary: string;
+    };
+    colors: {
+        primary: string;
+        accent: string;
+    };
+    fontScale: {
+        title: {
+            family: string;
+            size: number;
+            weight: number;
+        };
+        subtitle: {
+            family: string;
+            size: number;
+            weight: number;
+        };
+        body: {
+            family: string;
+            size: number;
+            weight: number;
+        };
+        caption: {
+            family: string;
+            size: number;
+            weight: number;
+        };
+    };
+    spaceScale: number[];
+    strokeScale: {
+        thin: number;
+        normal: number;
+        heavy: number;
     };
     table: {
         headerFill: string;

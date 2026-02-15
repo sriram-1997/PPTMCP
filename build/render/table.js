@@ -6,11 +6,12 @@ import { estimateTextLayout, textUnits, truncateTextToFit } from "./text.js";
 const DEFAULT_MIN_FONT = 10;
 const DEFAULT_TABLE_PADDING_PT = 2;
 function resolveTableStyle(style, theme, defaults) {
-    const bodySize = style?.fontSize ?? 11;
-    const headerSize = style?.headerFontSize ?? Math.max(bodySize + 1, 12);
+    const bodySize = style?.fontSize ?? theme.fontScale.caption.size;
+    const headerSize = style?.headerFontSize ?? Math.max(bodySize + 1, theme.fontScale.caption.size + 1);
+    const defaultPadding = theme.spaceScale[2] ?? DEFAULT_TABLE_PADDING_PT;
     return {
         borderColor: normalizeColor(style?.borderColor, defaults?.border ?? theme.table.border),
-        borderWidth: style?.borderWidth ?? defaults?.borderWidth ?? 0.75,
+        borderWidth: style?.borderWidth ?? defaults?.borderWidth ?? theme.strokeScale.thin,
         headerColor: normalizeColor(style?.headerColor, defaults?.fill ?? theme.table.headerFill),
         headerTextColor: normalizeColor(style?.headerTextColor, defaults?.textColor ?? theme.table.headerTextColor),
         bodyColor: defaults?.fill ?? theme.table.bodyFill,
@@ -19,7 +20,7 @@ function resolveTableStyle(style, theme, defaults) {
         minFont: style?.minFont ?? DEFAULT_MIN_FONT,
         fontSize: bodySize,
         headerFontSize: headerSize,
-        cellPaddingPt: style?.cellPaddingPt ?? DEFAULT_TABLE_PADDING_PT,
+        cellPaddingPt: style?.cellPaddingPt ?? defaultPadding,
         lineHeight: style?.lineHeight ?? 1.16,
     };
 }
@@ -120,6 +121,14 @@ export function prepareTableElement(args) {
     if (style.fontSize < style.minFont || style.headerFontSize < style.minFont) {
         throw new Error(`Slide ${args.slideIndex + 1} element ${args.elementIndex + 1}: table font below minFont ${style.minFont}`);
     }
+    const emphasisIndex = typeof args.element.emphasisColumn === "number" && args.element.emphasisColumn >= 1
+        ? args.element.emphasisColumn - 1
+        : null;
+    const columnAlign = Array.isArray(args.element.columnAlign) ? args.element.columnAlign : null;
+    const useStriping = args.element.rowStriping === true;
+    const stripeFillA = args.theme.surfaces.surface.fill;
+    const stripeFillB = args.theme.surfaces.elevated.fill;
+    const stripeTextColor = args.theme.text.colorPrimary;
     let bodyFont = style.fontSize;
     let headerFont = style.headerFontSize;
     let estimate = estimateTableLayout({
@@ -190,6 +199,7 @@ export function prepareTableElement(args) {
         const rowHeightInches = (rowHeightsPt[rowIdx] ?? minRowPt) / 72;
         const rawRow = allRows[rowIdx];
         const cells = [];
+        const bodyRowIdx = Math.max(0, rowIdx - 1);
         for (let colIdx = 0; colIdx < colCount; colIdx += 1) {
             const rawCell = rawRow[colIdx];
             const baseText = tableCellText(rawCell);
@@ -205,12 +215,26 @@ export function prepareTableElement(args) {
                     lineHeight: style.lineHeight,
                 }).text;
             }
+            let fillColor = isHeader ? style.headerColor : style.bodyColor;
+            let textColor = isHeader ? style.headerTextColor : style.bodyTextColor;
+            if (!isHeader && useStriping) {
+                fillColor = bodyRowIdx % 2 === 0 ? stripeFillA : stripeFillB;
+                textColor = stripeTextColor;
+            }
+            if (emphasisIndex !== null && colIdx === emphasisIndex) {
+                fillColor = args.theme.surfaces.accent.fill;
+                textColor = args.theme.surfaces.accent.textColor;
+            }
+            if (cellStyle.color) {
+                textColor = cellStyle.color;
+            }
             const options = {
                 bold: isHeader || cellStyle.bold,
-                color: cellStyle.color ?? (isHeader ? style.headerTextColor : style.bodyTextColor),
-                fill: { color: isHeader ? style.headerColor : style.bodyColor },
+                color: textColor,
+                fill: { color: fillColor },
                 fontSize: rowFont,
                 margin: style.cellPaddingPt,
+                align: columnAlign ? columnAlign[colIdx] : undefined,
             };
             cells.push({ text, options });
         }

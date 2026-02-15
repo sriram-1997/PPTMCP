@@ -28,7 +28,10 @@
           "region": "image",
           "src": "../assets/pptmcp_mark.png",
           "fit": "contain",
-          "variant": "surface"
+          "variant": "surface",
+          "opacity": 0.95,
+          "crop": { "left": 0.05, "right": 0.05, "top": 0.05, "bottom": 0.05 },
+          "borderRadiusPt": 12
         }
       ]
     }

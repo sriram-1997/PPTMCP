@@ -42,6 +42,76 @@ export interface TextElement {
   z?: number;
 }
 
+export type ListBulletStyle = "dot" | "number" | "icon" | "none";
+
+export interface ListBulletSpec {
+  size?: "sm" | "md";
+  gap?: number;
+  color?: "text" | "muted" | "primary";
+  icon?: string;
+}
+
+export interface ListIndentSpec {
+  left?: number;
+  hanging?: number;
+}
+
+export interface ListItemSpec {
+  text: string;
+}
+
+export interface ListSpec {
+  style?: ListBulletStyle;
+  bullet?: ListBulletSpec;
+  indent?: ListIndentSpec;
+  lineGap?: number;
+  items: ListItemSpec[];
+}
+
+export interface ListElement extends ListSpec {
+  type: "list";
+  region: string;
+  z?: number;
+}
+
+export interface CardStyleAccent {
+  edge: "left" | "top" | "none";
+  color?: "accent";
+  width?: number;
+}
+
+export interface CardStyleSpec {
+  bg?: "background" | "surface" | "elevated" | "accent";
+  border?: "default" | "subtle" | "none";
+  radius?: "sm" | "md" | "lg";
+  padding?: "sm" | "md" | "lg";
+  shadow?: "none" | "sm";
+  accent?: CardStyleAccent;
+}
+
+export interface CardHeaderSpec {
+  title: string;
+  subtitle?: string;
+  icon?: string;
+}
+
+export interface CardFooterSpec {
+  strip?: boolean;
+  label?: string;
+  text?: string;
+}
+
+export interface CardElement {
+  type: "card";
+  region: string;
+  variant?: "surface" | "elevated" | "accent";
+  style?: CardStyleSpec;
+  header?: CardHeaderSpec;
+  body: Array<ListSpec & { type: "list" }>;
+  footer?: CardFooterSpec;
+  z?: number;
+}
+
 export interface TableCell {
   text?: string;
   style?: {
@@ -73,6 +143,9 @@ export interface TableElement {
   region: string;
   content: TableContent;
   style?: TableStyle;
+  emphasisColumn?: number;
+  rowStriping?: boolean;
+  columnAlign?: Array<"left" | "center" | "right">;
   variant?: "surface" | "elevated" | "accent";
   z?: number;
 }
@@ -93,10 +166,52 @@ export interface ChartContent {
   dataSeries: ChartSeries[];
 }
 
+export interface ChartOverlays {
+  averageLine?: boolean;
+  trendLine?: boolean;
+}
+
 export interface ChartElement {
   type: "chart";
   region: string;
-  content: ChartContent;
+  content?: ChartContent;
+  chartType?: "line" | "column";
+  data?: {
+    labels: string[];
+    series: Array<{ name: string; values: number[] }>;
+  };
+  options?: {
+    showGrid?: boolean;
+    showMarkers?: boolean;
+    smooth?: boolean;
+    yAxisZero?: boolean;
+  };
+  overlays?: ChartOverlays;
+  title?: string;
+  variant?: "surface" | "elevated" | "accent";
+  z?: number;
+}
+
+export interface NodeElement {
+  type: "node";
+  id: string;
+  region: string;
+  shape: "rounded-rect";
+  variant?: "surface" | "elevated" | "accent";
+  icon?: string;
+  label: string;
+  paddingToken?: number;
+  z?: number;
+}
+
+export interface EdgeElement {
+  type: "edge";
+  id?: string;
+  region: string;
+  startNode: string;
+  endNode: string;
+  arrow?: "none" | "triangle";
+  strokeSlot?: "stroke.thin" | "stroke.normal" | "stroke.heavy";
   variant?: "surface" | "elevated" | "accent";
   z?: number;
 }
@@ -121,6 +236,11 @@ export interface CalloutText {
   style?: TextStyle;
 }
 
+export interface CalloutContent {
+  icon?: string;
+  text: string;
+}
+
 export interface CalloutLeader {
   style: "line";
   endCap?: "none";
@@ -134,7 +254,8 @@ export interface CalloutElement {
   region: string;
   anchor: RegionAnchor;
   box: CalloutBox;
-  text: CalloutText;
+  text?: CalloutText;
+  content?: CalloutContent;
   leader?: CalloutLeader;
   variant?: "surface" | "elevated" | "accent";
   z?: number;
@@ -171,10 +292,38 @@ export interface ImageElement {
   fit: "contain" | "cover";
   style?: ImageStyle;
   variant?: "surface" | "elevated" | "accent";
+  opacity?: number;
+  crop?: { left?: number; right?: number; top?: number; bottom?: number };
+  overlaySurfaceSlot?: "surface.background" | "surface.surface" | "surface.elevated" | "surface.accent";
+  overlayOpacity?: number;
+  borderRadiusPt?: number;
   z?: number;
 }
 
-export type Element = TextElement | TableElement | ChartElement | CalloutElement | ConnectorElement | ImageElement;
+export interface IconElement {
+  type: "icon";
+  id?: string;
+  region: string;
+  name: string;
+  sizeToken: number;
+  colorSlot: "text.title" | "text.subtitle" | "text.body" | "text.caption";
+  align?: "left" | "center" | "right";
+  verticalAlign?: "top" | "middle" | "bottom";
+  z?: number;
+}
+
+export type Element =
+  | TextElement
+  | ListElement
+  | CardElement
+  | TableElement
+  | ChartElement
+  | NodeElement
+  | EdgeElement
+  | CalloutElement
+  | ConnectorElement
+  | ImageElement
+  | IconElement;
 
 export interface Slide {
   id: string;
@@ -272,7 +421,9 @@ export interface PreparedTextElement {
   variant?: "surface" | "elevated" | "accent";
   bbox: BBox;
   content: string;
+  fontFace: string;
   fontSize: number;
+  boxStyle?: { fill: string; border: string; borderWidth: number };
   style: {
     bold: boolean;
     italic: boolean;
@@ -292,6 +443,7 @@ export interface PreparedTableCell {
     fill?: { color: string };
     fontSize?: number;
     margin?: number;
+    align?: "left" | "center" | "right";
   };
 }
 
@@ -323,6 +475,119 @@ export interface PreparedChartElement {
   title?: string;
   categories: string[];
   seriesData: { name: string; values: number[] }[];
+  options?: {
+    showGrid: boolean;
+    showMarkers: boolean;
+    smooth: boolean;
+    yAxisZero: boolean;
+  };
+  overlays?: PreparedChartOverlayLine[];
+}
+
+export interface PreparedChartOverlayLine {
+  kind: "average" | "trend";
+  start: { x: number; y: number };
+  end: { x: number; y: number };
+  style: { color: string; widthPt: number; dash?: "solid" | "dash" };
+}
+
+export interface PreparedListTextRun {
+  text: string;
+  bold: boolean;
+}
+
+export interface PreparedListLine {
+  runs: PreparedListTextRun[];
+}
+
+export interface PreparedListBullet {
+  type: "dot" | "number" | "icon";
+  bbox: BBox;
+  color: string;
+  text?: string;
+  data?: string;
+}
+
+export interface PreparedListItem {
+  textBox: BBox;
+  lines: PreparedListLine[];
+  bullet?: PreparedListBullet;
+}
+
+export interface PreparedListLayout {
+  bbox: BBox;
+  items: PreparedListItem[];
+  textStyle: {
+    fontFace: string;
+    fontSize: number;
+    color: string;
+    lineHeight: number;
+  };
+  bulletStyle: {
+    style: ListBulletStyle;
+    sizePt: number;
+    gapPt: number;
+    color: string;
+  };
+  totalHeightPt: number;
+}
+
+export interface PreparedListElement extends PreparedListLayout {
+  kind: "list";
+  z: number;
+  order: number;
+  id: string;
+  region: string;
+}
+
+export interface PreparedCardElement {
+  kind: "card";
+  z: number;
+  order: number;
+  id: string;
+  region: string;
+  bbox: BBox;
+  style: {
+    fill: string;
+    border: string;
+    borderWidth: number;
+    radius: number;
+    shadow?: {
+      type: "outer" | "inner" | "none";
+      opacity?: number;
+      blur?: number;
+      angle?: number;
+      offset?: number;
+      color?: string;
+    };
+  };
+  accent?: {
+    edge: "left" | "top";
+    bbox: BBox;
+    color: string;
+  };
+  header?: {
+    title: string;
+    subtitle?: string;
+    titleBox: BBox;
+    subtitleBox?: BBox;
+    titleFont: { face: string; size: number; bold: boolean; color: string };
+    subtitleFont?: { face: string; size: number; bold: boolean; color: string };
+    iconBox?: BBox;
+    iconData?: string;
+  };
+  body: PreparedListLayout[];
+  footer?: {
+    strip: boolean;
+    bbox: BBox;
+    label?: string;
+    text?: string;
+    labelFont?: { face: string; size: number; bold: boolean; color: string };
+    textFont?: { face: string; size: number; bold: boolean; color: string };
+    labelBox?: BBox;
+    textBox?: BBox;
+    stripFill?: string;
+  };
 }
 
 export interface PreparedCalloutElement {
@@ -332,11 +597,16 @@ export interface PreparedCalloutElement {
   id: string;
   region: string;
   variant?: "surface" | "elevated" | "accent";
+  anchor: { x: number; y: number };
   box: BBox;
   boxStyle?: { fill: string; border: string; borderWidth: number };
+  icon?: { bbox: BBox; data: string };
   text: PreparedTextElement;
   leader?: { start: { x: number; y: number }; end: { x: number; y: number } };
   leaderStyle?: { color: string; widthPt: number; startArrow: "none" | "triangle"; endArrow: "none" | "triangle" };
+  leaderLineStart?: { x: number; y: number };
+  leaderLineEnd?: { x: number; y: number };
+  leaderArrowHeads?: ArrowHead[];
   leaderRect?: BBox;
   leaderFlipV?: boolean;
   leaderFlipH?: boolean;
@@ -351,7 +621,10 @@ export interface PreparedConnectorElement {
   variant?: "surface" | "elevated" | "accent";
   start: { x: number; y: number };
   end: { x: number; y: number };
+  lineStart?: { x: number; y: number };
+  lineEnd?: { x: number; y: number };
   style: { widthPt: number; color: string; startArrow: "none" | "triangle"; endArrow: "none" | "triangle" };
+  arrowHeads?: ArrowHead[];
   lineRect: BBox;
   lineFlipV: boolean;
   lineFlipH: boolean;
@@ -359,14 +632,25 @@ export interface PreparedConnectorElement {
 
 export type PreparedElement =
   | PreparedTextElement
+  | PreparedListElement
+  | PreparedCardElement
   | PreparedTableElement
   | PreparedChartElement
+  | PreparedNodeElement
+  | PreparedEdgeElement
   | PreparedCalloutElement
   | PreparedConnectorElement
-  | PreparedImageElement;
+  | PreparedImageElement
+  | PreparedIconElement;
 
 export interface PreparedSlide {
   elements: PreparedElement[];
+}
+
+export interface ArrowHead {
+  bbox: BBox;
+  points: Array<{ x: number; y: number; moveTo?: boolean } | { close: true }>;
+  color: string;
 }
 
 export interface PreparedImageElement {
@@ -379,6 +663,62 @@ export interface PreparedImageElement {
   bbox: BBox;
   src: string;
   fit: "contain" | "cover";
+  opacity: number;
+  crop?: { left: number; right: number; top: number; bottom: number };
+  overlay?: { color: string; opacity: number };
+  borderRadiusPt: number;
+  data?: string;
   style: { borderColor: string; borderWidthPt: number; fillColor?: string };
+}
+
+export interface PreparedIconElement {
+  kind: "icon";
+  z: number;
+  order: number;
+  id: string;
+  region: string;
+  bbox: BBox;
+  data: string;
+  boxStyle?: { fill: string; border: string; borderWidth: number };
+}
+
+export interface PreparedNodeElement {
+  kind: "node";
+  z: number;
+  order: number;
+  id: string;
+  region: string;
+  variant?: "surface" | "elevated" | "accent";
+  bbox: BBox;
+  shape: "rounded-rect";
+  radius: number;
+  style: { fill: string; border: string; borderWidth: number };
+  icon?: { bbox: BBox; data: string };
+  label: {
+    text: string;
+    bbox: BBox;
+    fontFace: string;
+    fontSize: number;
+    bold: boolean;
+    color: string;
+  };
+}
+
+export interface PreparedEdgeElement {
+  kind: "edge";
+  z: number;
+  order: number;
+  id: string;
+  region: string;
+  variant?: "surface" | "elevated" | "accent";
+  start: { x: number; y: number };
+  end: { x: number; y: number };
+  lineStart?: { x: number; y: number };
+  lineEnd?: { x: number; y: number };
+  style: { widthPt: number; color: string; endArrow: "none" | "triangle" };
+  arrowHeads?: ArrowHead[];
+  lineRect: BBox;
+  lineFlipV: boolean;
+  lineFlipH: boolean;
 }
 

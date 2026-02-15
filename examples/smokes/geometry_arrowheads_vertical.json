@@ -1,0 +1,181 @@
+{
+  "title": "Geometry Arrowheads Vertical",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-13T00:00:00Z"
+  },
+  "slides": [
+    {
+      "id": "arrowheads-vertical-n",
+      "title": "Arrowheads Vertical N",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.05 },
+      "regions": {
+        "canvas": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 },
+        "n1_start": { "col": 2, "row": 6, "colSpan": 1, "rowSpan": 1 },
+        "n1_end": { "col": 2, "row": 1, "colSpan": 1, "rowSpan": 1 },
+        "n2_start": { "col": 5, "row": 6, "colSpan": 1, "rowSpan": 1 },
+        "n2_end": { "col": 5, "row": 1, "colSpan": 1, "rowSpan": 1 },
+        "n3_start": { "col": 8, "row": 6, "colSpan": 1, "rowSpan": 1 },
+        "n3_end": { "col": 8, "row": 1, "colSpan": 1, "rowSpan": 1 }
+      },
+      "elements": [
+        {
+          "type": "connector",
+          "id": "n_w1",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "n1_start", "point": "center" },
+          "end": { "type": "region", "targetRegion": "n1_end", "point": "center" },
+          "style": { "widthPt": 1, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "n_w2",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "n2_start", "point": "center" },
+          "end": { "type": "region", "targetRegion": "n2_end", "point": "center" },
+          "style": { "widthPt": 2, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "n_w3",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "n3_start", "point": "center" },
+          "end": { "type": "region", "targetRegion": "n3_end", "point": "center" },
+          "style": { "widthPt": 3, "endArrow": "triangle" }
+        }
+      ]
+    },
+    {
+      "id": "arrowheads-vertical-s",
+      "title": "Arrowheads Vertical S",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.05 },
+      "regions": {
+        "canvas": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 },
+        "s1_start": { "col": 2, "row": 1, "colSpan": 1, "rowSpan": 1 },
+        "s1_end": { "col": 2, "row": 6, "colSpan": 1, "rowSpan": 1 },
+        "s2_start": { "col": 5, "row": 1, "colSpan": 1, "rowSpan": 1 },
+        "s2_end": { "col": 5, "row": 6, "colSpan": 1, "rowSpan": 1 },
+        "s3_start": { "col": 8, "row": 1, "colSpan": 1, "rowSpan": 1 },
+        "s3_end": { "col": 8, "row": 6, "colSpan": 1, "rowSpan": 1 }
+      },
+      "elements": [
+        {
+          "type": "connector",
+          "id": "s_w1",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "s1_start", "point": "center" },
+          "end": { "type": "region", "targetRegion": "s1_end", "point": "center" },
+          "style": { "widthPt": 1, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "s_w2",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "s2_start", "point": "center" },
+          "end": { "type": "region", "targetRegion": "s2_end", "point": "center" },
+          "style": { "widthPt": 2, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "s_w3",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "s3_start", "point": "center" },
+          "end": { "type": "region", "targetRegion": "s3_end", "point": "center" },
+          "style": { "widthPt": 3, "endArrow": "triangle" }
+        }
+      ]
+    },
+    {
+      "id": "arrowheads-vertical-n-short",
+      "title": "Arrowheads Vertical N Short",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.05 },
+      "regions": {
+        "canvas": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 },
+        "ns1_start": { "col": 2, "row": 4, "colSpan": 1, "rowSpan": 1 },
+        "ns1_end": { "col": 2, "row": 3, "colSpan": 1, "rowSpan": 1 },
+        "ns2_start": { "col": 5, "row": 4, "colSpan": 1, "rowSpan": 1 },
+        "ns2_end": { "col": 5, "row": 3, "colSpan": 1, "rowSpan": 1 },
+        "ns3_start": { "col": 8, "row": 4, "colSpan": 1, "rowSpan": 1 },
+        "ns3_end": { "col": 8, "row": 3, "colSpan": 1, "rowSpan": 1 }
+      },
+      "elements": [
+        {
+          "type": "connector",
+          "id": "nshort_w1",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "ns1_start", "point": "center" },
+          "end": { "type": "region", "targetRegion": "ns1_end", "point": "center" },
+          "style": { "widthPt": 1, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "nshort_w2",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "ns2_start", "point": "center" },
+          "end": { "type": "region", "targetRegion": "ns2_end", "point": "center" },
+          "style": { "widthPt": 2, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "nshort_w3",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "ns3_start", "point": "center" },
+          "end": { "type": "region", "targetRegion": "ns3_end", "point": "center" },
+          "style": { "widthPt": 3, "endArrow": "triangle" }
+        }
+      ]
+    },
+    {
+      "id": "arrowheads-vertical-n-long",
+      "title": "Arrowheads Vertical N Long",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.05 },
+      "regions": {
+        "canvas": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 },
+        "nl1_start": { "col": 2, "row": 7, "colSpan": 1, "rowSpan": 1 },
+        "nl1_end": { "col": 2, "row": 0, "colSpan": 1, "rowSpan": 1 },
+        "nl2_start": { "col": 5, "row": 7, "colSpan": 1, "rowSpan": 1 },
+        "nl2_end": { "col": 5, "row": 0, "colSpan": 1, "rowSpan": 1 },
+        "nl3_start": { "col": 8, "row": 7, "colSpan": 1, "rowSpan": 1 },
+        "nl3_end": { "col": 8, "row": 0, "colSpan": 1, "rowSpan": 1 }
+      },
+      "elements": [
+        {
+          "type": "connector",
+          "id": "nlong_w1",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "nl1_start", "point": "center" },
+          "end": { "type": "region", "targetRegion": "nl1_end", "point": "center" },
+          "style": { "widthPt": 1, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "nlong_w2",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "nl2_start", "point": "center" },
+          "end": { "type": "region", "targetRegion": "nl2_end", "point": "center" },
+          "style": { "widthPt": 2, "endArrow": "triangle" }
+        },
+        {
+          "type": "connector",
+          "id": "nlong_w3",
+          "region": "canvas",
+          "z": 100,
+          "start": { "type": "region", "targetRegion": "nl3_start", "point": "center" },
+          "end": { "type": "region", "targetRegion": "nl3_end", "point": "center" },
+          "style": { "widthPt": 3, "endArrow": "triangle" }
+        }
+      ]
+    }
+  ]
+}

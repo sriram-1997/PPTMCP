@@ -45,6 +45,6 @@ export declare function prepareTextElement(args: {
     warnings: string[];
     hardErrors: string[];
 }): PreparedTextElement;
-export declare function renderTextElement(slide: any, element: PreparedTextElement): void;
+export declare function renderTextElement(slide: any, shapeType: any, element: PreparedTextElement): void;
 export {};
 //# sourceMappingURL=text.d.ts.map

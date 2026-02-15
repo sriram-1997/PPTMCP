@@ -1,0 +1,58 @@
+{
+  "id": "title_slide",
+  "title": "Title Slide",
+  "extends": "base_standard",
+  "placeholders": [
+    {
+      "id": "title",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 2,
+        "colSpan": 12,
+        "rowSpan": 2
+      },
+      "layer": "content",
+      "styleSlots": {
+        "text": "text.title",
+        "padding": 2
+      }
+    },
+    {
+      "id": "subtitle",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 4,
+        "colSpan": 12,
+        "rowSpan": 1
+      },
+      "layer": "content",
+      "styleSlots": {
+        "text": "text.subtitle",
+        "padding": 1
+      },
+      "policies": {
+        "required": false
+      }
+    },
+    {
+      "id": "footer",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 7,
+        "colSpan": 12,
+        "rowSpan": 1
+      },
+      "layer": "content",
+      "styleSlots": {
+        "text": "text.caption",
+        "padding": 1
+      },
+      "policies": {
+        "required": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "title": "Icons Smoke",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-13T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "icons-smoke",
+      "title": "Icons Smoke",
+      "grid": { "cols": 12, "rows": 6, "gutter": 0.05 },
+      "regions": {
+        "r1": { "col": 0, "row": 0, "colSpan": 3, "rowSpan": 2 },
+        "r2": { "col": 3, "row": 0, "colSpan": 3, "rowSpan": 2 },
+        "r3": { "col": 6, "row": 0, "colSpan": 3, "rowSpan": 2 },
+        "r4": { "col": 9, "row": 0, "colSpan": 3, "rowSpan": 2 },
+        "r5": { "col": 0, "row": 2, "colSpan": 3, "rowSpan": 2 },
+        "r6": { "col": 3, "row": 2, "colSpan": 3, "rowSpan": 2 },
+        "r7": { "col": 6, "row": 2, "colSpan": 3, "rowSpan": 2 },
+        "r8": { "col": 9, "row": 2, "colSpan": 3, "rowSpan": 2 },
+        "r9": { "col": 0, "row": 4, "colSpan": 3, "rowSpan": 2 },
+        "r10": { "col": 3, "row": 4, "colSpan": 3, "rowSpan": 2 },
+        "r11": { "col": 6, "row": 4, "colSpan": 3, "rowSpan": 2 },
+        "r12": { "col": 9, "row": 4, "colSpan": 3, "rowSpan": 2 }
+      },
+      "elements": [
+        {
+          "type": "icon",
+          "region": "r1",
+          "name": "academic-cap",
+          "sizeToken": 5,
+          "colorSlot": "text.body",
+          "align": "center",
+          "verticalAlign": "middle"
+        },
+        {
+          "type": "icon",
+          "region": "r2",
+          "name": "adjustments-horizontal",
+          "sizeToken": 5,
+          "colorSlot": "text.body",
+          "align": "center",
+          "verticalAlign": "middle"
+        },
+        {
+          "type": "icon",
+          "region": "r3",
+          "name": "arrow-trending-up",
+          "sizeToken": 5,
+          "colorSlot": "text.body",
+          "align": "center",
+          "verticalAlign": "middle"
+        },
+        {
+          "type": "icon",
+          "region": "r4",
+          "name": "chart-bar",
+          "sizeToken": 5,
+          "colorSlot": "text.body",
+          "align": "center",
+          "verticalAlign": "middle"
+        },
+        {
+          "type": "icon",
+          "region": "r5",
+          "name": "command-line",
+          "sizeToken": 5,
+          "colorSlot": "text.body",
+          "align": "center",
+          "verticalAlign": "middle"
+        },
+        {
+          "type": "icon",
+          "region": "r6",
+          "name": "credit-card",
+          "sizeToken": 5,
+          "colorSlot": "text.body",
+          "align": "center",
+          "verticalAlign": "middle"
+        },
+        {
+          "type": "icon",
+          "region": "r7",
+          "name": "cursor-arrow-rays",
+          "sizeToken": 5,
+          "colorSlot": "text.body",
+          "align": "center",
+          "verticalAlign": "middle"
+        },
+        {
+          "type": "icon",
+          "region": "r8",
+          "name": "document-text",
+          "sizeToken": 5,
+          "colorSlot": "text.body",
+          "align": "center",
+          "verticalAlign": "middle"
+        },
+        {
+          "type": "icon",
+          "region": "r9",
+          "name": "gift",
+          "sizeToken": 5,
+          "colorSlot": "text.body",
+          "align": "center",
+          "verticalAlign": "middle"
+        },
+        {
+          "type": "icon",
+          "region": "r10",
+          "name": "globe-alt",
+          "sizeToken": 5,
+          "colorSlot": "text.body",
+          "align": "center",
+          "verticalAlign": "middle"
+        },
+        {
+          "type": "icon",
+          "region": "r11",
+          "name": "light-bulb",
+          "sizeToken": 5,
+          "colorSlot": "text.body",
+          "align": "center",
+          "verticalAlign": "middle"
+        },
+        {
+          "type": "icon",
+          "region": "r12",
+          "name": "sparkles",
+          "sizeToken": 5,
+          "colorSlot": "text.body",
+          "align": "center",
+          "verticalAlign": "middle"
+        }
+      ]
+    }
+  ]
+}

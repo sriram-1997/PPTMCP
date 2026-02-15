@@ -1,0 +1,74 @@
+{
+  "title": "Diagram Primitives v1 (Light)",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-14T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "diagram-v1-light",
+      "title": "Diagram Primitives v1",
+      "grid": { "cols": 6, "rows": 3, "gutter": 0.2 },
+      "regions": {
+        "canvas": { "col": 0, "row": 0, "colSpan": 6, "rowSpan": 3 },
+        "node_a": { "col": 0, "row": 1, "colSpan": 2, "rowSpan": 1 },
+        "node_b": { "col": 2, "row": 1, "colSpan": 2, "rowSpan": 1 },
+        "node_c": { "col": 4, "row": 1, "colSpan": 2, "rowSpan": 1 }
+      },
+      "elements": [
+        {
+          "type": "edge",
+          "region": "canvas",
+          "startNode": "nodeA",
+          "endNode": "nodeB",
+          "arrow": "triangle",
+          "strokeSlot": "stroke.normal",
+          "z": 1
+        },
+        {
+          "type": "edge",
+          "region": "canvas",
+          "startNode": "nodeB",
+          "endNode": "nodeC",
+          "arrow": "none",
+          "strokeSlot": "stroke.normal",
+          "z": 1
+        },
+        {
+          "type": "node",
+          "id": "nodeA",
+          "region": "node_a",
+          "shape": "rounded-rect",
+          "variant": "surface",
+          "icon": "eye",
+          "label": "Observe",
+          "paddingToken": 2,
+          "z": 10
+        },
+        {
+          "type": "node",
+          "id": "nodeB",
+          "region": "node_b",
+          "shape": "rounded-rect",
+          "variant": "elevated",
+          "icon": "trending-up",
+          "label": "Analyze",
+          "paddingToken": 2,
+          "z": 10
+        },
+        {
+          "type": "node",
+          "id": "nodeC",
+          "region": "node_c",
+          "shape": "rounded-rect",
+          "variant": "accent",
+          "icon": "target",
+          "label": "Act",
+          "paddingToken": 2,
+          "z": 10
+        }
+      ]
+    }
+  ]
+}

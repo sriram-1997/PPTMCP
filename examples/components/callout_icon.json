@@ -1,0 +1,37 @@
+{
+  "title": "Callout Icon v0.2",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-14T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "callout-icon",
+      "title": "Callout Icon",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "canvas": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 },
+        "target": { "col": 7, "row": 3, "colSpan": 3, "rowSpan": 2 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "target",
+          "content": "Target"
+        },
+        {
+          "type": "callout",
+          "region": "canvas",
+          "anchor": { "type": "region", "targetRegion": "target", "point": "w" },
+          "box": { "wIn": 3.2, "hIn": 1.1, "placement": "w" },
+          "content": {
+            "icon": "arrow-trending-up",
+            "text": "Momentum is building in the current cohort."
+          },
+          "leader": { "style": "line", "endCap": "none" }
+        }
+      ]
+    }
+  ]
+}

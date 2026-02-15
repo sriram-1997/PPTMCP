@@ -1,0 +1,81 @@
+{
+  "id": "two_column_50_50",
+  "title": "Two Column 50/50",
+  "extends": "base_standard",
+  "placeholders": [
+    {
+      "id": "title",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 0,
+        "colSpan": 12,
+        "rowSpan": 1
+      },
+      "layer": "content",
+      "styleSlots": {
+        "text": "text.title",
+        "padding": 1
+      }
+    },
+    {
+      "id": "left",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 1,
+        "colSpan": 6,
+        "rowSpan": 6
+      },
+      "layer": "content",
+      "layoutMode": "vstack",
+      "gapToken": 2,
+      "allowedKinds": ["text", "list"],
+      "minItems": 1,
+      "maxItems": 3,
+      "styleSlots": {
+        "text": "text.body",
+        "padding": 2
+      }
+    },
+    {
+      "id": "right",
+      "kind": "text",
+      "region": {
+        "col": 6,
+        "row": 1,
+        "colSpan": 6,
+        "rowSpan": 6
+      },
+      "layer": "content",
+      "layoutMode": "vstack",
+      "gapToken": 2,
+      "allowedKinds": ["text", "list", "callout"],
+      "minItems": 1,
+      "maxItems": 4,
+      "styleSlots": {
+        "text": "text.body",
+        "padding": 2
+      },
+      "anchor": {
+        "target": "right",
+        "anchor": "top"
+      },
+      "box": {
+        "wIn": 2.4,
+        "hIn": 0.8,
+        "placement": "s",
+        "paddingSlot": 2
+      }
+    }
+  ],
+  "variants": {
+    "comfortable": {
+      "placeholders": [
+        { "id": "title", "paddingToken": 2 },
+        { "id": "left", "paddingToken": 3, "gapToken": 3 },
+        { "id": "right", "paddingToken": 3, "gapToken": 3 }
+      ]
+    }
+  }
+}

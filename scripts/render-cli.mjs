@@ -184,12 +184,22 @@ function unzipPptx(pptxPath, outDir) {
     fs.mkdirSync(outDir, { recursive: true });
 
     if (process.platform === "win32") {
-      const escapedPptx = pptxPath.replace(/'/g, "''");
       const escapedOut = outDir.replace(/'/g, "''");
-      const command = `Expand-Archive -LiteralPath '${escapedPptx}' -DestinationPath '${escapedOut}' -Force`;
-      const result = spawnSync("powershell", ["-NoProfile", "-Command", command], { stdio: "inherit" });
-      if (result.status !== 0) {
-        return `Unzip failed with exit code ${result.status}`;
+      const tempZip = path.join(outDir, "__pptx_unzip__.zip");
+      fs.copyFileSync(pptxPath, tempZip);
+      const escapedZip = tempZip.replace(/'/g, "''");
+      try {
+        const command = `Expand-Archive -LiteralPath '${escapedZip}' -DestinationPath '${escapedOut}' -Force`;
+        const result = spawnSync("powershell", ["-NoProfile", "-Command", command], { stdio: "inherit" });
+        if (result.status !== 0) {
+          return `Unzip failed with exit code ${result.status}`;
+        }
+      } finally {
+        try {
+          fs.rmSync(tempZip, { force: true });
+        } catch {
+          // Ignore cleanup errors for debug-only unzip.
+        }
       }
       return null;
     }

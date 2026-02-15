@@ -1,0 +1,67 @@
+{
+  "id": "table_full",
+  "title": "Table Full",
+  "extends": "base_standard",
+  "placeholders": [
+    {
+      "id": "title",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 0,
+        "colSpan": 12,
+        "rowSpan": 1
+      },
+      "layer": "content",
+      "styleSlots": {
+        "text": "text.title",
+        "padding": 1
+      }
+    },
+    {
+      "id": "table",
+      "kind": "table",
+      "region": {
+        "col": 0,
+        "row": 1,
+        "colSpan": 12,
+        "rowSpan": 6
+      },
+      "layer": "content",
+      "styleSlots": {
+        "padding": 2
+      }
+    },
+    {
+      "id": "callout",
+      "kind": "callout",
+      "region": {
+        "col": 0,
+        "row": 0,
+        "colSpan": 12,
+        "rowSpan": 8
+      },
+      "layer": "foreground",
+      "variant": "elevated",
+      "policies": {
+        "required": false
+      },
+      "anchor": {
+        "target": "table",
+        "anchor": "right"
+      },
+      "box": {
+        "wIn": 2.6,
+        "hIn": 0.8,
+        "placement": "w",
+        "paddingSlot": 2
+      },
+      "leader": {
+        "endArrow": "triangle"
+      },
+      "styleSlots": {
+        "text": "text.caption"
+      }
+    }
+  ]
+}

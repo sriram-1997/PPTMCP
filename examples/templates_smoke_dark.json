@@ -1,0 +1,96 @@
+{
+  "title": "Templates Smoke",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-13T00:00:00Z"
+  },
+  "theme": "consulting_dark_v1",
+  "slides": [
+    {
+      "id": "tmpl-title",
+      "title": "Template Title Slide",
+      "template": "title_slide",
+      "fills": {
+        "title": { "content": "Templates v1" },
+        "subtitle": { "content": "Compiled to regions deterministically" },
+        "footer": { "content": "PPTMCP" }
+      }
+    },
+    {
+      "id": "tmpl-section",
+      "title": "Template Section Header",
+      "template": "section_header",
+      "fills": {
+        "title": { "content": "Section One" },
+        "subtitle": { "content": "Layout + Theme Integration" }
+      }
+    },
+    {
+      "id": "tmpl-two-col",
+      "title": "Template Two Column",
+      "template": "two_column_50_50",
+      "fills": {
+        "title": { "content": "Two Column 50/50" },
+        "left": {
+          "items": [
+            {
+              "kind": "list",
+              "items": ["Deterministic layout", "Theme-driven sizes"]
+            }
+          ]
+        },
+        "right": {
+          "items": [
+            {
+              "kind": "list",
+              "items": ["No absolute positioning", "Strict validation"]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "tmpl-chart-insights",
+      "title": "Template Chart + Insights",
+      "template": "chart_plus_insights",
+      "fills": {
+        "title": { "content": "Growth Overview" },
+        "chart": {
+          "content": {
+            "chartType": "column",
+            "title": "Monthly Growth",
+            "dataSeries": [
+              { "name": "Actual", "data": [["Jan", 8], ["Feb", 10], ["Mar", 12], ["Apr", 14]] }
+            ]
+          }
+        },
+        "insights": {
+          "items": [
+            {
+              "kind": "list",
+              "items": ["Momentum building", "Q2 target achievable"]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "tmpl-table",
+      "title": "Template Table Full",
+      "template": "table_full",
+      "fills": {
+        "title": { "content": "Key Metrics" },
+        "table": {
+          "content": {
+            "headers": ["Metric", "Value"],
+            "rows": [
+              ["Activation", "62%"],
+              ["Retention", "91%"],
+              ["NPS", "47"]
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

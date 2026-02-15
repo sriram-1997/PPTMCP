@@ -273,7 +273,7 @@ This project is licensed under the **Apache License 2.0** - see the [LICENSE](LI
 </div>
 ## Deterministic Layout (render_pptmcp)
 - JSON-driven, grid/region-based layout with strict validation
-- Supported elements: text, tables, column charts, callouts (box + leader), connectors (straight line)
+- Supported elements: text, lists, cards, tables, column charts, line charts, callouts (box + leader), connectors (straight line), images, icons
 - Determinism > expressiveness; no absolute positioning in specs
 
 Example: callout (region anchor only)
@@ -301,6 +301,52 @@ Example: connector (region anchors only)
 }
 ```
 
+Example: list (dot bullets)
+```json
+{
+  "type": "list",
+  "region": "content",
+  "style": "dot",
+  "bullet": { "size": "md", "gap": 10, "color": "text" },
+  "indent": { "left": 0, "hanging": 18 },
+  "lineGap": 6,
+  "items": [
+    { "text": "**Bold lead** - supporting explanation" }
+  ]
+}
+```
+
+Example: card
+```json
+{
+  "type": "card",
+  "region": "content",
+  "variant": "surface",
+  "style": { "bg": "surface", "border": "default", "radius": "md", "padding": "md", "accent": { "edge": "left", "color": "accent" } },
+  "header": { "title": "Key Takeaway", "subtitle": "Optional subtitle", "icon": "target" },
+  "body": [
+    { "type": "list", "style": "dot", "items": [{ "text": "First point" }] }
+  ],
+  "footer": { "strip": true, "label": "Key Takeaway", "text": "Concise insight sentence." }
+}
+```
+
+Example: line chart (v0.1)
+```json
+{
+  "type": "chart",
+  "region": "content",
+  "chartType": "line",
+  "data": {
+    "labels": ["Jan", "Feb", "Mar"],
+    "series": [
+      { "name": "Series A", "values": [10, 15, 12] }
+    ]
+  },
+  "options": { "showGrid": true, "showMarkers": true, "smooth": false, "yAxisZero": true }
+}
+```
+
 Error codes (render_pptmcp):
 - `layer_z_invalid`
 - `anchor_type_not_supported`
@@ -312,6 +358,14 @@ Error codes (render_pptmcp):
 - `callout_leader_endcap_not_supported`
 - `connector_outside_region`
 - `absolute_position_forbidden`
+
+Smoke commands:
+- `npm run smoke:list`
+- `npm run smoke:card`
+- `npm run smoke:line-chart`
+- `npm run smoke:list:fail-icon`
+- `npm run smoke:card:overflow`
+- `npm run smoke:chart:mismatch`
 ## Theme / Style Tokens v0
 
 Theme is a pure style layer (colors/fonts only). Geometry and layout are unchanged.
@@ -353,3 +407,56 @@ Rules:
 Verification (manual):
 - Render `examples/themes/theme_default.json` and `examples/themes/theme_dark.json`.
 - Compare slide background and chart series colors by unzipping the PPTX (`ppt/slides/slide1.xml`, `ppt/charts/chart1.xml`) or via the `--unzip-out` helper.
+
+## Geometry v1
+- Post-layout geometry resolution for connectors and callout leaders.
+- Arrowheads are sized from stroke width and lines are trimmed to arrow bases.
+- No negative extents, deterministic rounding (see `docs/geometry_v1.md`).
+
+## Theme / Style Tokens v2
+Theme v2 introduces font, space, and stroke scales (see `docs/theme_v2.md`).
+Unknown tokens hard-fail; no cascade or inheritance beyond single-level overrides.
+
+## Templates v1
+Templates v1 compile deterministically into standard grid/region slides (see `docs/templates_v1.md`).
+
+Example (template slide):
+```json
+{
+  "id": "slide-1",
+  "title": "Template Slide",
+  "template": "title_slide",
+  "fills": {
+    "title": { "content": "Templates v1" },
+    "subtitle": { "content": "Compiled to regions" }
+  }
+}
+```
+
+## System Discipline
+- Canonical slot paths enforced via SlotMap (`text.*`, `surface.*`, `stroke.*`).
+- Global contrast validation at theme load with bounded thresholds.
+- Template layout modes (`single`, `vstack`, `hstack`, `grid`) with strict item schemas.
+- EMU quantization enforced for template rects (no silent snapping).
+- See `docs/system_discipline.md` for the full policy.
+
+## Verified Capabilities (render_pptmcp)
+- Deterministic, grid/region-based layout (no absolute positioning in specs).
+- Elements: text, lists v1, cards v1, tables (no merges), column charts v0 (1-2 series), line charts v0.1, callouts v0 (box + leader), connectors, images, icons.
+- Theme v2 tokens for colors, typography scale, spacing scale, and stroke scale.
+- Theme contrast validation with bounded thresholds.
+- Geometry v1: arrowheaded connectors/leaders with no negative extents.
+- Templates v1: template definitions + inheritance compile into regions/elements (no behavior changes).
+
+## Known Limitations (hard-fail)
+- Unsupported chart types (only column v0 and line v0.1 supported).
+- Merged table cells (`rowSpan`/`colSpan`).
+- Non-region anchors or absolute positioning.
+- Advanced shapes, animations, videos.
+- Template rects must be EMU-quantized (use `npm run templates:format`).
+
+## Roadmap (Explicit, Not Yet Implemented)
+- chart_point anchors (plot/legend/data point).
+- element_point anchors for generic shapes/text boxes.
+- routed/elbow connectors with deterministic routing.
+- overlap avoidance for callouts.

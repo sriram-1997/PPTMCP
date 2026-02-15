@@ -1,20 +1,25 @@
-﻿import type {
+import type {
   AnchorPoint,
   BBox,
   CalloutElement,
+  CardElement,
   ChartElement,
   ConnectorElement,
+  EdgeElement,
   GridConfig,
   ImageElement,
+  IconElement,
   IntegrityDebugReport,
   IntegrityEntryBase,
   IntegrityReportSlide,
   IntegrityWarning,
+  NodeElement,
   PreparedElement,
   PreparedSlide,
   RegionConfig,
   Regions,
   SlideProgramSpec,
+  ListElement,
   TableElement,
   TextElement,
   ValidationReportEntry,
@@ -24,9 +29,14 @@ import { EPSILON_INCHES, SLIDE_HEIGHT_INCHES, SLIDE_WIDTH_INCHES, ptToIn, roundI
 import { prepareTextElement } from "./text.js";
 import { prepareTableElement } from "./table.js";
 import { prepareChartElement } from "./chart.js";
+import { prepareListElement } from "./list.js";
+import { prepareCardElement } from "./card.js";
 import { prepareCalloutElement } from "./callout.js";
 import { prepareConnectorElement } from "./connector.js";
+import { prepareEdgeElement } from "./edge.js";
 import { prepareImageElement } from "./image.js";
+import { prepareIconElement } from "./icon.js";
+import { prepareNodeElement } from "./node.js";
 
 export function computeRegionBBox(region: RegionConfig, grid: GridConfig): BBox {
   const { cols, rows, gutter } = grid;
@@ -175,6 +185,21 @@ export function prepareSlides(args: {
 
   args.spec.slides.forEach((slideSpec, slideIndex) => {
     const preparedElements: PreparedElement[] = [];
+    const nodeBBoxes = new Map<string, BBox>();
+    slideSpec.elements.forEach((rawElement, elementIndex) => {
+      if (rawElement.type !== "node") {
+        return;
+      }
+      const element = rawElement as NodeElement;
+      if (typeof element.id !== "string" || element.id.trim().length === 0) {
+        return;
+      }
+      const region = slideSpec.regions[element.region];
+      if (!region) {
+        return;
+      }
+      nodeBBoxes.set(element.id, computeRegionBBox(region, slideSpec.grid));
+    });
     for (let elementIndex = 0; elementIndex < slideSpec.elements.length; elementIndex += 1) {
       const element = slideSpec.elements[elementIndex];
       const z = Number.isFinite(element.z as number) ? (element.z as number) : 0;
@@ -225,6 +250,34 @@ export function prepareSlides(args: {
             hardErrors: args.hardErrors,
           })
         );
+      } else if (element.type === "list") {
+        preparedElements.push(
+          prepareListElement({
+            slideIndex,
+            elementIndex,
+            element: element as ListElement,
+            bbox,
+            z,
+            order,
+            id,
+            theme: args.theme,
+            hardErrors: args.hardErrors,
+          })
+        );
+      } else if (element.type === "card") {
+        preparedElements.push(
+          prepareCardElement({
+            slideIndex,
+            elementIndex,
+            element: element as CardElement,
+            bbox,
+            z,
+            order,
+            id,
+            theme: args.theme,
+            hardErrors: args.hardErrors,
+          })
+        );
       } else if (element.type === "chart") {
         preparedElements.push(
           prepareChartElement({
@@ -235,8 +288,39 @@ export function prepareSlides(args: {
             z,
             order,
             id,
+            theme: args.theme,
             allowDenseCharts: args.allowDenseCharts,
             warnings: args.warnings,
+            hardErrors: args.hardErrors,
+          })
+        );
+      } else if (element.type === "node") {
+        preparedElements.push(
+          prepareNodeElement({
+            slideIndex,
+            elementIndex,
+            element: element as NodeElement,
+            bbox,
+            z,
+            order,
+            id,
+            theme: args.theme,
+            hardErrors: args.hardErrors,
+          })
+        );
+      } else if (element.type === "edge") {
+        preparedElements.push(
+          prepareEdgeElement({
+            slide: slideSpec,
+            slideIndex,
+            element: element as EdgeElement,
+            elementIndex,
+            z,
+            order,
+            id,
+            bbox,
+            theme: args.theme,
+            nodeBBoxes,
             hardErrors: args.hardErrors,
           })
         );
@@ -286,6 +370,21 @@ export function prepareSlides(args: {
             bbox,
             theme: args.theme,
             baseDir: args.baseDir,
+            hardErrors: args.hardErrors,
+          })
+        );
+      } else if (element.type === "icon") {
+        preparedElements.push(
+          prepareIconElement({
+            slide: slideSpec,
+            slideIndex,
+            element: element as IconElement,
+            elementIndex,
+            z,
+            order,
+            id,
+            bbox,
+            theme: args.theme,
             hardErrors: args.hardErrors,
           })
         );
@@ -421,6 +520,30 @@ export function buildIntegrityDebug(args: {
             h: roundInches(element.bbox.height),
           },
         });
+      } else if (element.kind === "list") {
+        textCount += 1;
+        checkBox("list_bbox", element.bbox);
+        renderList.push({
+          ...entryBase,
+          bbox_in: {
+            x: roundInches(element.bbox.x),
+            y: roundInches(element.bbox.y),
+            w: roundInches(element.bbox.width),
+            h: roundInches(element.bbox.height),
+          },
+        });
+      } else if (element.kind === "card") {
+        shapeCount += 1;
+        checkBox("card_bbox", element.bbox);
+        renderList.push({
+          ...entryBase,
+          bbox_in: {
+            x: roundInches(element.bbox.x),
+            y: roundInches(element.bbox.y),
+            w: roundInches(element.bbox.width),
+            h: roundInches(element.bbox.height),
+          },
+        });
       } else if (element.kind === "connector") {
         shapeCount += 1;
         checkPoint("connector_start", element.start);
@@ -436,6 +559,34 @@ export function buildIntegrityDebug(args: {
         }
         if (element.start.x === element.end.x && element.start.y === element.end.y) {
           addWarning("INTEGRITY_WARN_ZERO_LINE", "connector start equals end");
+        }
+        renderList.push({
+          ...entryBase,
+          start_in: { x: roundInches(element.start.x), y: roundInches(element.start.y) },
+          end_in: { x: roundInches(element.end.x), y: roundInches(element.end.y) },
+          line_rect_in: {
+            x: roundInches(element.lineRect.x),
+            y: roundInches(element.lineRect.y),
+            w: roundInches(element.lineRect.width),
+            h: roundInches(element.lineRect.height),
+          },
+          dx: roundInches(dx),
+          dy: roundInches(dy),
+          flip_v: element.lineFlipV === true,
+          flip_h: element.lineFlipH === true,
+        });
+      } else if (element.kind === "edge") {
+        shapeCount += 1;
+        checkPoint("edge_start", element.start);
+        checkPoint("edge_end", element.end);
+        checkLine("edge", element.start, element.end, element.style.widthPt);
+        const dx = element.end.x - element.start.x;
+        const dy = element.end.y - element.start.y;
+        if (dx < 0 || dy < 0) {
+          addIntegrityWarning("edge pre-normalization negative extent");
+        }
+        if (element.lineRect.width < 0 || element.lineRect.height < 0) {
+          addIntegrityWarning("edge normalized rect has negative extent");
         }
         renderList.push({
           ...entryBase,
@@ -490,6 +641,30 @@ export function buildIntegrityDebug(args: {
           dy: element.leader ? roundInches(element.leader.end.y - element.leader.start.y) : null,
           flip_v: element.leader ? element.leaderFlipV === true : null,
           flip_h: element.leader ? element.leaderFlipH === true : null,
+        });
+      } else if (element.kind === "icon") {
+        shapeCount += 1;
+        checkBox("icon_bbox", element.bbox);
+        renderList.push({
+          ...entryBase,
+          bbox_in: {
+            x: roundInches(element.bbox.x),
+            y: roundInches(element.bbox.y),
+            w: roundInches(element.bbox.width),
+            h: roundInches(element.bbox.height),
+          },
+        });
+      } else if (element.kind === "node") {
+        shapeCount += 1;
+        checkBox("node_bbox", element.bbox);
+        renderList.push({
+          ...entryBase,
+          bbox_in: {
+            x: roundInches(element.bbox.x),
+            y: roundInches(element.bbox.y),
+            w: roundInches(element.bbox.width),
+            h: roundInches(element.bbox.height),
+          },
         });
       }
     });

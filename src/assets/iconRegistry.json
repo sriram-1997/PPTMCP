@@ -1,0 +1,2149 @@
+{
+  "_meta": {
+    "generated_at": "2026-02-13T12:12:49.122Z",
+    "sources": [
+      {
+        "name": "heroicons",
+        "repo": "https://github.com/tailwindlabs/heroicons",
+        "commit": "669274d568e42b14f51700ddb2a12b02686f2d55",
+        "path": "optimized/24/outline"
+      },
+      {
+        "name": "feather",
+        "repo": "https://github.com/feathericons/feather",
+        "commit": "3dc050d97405062eba78aa57115c0a15c63abdaa",
+        "path": "icons"
+      }
+    ]
+  },
+  "icons": {
+    "academic-cap": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "adjustments-horizontal": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "adjustments-vertical": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "archive-box-arrow-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "archive-box-x-mark": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "archive-box": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-down-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-down-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-down-on-square-stack": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-down-on-square": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-down-right": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-down-tray": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-left-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-left-end-on-rectangle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-left-on-rectangle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-left-start-on-rectangle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-long-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-long-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-long-right": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-long-up": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-path-rounded-square": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-path": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-right-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-right-end-on-rectangle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-right-on-rectangle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-right-start-on-rectangle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-right": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-small-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-small-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-small-right": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-small-up": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-top-right-on-square": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-trending-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-trending-up": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-turn-down-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-turn-down-right": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-turn-left-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-turn-left-up": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-turn-right-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-turn-right-up": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-turn-up-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-turn-up-right": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-up-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-up-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-up-on-square-stack": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-up-on-square": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-up-right": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-up-tray": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-up": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-uturn-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-uturn-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-uturn-right": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrow-uturn-up": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrows-pointing-in": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrows-pointing-out": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrows-right-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "arrows-up-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "at-symbol": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "backspace": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "backward": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "banknotes": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bars-2": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bars-3-bottom-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bars-3-bottom-right": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bars-3-center-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bars-3": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bars-4": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bars-arrow-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bars-arrow-up": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "battery-0": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "battery-100": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "battery-50": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "beaker": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bell-alert": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bell-slash": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bell-snooze": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bell": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bold": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bolt-slash": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bolt": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "book-open": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bookmark-slash": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bookmark-square": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bookmark": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "briefcase": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "bug-ant": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "building-library": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "building-office-2": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "building-office": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "building-storefront": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "cake": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "calculator": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "calendar-date-range": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "calendar-days": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "calendar": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "camera": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chart-bar-square": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chart-bar": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chart-pie": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chat-bubble-bottom-center-text": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chat-bubble-bottom-center": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chat-bubble-left-ellipsis": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chat-bubble-left-right": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chat-bubble-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chat-bubble-oval-left-ellipsis": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chat-bubble-oval-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "check-badge": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "check-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "check": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chevron-double-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chevron-double-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chevron-double-right": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chevron-double-up": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chevron-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chevron-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chevron-right": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chevron-up-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "chevron-up": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "circle-stack": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "clipboard-document-check": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "clipboard-document-list": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "clipboard-document": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "clipboard": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "clock": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "cloud-arrow-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "cloud-arrow-up": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "cloud": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "code-bracket-square": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "code-bracket": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "cog-6-tooth": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "cog-8-tooth": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "cog": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "command-line": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "computer-desktop": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "cpu-chip": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "credit-card": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "cube-transparent": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "cube": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "currency-bangladeshi": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "currency-dollar": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "currency-euro": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "currency-pound": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "currency-rupee": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "currency-yen": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "cursor-arrow-rays": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "cursor-arrow-ripple": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "device-phone-mobile": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "device-tablet": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "divide": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-arrow-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-arrow-up": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-chart-bar": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-check": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-currency-bangladeshi": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-currency-dollar": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-currency-euro": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-currency-pound": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-currency-rupee": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-currency-yen": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-duplicate": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-magnifying-glass": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-minus": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-plus": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document-text": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "document": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "ellipsis-horizontal-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "ellipsis-horizontal": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "ellipsis-vertical": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "envelope-open": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "envelope": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "equals": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "exclamation-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "exclamation-triangle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "eye-dropper": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "eye-slash": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "eye": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "face-frown": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "face-smile": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "film": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "finger-print": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "fire": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "flag": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "folder-arrow-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "folder-minus": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "folder-open": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "folder-plus": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "folder": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "forward": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "funnel": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "gif": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "gift-top": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "gift": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "globe-alt": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "globe-americas": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "globe-asia-australia": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "globe-europe-africa": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "h1": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "h2": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "h3": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "hand-raised": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "hand-thumb-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "hand-thumb-up": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "hashtag": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "heart": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "home-modern": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "home": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "identification": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "inbox-arrow-down": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "inbox-stack": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "inbox": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "information-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "italic": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "key": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "language": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "lifebuoy": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "light-bulb": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "link-slash": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "link": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "list-bullet": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "lock-closed": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "lock-open": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "magnifying-glass-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "magnifying-glass-minus": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "magnifying-glass-plus": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "magnifying-glass": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "map-pin": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "map": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "megaphone": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "microphone": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "minus-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "minus-small": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "minus": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "moon": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "musical-note": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "newspaper": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "no-symbol": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "numbered-list": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "paint-brush": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "paper-airplane": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "paper-clip": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "pause-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "pause": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "pencil-square": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "pencil": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "percent-badge": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "phone-arrow-down-left": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "phone-arrow-up-right": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "phone-x-mark": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "phone": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "photo": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "play-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "play-pause": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "play": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "plus-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "plus-small": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "plus": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "power": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "presentation-chart-bar": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "presentation-chart-line": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "printer": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "puzzle-piece": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "qr-code": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "question-mark-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "queue-list": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "radio": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "receipt-percent": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "receipt-refund": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "rectangle-group": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "rectangle-stack": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "rocket-launch": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "rss": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "scale": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "scissors": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "server-stack": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "server": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "share": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "shield-check": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "shield-exclamation": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "shopping-bag": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "shopping-cart": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "signal-slash": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "signal": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "slash": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "sparkles": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "speaker-wave": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "speaker-x-mark": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "square-2-stack": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "square-3-stack-3d": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "squares-2x2": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "squares-plus": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "star": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "stop-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "stop": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "strikethrough": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "sun": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "swatch": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "table-cells": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "tag": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "ticket": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "trash": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "trophy": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "truck": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "tv": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "underline": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "user-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "user-group": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "user-minus": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "user-plus": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "user": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "users": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "variable": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "video-camera-slash": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "video-camera": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "view-columns": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "viewfinder-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "wallet": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "wifi": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "window": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "wrench-screwdriver": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "wrench": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "x-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "x-mark": {
+      "viewBox": "0 0 24 24",
+      "source": "heroicons"
+    },
+    "activity": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "airplay": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "alert-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "alert-octagon": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "alert-triangle": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "align-center": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "align-justify": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "align-left": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "align-right": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "anchor": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "aperture": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "archive": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "at-sign": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "award": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "bar-chart-2": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "bar-chart": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "battery-charging": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "battery": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "bell-off": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "bluetooth": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "book": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "box": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "camera-off": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "cast": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "check-square": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "chevrons-down": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "chevrons-left": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "chevrons-right": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "chevrons-up": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "chrome": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "circle": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "cloud-drizzle": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "cloud-lightning": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "cloud-off": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "cloud-rain": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "cloud-snow": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "code": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "codepen": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "codesandbox": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "coffee": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "columns": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "command": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "compass": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "copy": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "corner-down-left": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "corner-down-right": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "corner-left-down": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "corner-left-up": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "corner-right-down": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "corner-right-up": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "corner-up-left": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "corner-up-right": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "cpu": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "crop": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "crosshair": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "database": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "delete": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "disc": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "divide-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "divide-square": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "dollar-sign": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "download-cloud": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "download": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "dribbble": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "droplet": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "edit-2": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "edit-3": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "edit": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "external-link": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "eye-off": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "facebook": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "fast-forward": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "feather": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "figma": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "file-minus": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "file-plus": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "file-text": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "file": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "filter": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "framer": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "frown": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "git-branch": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "git-commit": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "git-merge": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "git-pull-request": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "github": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "gitlab": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "globe": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "grid": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "hard-drive": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "hash": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "headphones": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "help-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "hexagon": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "image": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "info": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "instagram": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "layers": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "layout": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "life-buoy": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "link-2": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "linkedin": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "list": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "loader": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "lock": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "log-in": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "log-out": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "mail": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "maximize-2": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "maximize": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "meh": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "menu": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "message-circle": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "message-square": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "mic-off": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "mic": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "minimize-2": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "minimize": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "minus-square": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "monitor": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "more-horizontal": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "more-vertical": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "mouse-pointer": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "move": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "music": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "navigation-2": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "navigation": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "octagon": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "package": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "paperclip": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "pen-tool": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "percent": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "phone-call": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "phone-forwarded": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "phone-incoming": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "phone-missed": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "phone-off": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "phone-outgoing": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "pie-chart": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "plus-square": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "pocket": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "refresh-ccw": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "refresh-cw": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "repeat": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "rewind": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "rotate-ccw": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "rotate-cw": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "save": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "search": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "send": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "settings": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "share-2": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "shield-off": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "shield": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "shuffle": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "sidebar": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "skip-back": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "skip-forward": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "slack": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "sliders": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "smartphone": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "smile": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "speaker": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "square": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "sunrise": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "sunset": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "table": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "tablet": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "target": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "terminal": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "thermometer": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "thumbs-down": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "thumbs-up": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "toggle-left": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "toggle-right": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "tool": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "trash-2": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "trello": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "trending-down": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "trending-up": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "triangle": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "twitch": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "twitter": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "type": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "umbrella": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "unlock": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "upload-cloud": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "upload": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "user-check": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "user-x": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "video-off": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "video": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "voicemail": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "volume-1": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "volume-2": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "volume-x": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "volume": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "watch": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "wifi-off": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "wind": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "x-octagon": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "x-square": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "x": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "youtube": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "zap-off": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "zap": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "zoom-in": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    },
+    "zoom-out": {
+      "viewBox": "0 0 24 24",
+      "source": "feather"
+    }
+  }
+}

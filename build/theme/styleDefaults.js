@@ -11,15 +11,16 @@ export function resolveElementStyleDefaults(element, theme) {
         ? {
             fill: surface.fill,
             border: surface.border,
-            borderWidth: theme.shape.borderWidth,
+            borderWidth: theme.strokeScale.thin,
             textColor: surface.textColor,
         }
         : undefined;
     switch (element.type) {
         case "text":
             return {
+                boxStyle: baseBox,
                 textStyle: {
-                    fontFace: theme.text.fontFamily,
+                    fontFace: theme.fontScale.body.family,
                     color: surface ? surface.textColor : theme.text.colorPrimary,
                 },
             };
@@ -27,7 +28,7 @@ export function resolveElementStyleDefaults(element, theme) {
             return {
                 boxStyle: baseBox,
                 textStyle: {
-                    fontFace: theme.text.fontFamily,
+                    fontFace: theme.fontScale.body.family,
                     color: surface ? surface.textColor : theme.text.colorPrimary,
                 },
             };
@@ -35,7 +36,7 @@ export function resolveElementStyleDefaults(element, theme) {
             return {
                 boxStyle: baseBox,
                 textStyle: {
-                    fontFace: theme.text.fontFamily,
+                    fontFace: theme.fontScale.body.family,
                     color: theme.chart.textColor,
                 },
             };
@@ -44,12 +45,12 @@ export function resolveElementStyleDefaults(element, theme) {
                 boxStyle: baseBox,
                 strokeStyle: {
                     color: surface ? surface.border : theme.callout.leader,
-                    widthPt: theme.shape.borderWidth,
+                    widthPt: theme.strokeScale.normal,
                     startArrow: "none",
                     endArrow: "none",
                 },
                 textStyle: {
-                    fontFace: theme.text.fontFamily,
+                    fontFace: theme.fontScale.body.family,
                     color: surface ? surface.textColor : theme.callout.textColor,
                 },
             };
@@ -57,7 +58,7 @@ export function resolveElementStyleDefaults(element, theme) {
             return {
                 strokeStyle: {
                     color: surface ? surface.border : theme.connector.stroke,
-                    widthPt: theme.shape.borderWidth,
+                    widthPt: theme.strokeScale.normal,
                     startArrow: "none",
                     endArrow: "none",
                 },
@@ -67,6 +68,31 @@ export function resolveElementStyleDefaults(element, theme) {
                 imageStyle: {
                     fit: element.fit === "cover" ? "cover" : "contain",
                     box: baseBox,
+                },
+            };
+        case "icon":
+            return {
+                boxStyle: baseBox,
+                textStyle: {
+                    fontFace: theme.fontScale.body.family,
+                    color: surface ? surface.textColor : theme.text.colorPrimary,
+                },
+            };
+        case "node":
+            return {
+                boxStyle: baseBox,
+                textStyle: {
+                    fontFace: theme.fontScale.body.family,
+                    color: surface ? surface.textColor : theme.text.colorPrimary,
+                },
+            };
+        case "edge":
+            return {
+                strokeStyle: {
+                    color: surface ? surface.border : theme.connector.stroke,
+                    widthPt: theme.strokeScale.normal,
+                    startArrow: "none",
+                    endArrow: "none",
                 },
             };
         default:

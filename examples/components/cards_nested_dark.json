@@ -1,0 +1,86 @@
+{
+  "title": "Cards Nested Dark",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-14T00:00:00Z"
+  },
+  "theme": "consulting_dark_v1",
+  "slides": [
+    {
+      "id": "cards-nested-dark",
+      "title": "Cards Nested Dark",
+      "template": "card_grid_2x2",
+      "fills": {
+        "cards": {
+          "items": [
+            {
+              "kind": "card",
+              "variant": "surface",
+              "header": { "title": "Core Metrics", "subtitle": "Week 6" },
+              "body": [
+                {
+                  "type": "list",
+                  "style": "dot",
+                  "items": [
+                    "Activation rate up 6%",
+                    "Churn down 2 points"
+                  ]
+                }
+              ],
+              "footer": { "strip": true, "text": "Sustain early wins" }
+            },
+            {
+              "kind": "card",
+              "variant": "elevated",
+              "header": { "title": "Retention", "subtitle": "Cohorts" },
+              "body": [
+                {
+                  "type": "list",
+                  "style": "number",
+                  "items": [
+                    "Onboarding fixes",
+                    "Lifecycle nudges"
+                  ]
+                }
+              ],
+              "footer": { "strip": true, "text": "Run A/B tests" }
+            },
+            {
+              "kind": "card",
+              "variant": "accent",
+              "style": { "accent": { "edge": "left", "color": "accent" } },
+              "header": { "title": "Pipeline", "subtitle": "Coverage" },
+              "body": [
+                {
+                  "type": "list",
+                  "style": "dot",
+                  "items": [
+                    "Top 3 accounts engaged",
+                    "Risk flagged for Q2"
+                  ]
+                }
+              ],
+              "footer": { "strip": true, "text": "Escalate blockers" }
+            },
+            {
+              "kind": "card",
+              "variant": "surface",
+              "header": { "title": "Product" },
+              "body": [
+                {
+                  "type": "list",
+                  "style": "dot",
+                  "items": [
+                    "Roadmap locked",
+                    "QA cycle stable"
+                  ]
+                }
+              ],
+              "footer": { "strip": true, "text": "On track" }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

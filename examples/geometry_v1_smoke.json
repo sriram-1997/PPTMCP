@@ -1,0 +1,453 @@
+{
+  "title": "Geometry v1 Smoke",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-13T00:00:00Z"
+  },
+  "slides": [
+    {
+      "id": "geometry-v1",
+      "title": "Geometry v1",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.05
+      },
+      "regions": {
+        "canvas": {
+          "col": 0,
+          "row": 0,
+          "colSpan": 12,
+          "rowSpan": 8
+        },
+        "center": {
+          "col": 5,
+          "row": 3,
+          "colSpan": 2,
+          "rowSpan": 2
+        },
+        "north": {
+          "col": 5,
+          "row": 0,
+          "colSpan": 2,
+          "rowSpan": 1
+        },
+        "south": {
+          "col": 5,
+          "row": 7,
+          "colSpan": 2,
+          "rowSpan": 1
+        },
+        "west": {
+          "col": 0,
+          "row": 3,
+          "colSpan": 2,
+          "rowSpan": 2
+        },
+        "east": {
+          "col": 10,
+          "row": 3,
+          "colSpan": 2,
+          "rowSpan": 2
+        },
+        "nw": {
+          "col": 0,
+          "row": 0,
+          "colSpan": 2,
+          "rowSpan": 1
+        },
+        "ne": {
+          "col": 10,
+          "row": 0,
+          "colSpan": 2,
+          "rowSpan": 1
+        },
+        "sw": {
+          "col": 0,
+          "row": 7,
+          "colSpan": 2,
+          "rowSpan": 1
+        },
+        "se": {
+          "col": 10,
+          "row": 7,
+          "colSpan": 2,
+          "rowSpan": 1
+        }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "center",
+          "content": "CENTER",
+          "style": {
+            "fontSize": 12,
+            "bold": true,
+            "align": "center",
+            "verticalAlign": "middle"
+          }
+        },
+        {
+          "type": "text",
+          "region": "north",
+          "content": "N",
+          "style": {
+            "fontSize": 10,
+            "bold": true,
+            "align": "center",
+            "verticalAlign": "middle"
+          }
+        },
+        {
+          "type": "text",
+          "region": "south",
+          "content": "S",
+          "style": {
+            "fontSize": 10,
+            "bold": true,
+            "align": "center",
+            "verticalAlign": "middle"
+          }
+        },
+        {
+          "type": "text",
+          "region": "west",
+          "content": "W",
+          "style": {
+            "fontSize": 10,
+            "bold": true,
+            "align": "center",
+            "verticalAlign": "middle"
+          }
+        },
+        {
+          "type": "text",
+          "region": "east",
+          "content": "E",
+          "style": {
+            "fontSize": 10,
+            "bold": true,
+            "align": "center",
+            "verticalAlign": "middle"
+          }
+        },
+        {
+          "type": "text",
+          "region": "nw",
+          "content": "NW",
+          "style": {
+            "fontSize": 10,
+            "bold": true,
+            "align": "center",
+            "verticalAlign": "middle"
+          }
+        },
+        {
+          "type": "text",
+          "region": "ne",
+          "content": "NE",
+          "style": {
+            "fontSize": 10,
+            "bold": true,
+            "align": "center",
+            "verticalAlign": "middle"
+          }
+        },
+        {
+          "type": "text",
+          "region": "sw",
+          "content": "SW",
+          "style": {
+            "fontSize": 10,
+            "bold": true,
+            "align": "center",
+            "verticalAlign": "middle"
+          }
+        },
+        {
+          "type": "text",
+          "region": "se",
+          "content": "SE",
+          "style": {
+            "fontSize": 10,
+            "bold": true,
+            "align": "center",
+            "verticalAlign": "middle"
+          }
+        },
+        {
+          "type": "connector",
+          "id": "conn_n",
+          "region": "canvas",
+          "z": 100,
+          "start": {
+            "type": "region",
+            "targetRegion": "center",
+            "point": "n"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "north",
+            "point": "s"
+          },
+          "style": {
+            "widthPt": 0.75,
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "connector",
+          "id": "conn_ne",
+          "region": "canvas",
+          "z": 100,
+          "start": {
+            "type": "region",
+            "targetRegion": "center",
+            "point": "ne"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "ne",
+            "point": "sw"
+          },
+          "style": {
+            "widthPt": 1,
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "connector",
+          "id": "conn_e",
+          "region": "canvas",
+          "z": 100,
+          "start": {
+            "type": "region",
+            "targetRegion": "center",
+            "point": "e"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "east",
+            "point": "w"
+          },
+          "style": {
+            "widthPt": 1.25,
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "connector",
+          "id": "conn_se",
+          "region": "canvas",
+          "z": 100,
+          "start": {
+            "type": "region",
+            "targetRegion": "center",
+            "point": "se"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "se",
+            "point": "nw"
+          },
+          "style": {
+            "widthPt": 1.5,
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "connector",
+          "id": "conn_s",
+          "region": "canvas",
+          "z": 100,
+          "start": {
+            "type": "region",
+            "targetRegion": "center",
+            "point": "s"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "south",
+            "point": "n"
+          },
+          "style": {
+            "widthPt": 1.75,
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "connector",
+          "id": "conn_sw",
+          "region": "canvas",
+          "z": 100,
+          "start": {
+            "type": "region",
+            "targetRegion": "center",
+            "point": "sw"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "sw",
+            "point": "ne"
+          },
+          "style": {
+            "widthPt": 2,
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "connector",
+          "id": "conn_w",
+          "region": "canvas",
+          "z": 100,
+          "start": {
+            "type": "region",
+            "targetRegion": "center",
+            "point": "w"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "west",
+            "point": "e"
+          },
+          "style": {
+            "widthPt": 1,
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "connector",
+          "id": "conn_nw",
+          "region": "canvas",
+          "z": 100,
+          "start": {
+            "type": "region",
+            "targetRegion": "center",
+            "point": "nw"
+          },
+          "end": {
+            "type": "region",
+            "targetRegion": "nw",
+            "point": "se"
+          },
+          "style": {
+            "widthPt": 1.25,
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "callout",
+          "id": "callout_top",
+          "region": "canvas",
+          "z": 120,
+          "anchor": {
+            "type": "region",
+            "targetRegion": "north",
+            "point": "s"
+          },
+          "box": {
+            "wIn": 2.0,
+            "hIn": 0.6,
+            "placement": "s",
+            "paddingPt": 6
+          },
+          "text": {
+            "value": "Top hit",
+            "style": {
+              "fontSize": 10
+            }
+          },
+          "leader": {
+            "style": "line",
+            "endCap": "none",
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "callout",
+          "id": "callout_bottom",
+          "region": "canvas",
+          "z": 120,
+          "anchor": {
+            "type": "region",
+            "targetRegion": "south",
+            "point": "n"
+          },
+          "box": {
+            "wIn": 2.0,
+            "hIn": 0.6,
+            "placement": "n",
+            "paddingPt": 6
+          },
+          "text": {
+            "value": "Bottom hit",
+            "style": {
+              "fontSize": 10
+            }
+          },
+          "leader": {
+            "style": "line",
+            "endCap": "none",
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "callout",
+          "id": "callout_left",
+          "region": "canvas",
+          "z": 120,
+          "anchor": {
+            "type": "region",
+            "targetRegion": "west",
+            "point": "e"
+          },
+          "box": {
+            "wIn": 2.0,
+            "hIn": 0.6,
+            "placement": "e",
+            "paddingPt": 6
+          },
+          "text": {
+            "value": "Left hit",
+            "style": {
+              "fontSize": 10
+            }
+          },
+          "leader": {
+            "style": "line",
+            "endCap": "none",
+            "endArrow": "triangle"
+          }
+        },
+        {
+          "type": "callout",
+          "id": "callout_right",
+          "region": "canvas",
+          "z": 120,
+          "anchor": {
+            "type": "region",
+            "targetRegion": "east",
+            "point": "w"
+          },
+          "box": {
+            "wIn": 2.0,
+            "hIn": 0.6,
+            "placement": "w",
+            "paddingPt": 6
+          },
+          "text": {
+            "value": "Right hit",
+            "style": {
+              "fontSize": 10
+            }
+          },
+          "leader": {
+            "style": "line",
+            "endCap": "none",
+            "endArrow": "triangle"
+          }
+        }
+      ]
+    }
+  ]
+}

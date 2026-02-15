@@ -1,0 +1,31 @@
+{
+  "title": "List Invalid Icon",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-13T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "list-invalid-icon",
+      "title": "List Invalid Icon",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "list": { "col": 1, "row": 2, "colSpan": 10, "rowSpan": 4 }
+      },
+      "elements": [
+        {
+          "type": "list",
+          "region": "list",
+          "style": "icon",
+          "bullet": { "size": "md", "gap": 8, "color": "text", "icon": "icon_does_not_exist" },
+          "indent": { "left": 0, "hanging": 18 },
+          "lineGap": 6,
+          "items": [
+            { "text": "This should fail with icon_not_found." }
+          ]
+        }
+      ]
+    }
+  ]
+}

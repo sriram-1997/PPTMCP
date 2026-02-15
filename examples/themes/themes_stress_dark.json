@@ -1,0 +1,88 @@
+{
+  "title": "Themes Stress",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-13T00:00:00Z"
+  },
+  "theme": "consulting_dark_v1",
+  "slides": [
+    {
+      "id": "stress-title",
+      "title": "Stress Title",
+      "template": "title_slide",
+      "fills": {
+        "title": { "content": "Themes Stress" },
+        "subtitle": { "content": "Light vs Dark" },
+        "footer": { "content": "PPTMCP" }
+      }
+    },
+    {
+      "id": "stress-section",
+      "title": "Stress Section",
+      "template": "section_header",
+      "fills": {
+        "title": { "content": "Section Header" },
+        "subtitle": { "content": "Template Inheritance" }
+      }
+    },
+    {
+      "id": "stress-two-col",
+      "title": "Stress Two Column",
+      "template": "two_column_50_50",
+      "fills": {
+        "title": { "content": "Two Column 50/50" },
+        "left": {
+          "items": [
+            {
+              "kind": "text",
+              "text": "Left column"
+            }
+          ]
+        },
+        "right": {
+          "items": [
+            {
+              "kind": "text",
+              "text": "Right column"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "stress-chart",
+      "title": "Stress Chart",
+      "template": "chart_full",
+      "fills": {
+        "title": { "content": "Quarterly Output" },
+        "chart": {
+          "content": {
+            "chartType": "column",
+            "title": "Quarterly Output",
+            "dataSeries": [
+              { "name": "Series A", "data": [["Q1", 5], ["Q2", 7], ["Q3", 6]] }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "stress-table",
+      "title": "Stress Table",
+      "template": "table_full",
+      "fills": {
+        "title": { "content": "Key Metrics" },
+        "table": {
+          "content": {
+            "headers": ["Metric", "Value"],
+            "rows": [
+              ["Activation", "62%"],
+              ["Retention", "91%"],
+              ["NPS", "47"]
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

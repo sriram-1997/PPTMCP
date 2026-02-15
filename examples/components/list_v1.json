@@ -1,0 +1,77 @@
+{
+  "title": "List v1",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-13T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "list-v1",
+      "title": "List v1",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "header": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "list_dot": { "col": 0, "row": 1, "colSpan": 6, "rowSpan": 3 },
+        "list_number": { "col": 6, "row": 1, "colSpan": 6, "rowSpan": 3 },
+        "list_icon": { "col": 0, "row": 4, "colSpan": 6, "rowSpan": 3 },
+        "list_none": { "col": 6, "row": 4, "colSpan": 6, "rowSpan": 3 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "header",
+          "content": "List v1 - dot, number, icon, none"
+        },
+        {
+          "type": "list",
+          "region": "list_dot",
+          "style": "dot",
+          "bullet": { "size": "md", "gap": 10, "color": "text" },
+          "indent": { "left": 0, "hanging": 18 },
+          "lineGap": 6,
+          "items": [
+            { "text": "**Bold lead** - supporting explanation wraps into a second line." },
+            { "text": "Second point with a longer sentence to demonstrate wrapping." }
+          ]
+        },
+        {
+          "type": "list",
+          "region": "list_number",
+          "style": "number",
+          "bullet": { "size": "md", "gap": 10, "color": "primary" },
+          "indent": { "left": 0, "hanging": 20 },
+          "lineGap": 6,
+          "items": [
+            { "text": "**Step one** - align data definitions across teams." },
+            { "text": "Step two - validate the pipeline with sample inputs." }
+          ]
+        },
+        {
+          "type": "list",
+          "region": "list_icon",
+          "style": "icon",
+          "bullet": { "size": "md", "gap": 10, "color": "muted", "icon": "check" },
+          "indent": { "left": 0, "hanging": 20 },
+          "lineGap": 6,
+          "items": [
+            { "text": "**Icon bullet** - confirms completed work items." },
+            { "text": "Second item uses the same icon and spacing." }
+          ]
+        },
+        {
+          "type": "list",
+          "region": "list_none",
+          "style": "none",
+          "bullet": { "size": "md", "gap": 10, "color": "text" },
+          "indent": { "left": 0, "hanging": 20 },
+          "lineGap": 6,
+          "items": [
+            { "text": "**No bullet** - spacing preserved for alignment." },
+            { "text": "Second line still aligns to the same text start." }
+          ]
+        }
+      ]
+    }
+  ]
+}

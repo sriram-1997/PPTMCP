@@ -53,7 +53,7 @@ export function resolveElementStyleDefaults(
     ? {
         fill: surface.fill,
         border: surface.border,
-        borderWidth: theme.shape.borderWidth,
+        borderWidth: theme.strokeScale.thin,
         textColor: surface.textColor,
       }
     : undefined;
@@ -61,8 +61,9 @@ export function resolveElementStyleDefaults(
   switch (element.type) {
     case "text":
       return {
+        boxStyle: baseBox,
         textStyle: {
-          fontFace: theme.text.fontFamily,
+          fontFace: theme.fontScale.body.family,
           color: surface ? surface.textColor : theme.text.colorPrimary,
         },
       };
@@ -70,7 +71,7 @@ export function resolveElementStyleDefaults(
       return {
         boxStyle: baseBox,
         textStyle: {
-          fontFace: theme.text.fontFamily,
+          fontFace: theme.fontScale.body.family,
           color: surface ? surface.textColor : theme.text.colorPrimary,
         },
       };
@@ -78,7 +79,7 @@ export function resolveElementStyleDefaults(
       return {
         boxStyle: baseBox,
         textStyle: {
-          fontFace: theme.text.fontFamily,
+          fontFace: theme.fontScale.body.family,
           color: theme.chart.textColor,
         },
       };
@@ -87,12 +88,12 @@ export function resolveElementStyleDefaults(
         boxStyle: baseBox,
         strokeStyle: {
           color: surface ? surface.border : theme.callout.leader,
-          widthPt: theme.shape.borderWidth,
+          widthPt: theme.strokeScale.normal,
           startArrow: "none",
           endArrow: "none",
         },
         textStyle: {
-          fontFace: theme.text.fontFamily,
+          fontFace: theme.fontScale.body.family,
           color: surface ? surface.textColor : theme.callout.textColor,
         },
       };
@@ -100,7 +101,7 @@ export function resolveElementStyleDefaults(
       return {
         strokeStyle: {
           color: surface ? surface.border : theme.connector.stroke,
-          widthPt: theme.shape.borderWidth,
+          widthPt: theme.strokeScale.normal,
           startArrow: "none",
           endArrow: "none",
         },
@@ -110,6 +111,31 @@ export function resolveElementStyleDefaults(
         imageStyle: {
           fit: element.fit === "cover" ? "cover" : "contain",
           box: baseBox,
+        },
+      };
+    case "icon":
+      return {
+        boxStyle: baseBox,
+        textStyle: {
+          fontFace: theme.fontScale.body.family,
+          color: surface ? surface.textColor : theme.text.colorPrimary,
+        },
+      };
+    case "node":
+      return {
+        boxStyle: baseBox,
+        textStyle: {
+          fontFace: theme.fontScale.body.family,
+          color: surface ? surface.textColor : theme.text.colorPrimary,
+        },
+      };
+    case "edge":
+      return {
+        strokeStyle: {
+          color: surface ? surface.border : theme.connector.stroke,
+          widthPt: theme.strokeScale.normal,
+          startArrow: "none",
+          endArrow: "none",
         },
       };
     default:

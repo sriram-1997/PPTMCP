@@ -1,0 +1,92 @@
+{
+  "title": "Bullet Gallery",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-14T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "bullet-gallery",
+      "title": "Bullet Gallery",
+      "grid": { "cols": 4, "rows": 3, "gutter": 0.1 },
+      "regions": {
+        "dot": { "col": 0, "row": 0, "colSpan": 2, "rowSpan": 1 },
+        "number": { "col": 2, "row": 0, "colSpan": 2, "rowSpan": 1 },
+        "icon_check": { "col": 0, "row": 1, "colSpan": 2, "rowSpan": 1 },
+        "icon_arrow": { "col": 2, "row": 1, "colSpan": 2, "rowSpan": 1 },
+        "icon_alert": { "col": 0, "row": 2, "colSpan": 2, "rowSpan": 1 },
+        "none": { "col": 2, "row": 2, "colSpan": 2, "rowSpan": 1 }
+      },
+      "elements": [
+        {
+          "type": "list",
+          "region": "dot",
+          "style": "dot",
+          "bullet": { "size": "md", "gap": 8, "color": "text" },
+          "indent": { "left": 0, "hanging": 18 },
+          "lineGap": 6,
+          "items": [
+            { "text": "Dot bullets with a **wrapped line** to verify alignment across multi-line entries." }
+          ]
+        },
+        {
+          "type": "list",
+          "region": "number",
+          "style": "number",
+          "bullet": { "size": "md", "gap": 8, "color": "text" },
+          "indent": { "left": 0, "hanging": 18 },
+          "lineGap": 6,
+          "items": [
+            { "text": "Numbered bullets show ordered steps." },
+            { "text": "Second step keeps the hanging indent." }
+          ]
+        },
+        {
+          "type": "list",
+          "region": "icon_check",
+          "style": "icon",
+          "bullet": { "size": "md", "gap": 8, "color": "text", "icon": "check" },
+          "indent": { "left": 0, "hanging": 18 },
+          "lineGap": 6,
+          "items": [
+            { "text": "Icon bullet (check) confirms completion." }
+          ]
+        },
+        {
+          "type": "list",
+          "region": "icon_arrow",
+          "style": "icon",
+          "bullet": { "size": "md", "gap": 8, "color": "muted", "icon": "arrow-right" },
+          "indent": { "left": 0, "hanging": 18 },
+          "lineGap": 6,
+          "items": [
+            { "text": "Icon bullet (arrow) indicates movement." }
+          ]
+        },
+        {
+          "type": "list",
+          "region": "icon_alert",
+          "style": "icon",
+          "bullet": { "size": "md", "gap": 8, "color": "text", "icon": "alert-triangle" },
+          "indent": { "left": 0, "hanging": 18 },
+          "lineGap": 6,
+          "items": [
+            { "text": "Icon bullet (alert) flags risk." }
+          ]
+        },
+        {
+          "type": "list",
+          "region": "none",
+          "style": "none",
+          "bullet": { "size": "md", "gap": 8, "color": "text" },
+          "indent": { "left": 0, "hanging": 18 },
+          "lineGap": 6,
+          "items": [
+            { "text": "No bullet keeps the same text alignment." }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "title": "Company Strategy Update - Q2 2026",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-13T00:00:00Z"
+  },
+  "theme": "consulting_dark_v1",
+  "slides": [
+    {
+      "id": "title-slide",
+      "title": "Title Slide",
+      "template": "title_slide",
+      "fills": {
+        "title": { "content": "Q2 2026 Strategy Update" },
+        "subtitle": { "content": "Execution Discipline + Growth Acceleration" },
+        "footer": { "content": "Confidential - Internal Use Only" }
+      }
+    },
+    {
+      "id": "two-column-50-50",
+      "title": "Execution Discipline",
+      "template": { "name": "two_column_50_50", "variant": "comfortable" },
+      "fills": {
+        "title": { "content": "Execution Discipline" },
+        "left": {
+          "items": [
+            {
+              "kind": "list",
+              "items": [
+                "Deterministic template compilation",
+                "Theme-driven typography",
+                "Strict validation",
+                "No silent degradation"
+              ]
+            }
+          ]
+        },
+        "right": {
+          "items": [
+            {
+              "kind": "callout",
+              "text": "System stability reached",
+              "variant": "elevated"
+            },
+            {
+              "kind": "list",
+              "items": [
+                "Arrowheads stable",
+                "Padding inset working",
+                "Geometry invariant across themes"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "metrics-grid",
+      "title": "Grid 3x3 Metrics",
+      "template": { "name": "matrix_3x3", "variant": "compact" },
+      "fills": {
+        "metrics": {
+          "items": [
+            {
+              "kind": "text",
+              "text": "98%\\nRender determinism",
+              "textStyleSlot": "text.title",
+              "variant": "surface"
+            },
+            {
+              "kind": "text",
+              "text": "0\\nSilent degradations",
+              "textStyleSlot": "text.title",
+              "variant": "surface"
+            },
+            {
+              "kind": "text",
+              "text": "100%\\nTemplate compilation success",
+              "textStyleSlot": "text.title",
+              "variant": "surface"
+            },
+            {
+              "kind": "text",
+              "text": "4.5:1\\nMin contrast",
+              "textStyleSlot": "text.title",
+              "variant": "surface"
+            },
+            {
+              "kind": "text",
+              "text": "10 EMU\\nQuantization step",
+              "textStyleSlot": "text.title",
+              "variant": "surface"
+            },
+            {
+              "kind": "text",
+              "text": "v1\\nTemplate inheritance stable",
+              "textStyleSlot": "text.title",
+              "variant": "surface"
+            },
+            {
+              "kind": "text",
+              "text": "IR\\nValidation gate active",
+              "textStyleSlot": "text.title",
+              "variant": "surface"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "chart-insights",
+      "title": "Chart + Insights",
+      "template": "chart_plus_insights",
+      "fills": {
+        "title": { "content": "Growth Acceleration" },
+        "chart": {
+          "content": {
+            "chartType": "column",
+            "title": "Quarterly Growth",
+            "dataSeries": [
+              {
+                "name": "Q1-Q4",
+                "data": [["Q1", 42], ["Q2", 55], ["Q3", 68], ["Q4", 90]]
+              }
+            ]
+          }
+        },
+        "insights": {
+          "items": [
+            {
+              "kind": "list",
+              "items": [
+                "Growth accelerating",
+                "Execution discipline compounding",
+                "Q4 target achievable"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "table-callout",
+      "title": "Table + Callout",
+      "template": "table_full",
+      "fills": {
+        "title": { "content": "Execution Status" },
+        "table": {
+          "content": {
+            "headers": ["Feature", "Status", "Risk"],
+            "rows": [
+              ["Templates v1", "Complete", "Low"],
+              ["Theme contrast enforcement", "Complete", "Low"],
+              ["Orthogonal routing", "Backlog", "Medium"],
+              ["Constraint solver", "Backlog", "Medium"]
+            ]
+          }
+        },
+        "callout": {
+          "text": "All foundational systems stabilized",
+          "leader": { "endArrow": "triangle" }
+        }
+      }
+    },
+    {
+      "id": "theme-invariance",
+      "title": "Theme Invariance Demo",
+      "template": "two_column_66_33",
+      "fills": {
+        "title": { "content": "Theme Invariance Demo" },
+        "left": {
+          "items": [
+            {
+              "kind": "list",
+              "items": [
+                "Render in light theme",
+                "Render in dark theme",
+                "Compare region rects",
+                "Geometry must match exactly"
+              ]
+            }
+          ]
+        },
+        "right": {
+          "items": [
+            {
+              "kind": "callout",
+              "text": "Style changes only",
+              "variant": "elevated"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

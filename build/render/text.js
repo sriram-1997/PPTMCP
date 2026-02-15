@@ -25,25 +25,32 @@ function valignToPptx(value) {
             return "top";
     }
 }
-function defaultTextFontByRegion(regionName) {
+function resolveFontScale(regionName, theme) {
     const lower = regionName.toLowerCase();
     if (lower.includes("title") || lower.includes("header")) {
-        return 32;
+        return theme.fontScale.title;
+    }
+    if (lower.includes("subtitle")) {
+        return theme.fontScale.subtitle;
     }
     if (lower.includes("caption") || lower.includes("footer") || lower.includes("note")) {
-        return 11;
+        return theme.fontScale.caption;
     }
-    return 16;
+    return theme.fontScale.body;
 }
 function resolveTextStyle(regionName, style, theme, defaultColor) {
-    const baseSize = style?.fontSize ?? defaultTextFontByRegion(regionName);
+    const scale = resolveFontScale(regionName, theme);
+    const baseSize = style?.fontSize ?? scale.size;
+    const defaultPadding = theme.spaceScale[1] ?? DEFAULT_TEXT_PADDING_PT;
+    const defaultBold = scale.weight >= theme.type.weightBold;
     return {
+        fontFace: scale.family,
         fontSize: baseSize,
         minFont: style?.minFont ?? DEFAULT_MIN_FONT,
         fit: style?.fit ?? "shrink",
         lineHeight: style?.lineHeight ?? 1.2,
-        paddingPt: style?.paddingPt ?? DEFAULT_TEXT_PADDING_PT,
-        bold: style?.bold ?? false,
+        paddingPt: style?.paddingPt ?? defaultPadding,
+        bold: style?.bold ?? defaultBold,
         italic: style?.italic ?? false,
         color: normalizeColor(style?.color, defaultColor),
         align: alignToPptx(style?.align),
@@ -98,23 +105,18 @@ function wrapParagraph(paragraph, maxUnitsPerLine) {
     if (!paragraph.trim()) {
         return [""];
     }
-    const bulletMatch = paragraph.trimStart().match(/^([\u2022\-\u25AA\u25E6])\s+(.*)$/u);
-    const firstPrefix = bulletMatch ? `${bulletMatch[1]} ` : "";
-    const nextPrefix = bulletMatch ? "  " : "";
-    const body = bulletMatch ? bulletMatch[2] : paragraph.trim();
+    const body = paragraph.trim();
     const words = body.split(/\s+/).filter((word) => word.length > 0);
     if (words.length === 0) {
-        return [firstPrefix.trimEnd()];
+        return [""];
     }
     const lines = [];
     let currentText = "";
-    let currentUnits = textUnits(firstPrefix);
-    let currentPrefix = firstPrefix;
+    let currentUnits = 0;
     const pushCurrent = () => {
-        lines.push(`${currentPrefix}${currentText}`.trimEnd());
+        lines.push(currentText.trimEnd());
         currentText = "";
-        currentPrefix = nextPrefix;
-        currentUnits = textUnits(nextPrefix);
+        currentUnits = 0;
     };
     for (const word of words) {
         const spaceUnits = currentText.length > 0 ? glyphUnits(" ") : 0;
@@ -130,10 +132,10 @@ function wrapParagraph(paragraph, maxUnitsPerLine) {
         if (currentText.length > 0) {
             pushCurrent();
         }
-        const maxForWord = Math.max(1, maxUnitsPerLine - textUnits(currentPrefix));
+        const maxForWord = Math.max(1, maxUnitsPerLine);
         if (textUnits(word) <= maxForWord) {
             currentText = word;
-            currentUnits = textUnits(currentPrefix) + textUnits(word);
+            currentUnits = textUnits(word);
             continue;
         }
         const chunks = wrapLongToken(word, maxForWord);
@@ -141,16 +143,15 @@ function wrapParagraph(paragraph, maxUnitsPerLine) {
             const chunk = chunks[idx];
             if (idx === chunks.length - 1) {
                 currentText = chunk;
-                currentUnits = textUnits(currentPrefix) + textUnits(chunk);
+                currentUnits = textUnits(chunk);
             }
             else {
-                lines.push(`${currentPrefix}${chunk}`);
-                currentPrefix = nextPrefix;
+                lines.push(chunk);
             }
         }
     }
     if (currentText.length > 0 || lines.length === 0) {
-        lines.push(`${currentPrefix}${currentText}`.trimEnd());
+        lines.push(currentText.trimEnd());
     }
     return lines;
 }
@@ -288,6 +289,13 @@ export function prepareTextElement(args) {
     if (action === "error") {
         args.hardErrors.push(buildOverflowMessage(entry));
     }
+    const boxStyle = defaults.boxStyle
+        ? {
+            fill: defaults.boxStyle.fill,
+            border: defaults.boxStyle.border,
+            borderWidth: defaults.boxStyle.borderWidth,
+        }
+        : undefined;
     return {
         kind: "text",
         z: args.z,
@@ -297,7 +305,9 @@ export function prepareTextElement(args) {
         variant: args.element.variant,
         bbox: args.bbox,
         content,
+        fontFace: style.fontFace,
         fontSize,
+        boxStyle,
         style: {
             bold: style.bold,
             italic: style.italic,
@@ -309,12 +319,23 @@ export function prepareTextElement(args) {
         },
     };
 }
-export function renderTextElement(slide, element) {
+export function renderTextElement(slide, shapeType, element) {
+    if (element.boxStyle) {
+        slide.addShape(shapeType.rect, {
+            x: element.bbox.x,
+            y: element.bbox.y,
+            w: element.bbox.width,
+            h: element.bbox.height,
+            fill: { color: element.boxStyle.fill },
+            line: { color: element.boxStyle.border, width: element.boxStyle.borderWidth },
+        });
+    }
     slide.addText(element.content, {
         x: element.bbox.x,
         y: element.bbox.y,
         w: element.bbox.width,
         h: element.bbox.height,
+        fontFace: element.fontFace,
         fontSize: element.fontSize,
         bold: element.style.bold,
         italic: element.style.italic,

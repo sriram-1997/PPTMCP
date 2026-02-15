@@ -21,11 +21,12 @@ PPTMCP is a deterministic PowerPoint generation system driven by a JSON slide pr
   - Basic rectangular tables with headers + rows.
   - Cell types: string or `{text, style}`.
   - Constraints: row cell count must match headers; merged cells unsupported and hard-fail.
-- Chart elements (v0)
-  - Supported: column charts only (`chartType="column"`).
-  - Data schema: `dataSeries` with 1-2 series, each `data` is `[label, number]` pairs.
-  - Category alignment required across series.
-  - Density guards: category count > 25 or long labels in narrow regions hard-fail unless `allow_dense_charts=true`.
+- Chart elements (v0/v0.1)
+  - Supported: column charts (`chartType="column"`) and line charts (`chartType="line"`).
+  - Column data schema: `dataSeries` with 1-2 series, each `data` is `[label, number]` pairs.
+  - Line data schema: `data.labels` with `data.series[].values` aligned to labels.
+  - Category alignment required across column series; label/value length alignment required for line charts.
+  - Density guards (column): category count > 25 or long labels in narrow regions hard-fail unless `allow_dense_charts=true`.
 - Callout elements (v0)
   - Box + text + straight leader line, region-bounded container.
   - Placement: explicit direction or deterministic auto placement.
@@ -126,6 +127,14 @@ PPTMCP is a deterministic PowerPoint generation system driven by a JSON slide pr
 - `image_type_not_supported`
 - `image_fit_invalid`
 - `image_style_invalid`
+- `image_opacity_invalid`
+- `image_crop_invalid`
+- `image_overlay_invalid`
+- `image_border_radius_invalid`
+- `image_mask_failed`
+- `icon_registry_missing`
+- `icon_not_found`
+- `icon_invalid`
 - `theme_invalid_type`
 - `theme_name_invalid`
 - `theme_overrides_invalid_type`
@@ -133,6 +142,7 @@ PPTMCP is a deterministic PowerPoint generation system driven by a JSON slide pr
 - `theme_invalid_definition`
 - `theme_invalid_json`
 - `theme_not_found`
+- `theme_contrast_invalid`
 - `unknown_style_token`
 - `style_token_invalid`
 
@@ -140,3 +150,22 @@ PPTMCP is a deterministic PowerPoint generation system driven by a JSON slide pr
 Pure structural extraction.
 No behavior changes.
 Prepared system for Theme/Style Tokens v0.
+
+## Theme v2 + Geometry v1
+- Added post-layout geometry resolution for connectors and callout leaders (arrowheads + trimming, deterministic rounding).
+- Introduced Theme v2 scales: font, space, stroke (pure style layer).
+- Added Geometry v1 smoke fixture and updated theme readability matrix.
+
+
+## Templates v1
+- Added template compilation layer (templates compile to grid/regions + elements).
+- Added template inheritance (single extends) and template library (>=10 templates).
+- Updated theme readability matrix to render via `matrix_3x3` template.
+- Added templates smoke (light/dark) for deterministic layout verification.
+
+## Design Vocabulary Expansion (2026-02-13)
+- Table v0.1: header/body fills + text colors + border driven by theme tokens with contrast validation.
+- Icons v0: deterministic registry in `src/assets/iconRegistry.json` and assets in `src/assets/icons/`.
+  - Sources: Heroicons `669274d568e42b14f51700ddb2a12b02686f2d55` (optimized/24/outline) and Feather `3dc050d97405062eba78aa57115c0a15c63abdaa` (icons).
+  - Added `icons:lint` and `smoke:icons`.
+- Image v1: opacity/crop/overlay/border radius supported via deterministic SVG mask wrapper (hard-fail on mask errors).

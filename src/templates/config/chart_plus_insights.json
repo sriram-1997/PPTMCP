@@ -1,0 +1,53 @@
+{
+  "id": "chart_plus_insights",
+  "title": "Chart + Insights",
+  "extends": "base_standard",
+  "placeholders": [
+    {
+      "id": "title",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 0,
+        "colSpan": 12,
+        "rowSpan": 1
+      },
+      "layer": "content",
+      "styleSlots": {
+        "text": "text.title",
+        "padding": 1
+      }
+    },
+    {
+      "id": "chart",
+      "kind": "chart",
+      "region": {
+        "col": 0,
+        "row": 1,
+        "colSpan": 8,
+        "rowSpan": 6
+      },
+      "layer": "content"
+    },
+    {
+      "id": "insights",
+      "kind": "text",
+      "region": {
+        "col": 8,
+        "row": 1,
+        "colSpan": 4,
+        "rowSpan": 6
+      },
+      "layer": "content",
+      "layoutMode": "vstack",
+      "gapToken": 2,
+      "allowedKinds": ["text", "list"],
+      "minItems": 1,
+      "maxItems": 4,
+      "styleSlots": {
+        "text": "text.body",
+        "padding": 2
+      }
+    }
+  ]
+}

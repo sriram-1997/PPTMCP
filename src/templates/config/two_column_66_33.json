@@ -1,0 +1,27 @@
+{
+  "id": "two_column_66_33",
+  "title": "Two Column 66/33",
+  "extends": "two_column_50_50",
+  "placeholders": [
+    {
+      "id": "left",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 1,
+        "colSpan": 8,
+        "rowSpan": 6
+      }
+    },
+    {
+      "id": "right",
+      "kind": "text",
+      "region": {
+        "col": 8,
+        "row": 1,
+        "colSpan": 4,
+        "rowSpan": 6
+      }
+    }
+  ]
+}
