@@ -243,6 +243,8 @@ export function renderCalloutElement(slide, shapeType, element, theme) {
         fit: "none",
         margin: element.text.style.paddingPt,
         breakLine: true,
+        paraSpaceBeforePt: 0,
+        paraSpaceAfterPt: 0,
     });
 }
 //# sourceMappingURL=callout.js.map

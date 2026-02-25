@@ -41,7 +41,10 @@
       "layer": "content",
       "layoutMode": "vstack",
       "gapToken": 2,
-      "allowedKinds": ["text", "list"],
+      "allowedKinds": [
+        "text",
+        "list"
+      ],
       "minItems": 1,
       "maxItems": 4,
       "styleSlots": {

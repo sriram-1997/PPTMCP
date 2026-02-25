@@ -83,7 +83,7 @@
           "content": "PPTMCP"
         },
         "subtitle": {
-          "content": "Deterministic slide generation engine for consulting-grade decks"
+          "content": "Deterministic slide generation for consulting decks"
         },
         "bullets": {
           "items": [
@@ -365,7 +365,7 @@
         "callout": {
           "content": {
             "icon": "bolt",
-            "text": "Strict schema + deterministic layout eliminate slide drift."
+            "text": "Strict schema prevents drift."
           },
           "leader": {}
         }
@@ -560,7 +560,7 @@
           },
           "content": {
             "icon": "shield",
-            "text": "Strict mode + geometry v1 keep output deterministic."
+            "text": "Strict mode enforces determinism."
           },
           "leader": {
             "style": "line"
@@ -841,7 +841,7 @@
           },
           "content": {
             "icon": "chart-bar",
-            "text": "Overlays compute mean + least-squares trend, clipped to the plot area."
+            "text": "Overlays: mean + trend line, clipped to plot."
           },
           "leader": {
             "style": "line"
@@ -1304,7 +1304,7 @@
         "callout": {
           "content": {
             "icon": "shield",
-            "text": "No-repair PPTX policy + geometry v1 invariants protect downstream edits."
+            "text": "No-repair PPTX + geometry v1 protect edits."
           },
           "leader": {}
         },

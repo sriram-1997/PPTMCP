@@ -8,6 +8,7 @@ declare function renderPptmcp(args: {
     allow_dense_charts?: boolean;
     export_pdf?: boolean;
     debug_integrity?: boolean;
+    enterprise_mode?: boolean;
 }): Promise<RenderResult>;
 export declare const pptRenderer: {
     name: string;
@@ -54,6 +55,11 @@ export declare const pptRenderer: {
                 description: string;
                 default: boolean;
             };
+            enterprise_mode: {
+                type: string;
+                description: string;
+                default: boolean;
+            };
         };
         required: string[];
     };
@@ -66,6 +72,7 @@ export declare const pptRenderer: {
         allow_dense_charts?: boolean;
         export_pdf?: boolean;
         debug_integrity?: boolean;
+        enterprise_mode?: boolean;
     }): Promise<{
         content: {
             type: string;

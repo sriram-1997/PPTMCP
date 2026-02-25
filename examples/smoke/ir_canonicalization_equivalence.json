@@ -1,0 +1,81 @@
+{
+  "title": "IR Canonicalization Equivalence",
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "template-card-slide",
+      "title": "Template Card",
+      "template": {
+        "id": "inline_card_equivalence_template",
+        "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+        "placeholders": [
+          {
+            "id": "card_slot",
+            "kind": "card",
+            "region": { "col": 1, "row": 1, "colSpan": 10, "rowSpan": 6 }
+          }
+        ]
+      },
+      "fills": {
+        "card_slot": {
+          "variant": "surface",
+          "style": { "paddingSlot": 3 },
+          "header": {
+            "title": "Canonical Card",
+            "subtitle": "Built through template compiler"
+          },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "**Bold lead** - supporting explanation wraps into a second line." },
+                { "text": "Second point verifies deterministic geometry." }
+              ]
+            }
+          ],
+          "footer": {
+            "strip": true,
+            "label": "Key",
+            "text": "Canonicalization equivalence."
+          }
+        }
+      }
+    },
+    {
+      "id": "raw-card-slide",
+      "title": "Raw IR Card",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "card_slot": { "col": 1, "row": 1, "colSpan": 10, "rowSpan": 6 }
+      },
+      "elements": [
+        {
+          "type": "card",
+          "region": "card_slot",
+          "variant": "surface",
+          "style": { "paddingPt": 6 },
+          "header": {
+            "title": "Canonical Card",
+            "subtitle": "Built through template compiler"
+          },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "**Bold lead** - supporting explanation wraps into a second line." },
+                { "text": "Second point verifies deterministic geometry." }
+              ]
+            }
+          ],
+          "footer": {
+            "strip": true,
+            "label": "Key",
+            "text": "Canonicalization equivalence."
+          }
+        }
+      ]
+    }
+  ]
+}

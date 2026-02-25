@@ -1,0 +1,49 @@
+{
+  "id": "strategy_stack",
+  "title": "Strategy Stack",
+  "extends": "base_standard",
+  "placeholders": [
+    {
+      "id": "title",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 0,
+        "colSpan": 12,
+        "rowSpan": 1
+      },
+      "layer": "content",
+      "styleSlots": {
+        "text": "text.title",
+        "padding": 1
+      },
+      "allowedKinds": [
+        "text"
+      ],
+      "minItems": 1,
+      "maxItems": 1,
+      "layoutMode": "single"
+    },
+    {
+      "id": "stack",
+      "kind": "card",
+      "region": {
+        "col": 2,
+        "row": 2,
+        "colSpan": 8,
+        "rowSpan": 6
+      },
+      "layer": "content",
+      "styleSlots": {
+        "padding": 0
+      },
+      "allowedKinds": [
+        "card"
+      ],
+      "minItems": 4,
+      "maxItems": 4,
+      "layoutMode": "vstack",
+      "gapToken": 0
+    }
+  ]
+}

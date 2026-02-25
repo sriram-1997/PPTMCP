@@ -15,4 +15,20 @@ export function inToPt(valueIn) {
 export function inchesToEmu(valueIn) {
     return valueIn * EMU_PER_INCH;
 }
+export function emuToInches(valueEmu) {
+    return valueEmu / EMU_PER_INCH;
+}
+export function quantizeInchesToEmuStep(valueIn) {
+    if (!Number.isFinite(valueIn)) {
+        return valueIn;
+    }
+    const emu = Math.round((valueIn * EMU_PER_INCH) / EMU_STEP) * EMU_STEP;
+    return emu / EMU_PER_INCH;
+}
+export function quantizePtToEmuStep(valuePt) {
+    if (!Number.isFinite(valuePt)) {
+        return valuePt;
+    }
+    return inToPt(quantizeInchesToEmuStep(ptToIn(valuePt)));
+}
 //# sourceMappingURL=units.js.map

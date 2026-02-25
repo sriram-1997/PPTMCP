@@ -16,6 +16,44 @@ function roundBox(box) {
         height: roundGeom(box.height),
     };
 }
+function unionBoxes(current, next) {
+    if (!current) {
+        return { ...next };
+    }
+    const x0 = Math.min(current.x, next.x);
+    const y0 = Math.min(current.y, next.y);
+    const x1 = Math.max(current.x + current.width, next.x + next.width);
+    const y1 = Math.max(current.y + current.height, next.y + next.height);
+    return {
+        x: x0,
+        y: y0,
+        width: x1 - x0,
+        height: y1 - y0,
+    };
+}
+function translatePoint(point, delta) {
+    return roundPoint({ x: point.x + delta.x, y: point.y + delta.y });
+}
+function translateBox(box, delta) {
+    return roundBox({
+        x: box.x + delta.x,
+        y: box.y + delta.y,
+        width: box.width,
+        height: box.height,
+    });
+}
+function translateArrowHead(arrow, delta) {
+    return {
+        ...arrow,
+        bbox: translateBox(arrow.bbox, delta),
+        points: arrow.points.map((point) => {
+            if ("close" in point) {
+                return point;
+            }
+            return { ...point, x: roundGeom(point.x + delta.x), y: roundGeom(point.y + delta.y) };
+        }),
+    };
+}
 function roundArrowHead(arrow) {
     return {
         ...arrow,
@@ -80,6 +118,9 @@ function resolveConnectorGeometry(element, slideIndex, warnings, hardErrors) {
     if (lineRectResult.error) {
         hardErrors.push(`Slide ${slideIndex + 1} element ${element.order + 1}: ${lineRectResult.error}`);
     }
+    let lineStart = roundPoint(start);
+    let lineEnd = roundPoint(end);
+    let arrowHeads = [];
     const arrowMeta = computeLineWithArrowheads({
         start,
         end,
@@ -87,20 +128,22 @@ function resolveConnectorGeometry(element, slideIndex, warnings, hardErrors) {
         color: element.style.color,
         startArrow: element.style.startArrow,
         endArrow: element.style.endArrow,
+        arrowSizePt: element.arrowSizePt,
         warnings,
         warnPrefix: `Slide ${slideIndex + 1} element ${element.order + 1}:`,
     });
-    const lineStart = roundPoint(arrowMeta.lineStart);
-    const lineEnd = roundPoint(arrowMeta.lineEnd);
+    if (arrowMeta.error) {
+        hardErrors.push(`Slide ${slideIndex + 1} element ${element.order + 1}: ${arrowMeta.error}`);
+    }
+    lineStart = roundPoint(arrowMeta.lineStart);
+    lineEnd = roundPoint(arrowMeta.lineEnd);
+    arrowHeads = arrowMeta.arrowHeads.map((arrow) => roundArrowHead(arrow));
     const adjustedRect = lineRectFromPoints(lineStart, lineEnd);
     element.start = start;
     element.end = end;
     element.lineStart = lineStart;
     element.lineEnd = lineEnd;
-    if (arrowMeta.arrowHeads.length > 1) {
-        hardErrors.push(`Slide ${slideIndex + 1} element ${element.order + 1}: connector_arrowhead_count_invalid`);
-    }
-    element.arrowHeads = arrowMeta.arrowHeads.map((arrow) => roundArrowHead(arrow));
+    element.arrowHeads = arrowHeads;
     element.lineRect = roundBox(adjustedRect.rect);
     element.lineFlipV = adjustedRect.flipV;
     element.lineFlipH = adjustedRect.flipH;
@@ -122,6 +165,9 @@ function resolveEdgeGeometry(element, slideIndex, warnings, hardErrors) {
         warnings,
         warnPrefix: `Slide ${slideIndex + 1} element ${element.order + 1}:`,
     });
+    if (arrowMeta.error) {
+        hardErrors.push(`Slide ${slideIndex + 1} element ${element.order + 1}: ${arrowMeta.error}`);
+    }
     const lineStart = roundPoint(arrowMeta.lineStart);
     const lineEnd = roundPoint(arrowMeta.lineEnd);
     const adjustedRect = lineRectFromPoints(lineStart, lineEnd);
@@ -129,10 +175,8 @@ function resolveEdgeGeometry(element, slideIndex, warnings, hardErrors) {
     element.end = end;
     element.lineStart = lineStart;
     element.lineEnd = lineEnd;
-    if (arrowMeta.arrowHeads.length > 1) {
-        hardErrors.push(`Slide ${slideIndex + 1} element ${element.order + 1}: edge_arrowhead_count_invalid`);
-    }
     element.arrowHeads = arrowMeta.arrowHeads.map((arrow) => roundArrowHead(arrow));
+    element.metrics = { renderMode: "unified" };
     element.lineRect = roundBox(adjustedRect.rect);
     element.lineFlipV = adjustedRect.flipV;
     element.lineFlipH = adjustedRect.flipH;
@@ -157,6 +201,9 @@ function resolveCalloutLeaderGeometry(element, slideIndex, warnings, hardErrors)
         warnings,
         warnPrefix: `Slide ${slideIndex + 1} element ${element.order + 1}:`,
     });
+    if (arrowMeta.error) {
+        hardErrors.push(`Slide ${slideIndex + 1} element ${element.order + 1}: ${arrowMeta.error}`);
+    }
     const lineStart = roundPoint(arrowMeta.lineStart);
     const lineEnd = roundPoint(arrowMeta.lineEnd);
     const adjustedRect = lineRectFromPoints(lineStart, lineEnd);
@@ -172,6 +219,91 @@ function resolveCalloutLeaderGeometry(element, slideIndex, warnings, hardErrors)
     element.leaderFlipV = adjustedRect.flipV;
     element.leaderFlipH = adjustedRect.flipH;
 }
+function applyDiagramCentering(slide) {
+    if (!slide.diagramRegionBBox) {
+        return;
+    }
+    let diagramBBox = null;
+    slide.elements.forEach((element) => {
+        if (element.kind === "node") {
+            element.bbox = roundBox(element.bbox);
+            if (element.icon) {
+                element.icon.bbox = roundBox(element.icon.bbox);
+            }
+            element.label.bbox = roundBox(element.label.bbox);
+            diagramBBox = unionBoxes(diagramBBox, element.bbox);
+        }
+        else if (element.kind === "edge") {
+            element.lineRect = roundBox(element.lineRect);
+            diagramBBox = unionBoxes(diagramBBox, element.lineRect);
+        }
+        else if (element.kind === "connector") {
+            element.lineRect = roundBox(element.lineRect);
+            diagramBBox = unionBoxes(diagramBBox, element.lineRect);
+        }
+    });
+    if (!diagramBBox) {
+        return;
+    }
+    const region = roundBox(slide.diagramRegionBBox);
+    const regionCenter = { x: region.x + region.width / 2, y: region.y + region.height / 2 };
+    const diagramBox = diagramBBox;
+    const diagramCenter = { x: diagramBox.x + diagramBox.width / 2, y: diagramBox.y + diagramBox.height / 2 };
+    const delta = { x: regionCenter.x - diagramCenter.x, y: regionCenter.y - diagramCenter.y };
+    if (Math.abs(delta.x) < EPSILON_INCHES && Math.abs(delta.y) < EPSILON_INCHES) {
+        return;
+    }
+    slide.elements.forEach((element) => {
+        if (element.kind === "node") {
+            element.bbox = translateBox(element.bbox, delta);
+            if (element.icon) {
+                element.icon.bbox = translateBox(element.icon.bbox, delta);
+            }
+            element.label.bbox = translateBox(element.label.bbox, delta);
+        }
+        else if (element.kind === "edge") {
+            element.start = translatePoint(element.start, delta);
+            element.end = translatePoint(element.end, delta);
+            element.lineStart = translatePoint(element.lineStart ?? element.start, delta);
+            element.lineEnd = translatePoint(element.lineEnd ?? element.end, delta);
+            element.lineRect = translateBox(element.lineRect, delta);
+        }
+        else if (element.kind === "connector") {
+            element.start = translatePoint(element.start, delta);
+            element.end = translatePoint(element.end, delta);
+            element.lineStart = translatePoint(element.lineStart ?? element.start, delta);
+            element.lineEnd = translatePoint(element.lineEnd ?? element.end, delta);
+            element.lineRect = translateBox(element.lineRect, delta);
+            if (element.arrowHeads && element.arrowHeads.length > 0) {
+                element.arrowHeads = element.arrowHeads.map((arrow) => translateArrowHead(arrow, delta));
+            }
+        }
+        else if (element.kind === "callout") {
+            element.anchor = translatePoint(element.anchor, delta);
+            element.box = translateBox(element.box, delta);
+            element.text.bbox = translateBox(element.text.bbox, delta);
+            if (element.icon) {
+                element.icon.bbox = translateBox(element.icon.bbox, delta);
+            }
+            if (element.leader) {
+                element.leader.start = translatePoint(element.leader.start, delta);
+                element.leader.end = translatePoint(element.leader.end, delta);
+                if (element.leaderLineStart) {
+                    element.leaderLineStart = translatePoint(element.leaderLineStart, delta);
+                }
+                if (element.leaderLineEnd) {
+                    element.leaderLineEnd = translatePoint(element.leaderLineEnd, delta);
+                }
+                if (element.leaderRect) {
+                    element.leaderRect = translateBox(element.leaderRect, delta);
+                }
+                if (element.leaderArrowHeads && element.leaderArrowHeads.length > 0) {
+                    element.leaderArrowHeads = element.leaderArrowHeads.map((arrow) => translateArrowHead(arrow, delta));
+                }
+            }
+        }
+    });
+}
 export function resolveGeometryV1(args) {
     args.slides.forEach((slide, slideIndex) => {
         slide.elements.forEach((element) => {
@@ -185,6 +317,7 @@ export function resolveGeometryV1(args) {
                 resolveCalloutLeaderGeometry(element, slideIndex, args.warnings, args.hardErrors);
             }
         });
+        applyDiagramCentering(slide);
     });
 }
 //# sourceMappingURL=geometry.js.map

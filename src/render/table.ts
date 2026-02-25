@@ -15,6 +15,7 @@ import { normalizeColor } from "./utils/color.js";
 import { roundInches } from "./utils/units.js";
 import { addValidationEntry, buildOverflowMessage } from "./validate.js";
 import { estimateTextLayout, textUnits, truncateTextToFit } from "./text.js";
+import { normalizeText } from "./utils/textRuns.js";
 
 const DEFAULT_MIN_FONT = 10;
 const DEFAULT_TABLE_PADDING_PT = 2;
@@ -61,9 +62,9 @@ function tableCellText(cell: string | TableCell | undefined): string {
     return "";
   }
   if (typeof cell === "string") {
-    return cell;
+    return normalizeText(cell);
   }
-  return typeof cell.text === "string" ? cell.text : "";
+  return typeof cell.text === "string" ? normalizeText(cell.text) : "";
 }
 
 function tableCellStyle(cell: string | TableCell | undefined): { bold?: boolean; color?: string } {

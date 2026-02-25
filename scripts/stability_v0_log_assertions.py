@@ -2,16 +2,15 @@
 import os
 import sys
 
-LOGS = [
+DEFAULT_LOGS = [
     "out/demos/pptmcp_capabilities_deck_v1.renderlog.txt",
     "out/demos/pptmcp_capabilities_deck_v1_dark.renderlog.txt",
     "out/demos/pptmcp_capabilities_deck_v1.pdf.renderlog.txt",
 ]
-OUT = "out/demos/pptmcp_capabilities_deck_v1.log_assertions.json"
+DEFAULT_OUT = "out/demos/pptmcp_capabilities_deck_v1.log_assertions.json"
 
 TOKENS = [
     "overflow",
-    "arrowhead_scaled",
     "missing_asset",
     "silent_drop",
     "dropped",
@@ -21,9 +20,20 @@ TOKENS = [
 
 
 def main() -> int:
+    args = sys.argv[1:]
+    if args:
+        if len(args) < 2:
+            print("Usage: python scripts/stability_v0_log_assertions.py <out_json> <log1> [log2 ...]")
+            return 1
+        out_path = args[0]
+        logs = args[1:]
+    else:
+        out_path = DEFAULT_OUT
+        logs = DEFAULT_LOGS
+
     results = {}
     failed = False
-    for path in LOGS:
+    for path in logs:
         entry = {"path": path, "found": []}
         if not os.path.exists(path):
             entry["error"] = "log_missing"
@@ -50,8 +60,8 @@ def main() -> int:
         "results": results,
         "ok": not failed,
     }
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    with open(OUT, "w", encoding="utf-8") as f:
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    with open(out_path, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)
         f.write("\n")
 

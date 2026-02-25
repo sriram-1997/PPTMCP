@@ -1,0 +1,90 @@
+{
+  "id": "kpi_dashboard",
+  "title": "KPI Dashboard",
+  "extends": "base_standard",
+  "placeholders": [
+    {
+      "id": "title",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 0,
+        "colSpan": 12,
+        "rowSpan": 1
+      },
+      "layer": "content",
+      "styleSlots": {
+        "text": "text.title",
+        "padding": 1
+      },
+      "allowedKinds": [
+        "text"
+      ],
+      "minItems": 1,
+      "maxItems": 1,
+      "layoutMode": "single"
+    },
+    {
+      "id": "kpis",
+      "kind": "card",
+      "region": {
+        "col": 0,
+        "row": 1,
+        "colSpan": 12,
+        "rowSpan": 2
+      },
+      "layer": "content",
+      "styleSlots": {
+        "padding": 0
+      },
+      "allowedKinds": [
+        "card"
+      ],
+      "minItems": 4,
+      "maxItems": 4,
+      "layoutMode": "hstack",
+      "gapToken": 1
+    },
+    {
+      "id": "trend_chart",
+      "kind": "chart",
+      "region": {
+        "col": 0,
+        "row": 3,
+        "colSpan": 8,
+        "rowSpan": 5
+      },
+      "layer": "content",
+      "styleSlots": {
+        "padding": 1
+      },
+      "allowedKinds": [
+        "chart"
+      ],
+      "minItems": 1,
+      "maxItems": 1,
+      "layoutMode": "single"
+    },
+    {
+      "id": "insights",
+      "kind": "list",
+      "region": {
+        "col": 8,
+        "row": 3,
+        "colSpan": 4,
+        "rowSpan": 5
+      },
+      "layer": "content",
+      "styleSlots": {
+        "padding": 1
+      },
+      "allowedKinds": [
+        "list"
+      ],
+      "minItems": 2,
+      "maxItems": 2,
+      "layoutMode": "vstack",
+      "gapToken": 1
+    }
+  ]
+}

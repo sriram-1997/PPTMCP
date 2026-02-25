@@ -38,7 +38,6 @@ $ppt = $null;
 $pres = $null;
 try {
   $ppt = New-Object -ComObject PowerPoint.Application;
-  $ppt.Visible = $false;
   $pres = $ppt.Presentations.Open($pptxPath, $true, $true, $false);
   $pres.SaveAs($pdfPath, 32);
 } finally {

@@ -99,6 +99,8 @@ export function prepareEdgeElement(args: {
 }
 
 export function renderEdgeElement(slide: any, shapeType: any, element: PreparedEdgeElement): void {
+  const useCustom = Boolean(element.arrowHeads && element.arrowHeads.length > 0);
+  const endArrowType = useCustom ? "none" : element.style.endArrow === "triangle" ? "triangle" : "none";
   slide.addShape(shapeType.line, {
     x: element.lineRect.x,
     y: element.lineRect.y,
@@ -109,9 +111,10 @@ export function renderEdgeElement(slide: any, shapeType: any, element: PreparedE
     line: {
       color: element.style.color,
       width: element.style.widthPt,
+      endArrowType,
     },
   });
-  if (element.arrowHeads && element.arrowHeads.length > 0) {
-    renderArrowHeads(slide, shapeType, element.arrowHeads);
+  if (useCustom) {
+    renderArrowHeads(slide, shapeType, element.arrowHeads || []);
   }
 }

@@ -1,7 +1,11 @@
 import { resolveElementStyleDefaults } from "../theme/styleDefaults.js";
 import { normalizeColor } from "./utils/color.js";
 import { addValidationEntry, buildOverflowMessage } from "./validate.js";
+import { normalizeText } from "./utils/textRuns.js";
+import { resolveTextRhythm } from "../typography/rhythm.js";
 const DEFAULT_MIN_FONT = 10;
+const MIN_BODY_FONT_PT = 14;
+const MIN_TITLE_FONT_PT = 24;
 const DEFAULT_TEXT_PADDING_PT = 2;
 function alignToPptx(value) {
     switch (value) {
@@ -38,17 +42,30 @@ function resolveFontScale(regionName, theme) {
     }
     return theme.fontScale.body;
 }
-function resolveTextStyle(regionName, style, theme, defaultColor) {
+function resolveTextStyle(regionName, style, theme, defaultColor, contextLabel) {
     const scale = resolveFontScale(regionName, theme);
-    const baseSize = style?.fontSize ?? scale.size;
+    const baseSize = scale.size;
     const defaultPadding = theme.spaceScale[1] ?? DEFAULT_TEXT_PADDING_PT;
     const defaultBold = scale.weight >= theme.type.weightBold;
+    const rhythm = resolveTextRhythm({
+        regionName,
+        overrideLineHeight: style?.lineHeight,
+        contextLabel,
+    });
+    const lower = regionName.toLowerCase();
+    const isSubtitle = lower.includes("subtitle");
+    const isTitleLike = (lower.includes("title") || lower.includes("header")) && !isSubtitle;
+    const slotMin = isTitleLike
+        ? MIN_TITLE_FONT_PT
+        : lower.includes("caption") || lower.includes("footer") || lower.includes("note")
+            ? DEFAULT_MIN_FONT
+            : MIN_BODY_FONT_PT;
     return {
         fontFace: scale.family,
-        fontSize: baseSize,
-        minFont: style?.minFont ?? DEFAULT_MIN_FONT,
+        fontSize: style?.fontSize ?? baseSize,
+        minFont: Math.max(style?.minFont ?? DEFAULT_MIN_FONT, slotMin),
         fit: style?.fit ?? "shrink",
-        lineHeight: style?.lineHeight ?? 1.2,
+        lineHeight: rhythm.lineHeight,
         paddingPt: style?.paddingPt ?? defaultPadding,
         bold: style?.bold ?? defaultBold,
         italic: style?.italic ?? false,
@@ -202,13 +219,14 @@ export function truncateTextToFit(args) {
     return { text: truncatedText, estimate: estimateTextLayout({ ...args, text: truncatedText }) };
 }
 export function prepareTextElement(args) {
+    const contextLabel = `Slide ${args.slideIndex + 1} element ${args.elementIndex + 1}`;
     const defaults = resolveElementStyleDefaults(args.element, args.theme);
     const defaultColor = defaults.textStyle?.color ?? args.theme.text.colorPrimary;
-    const style = resolveTextStyle(args.element.region, args.element.style, args.theme, defaultColor);
+    const style = resolveTextStyle(args.element.region, args.element.style, args.theme, defaultColor, contextLabel);
     if (style.fontSize < style.minFont) {
         throw new Error(`Slide ${args.slideIndex + 1} element ${args.elementIndex + 1}: fontSize ${style.fontSize} is below minFont ${style.minFont}`);
     }
-    let content = args.element.content;
+    let content = normalizeText(args.element.content ?? "");
     let fontSize = style.fontSize;
     let estimate = estimateTextLayout({
         text: content,
@@ -345,6 +363,8 @@ export function renderTextElement(slide, shapeType, element) {
         fit: "none",
         margin: element.style.paddingPt,
         breakLine: true,
+        paraSpaceBeforePt: 0,
+        paraSpaceAfterPt: 0,
     });
 }
 //# sourceMappingURL=text.js.map

@@ -30,6 +30,7 @@ const PLACEHOLDER_KINDS = new Set([
     "list",
     "table",
     "chart",
+    "chevron_flow",
     "card",
     "callout",
     "connector",
@@ -930,6 +931,20 @@ function parseCardStyleSpec(style, prefix, errors) {
         }
         parsed.padding = style.padding;
     }
+    if (typeof style.paddingSlot !== "undefined") {
+        if (!Number.isInteger(style.paddingSlot) || style.paddingSlot < 0) {
+            pushCardFillError(prefix, errors);
+            return null;
+        }
+        parsed.paddingSlot = style.paddingSlot;
+    }
+    if (typeof style.paddingPt !== "undefined") {
+        if (typeof style.paddingPt !== "number" || !Number.isFinite(style.paddingPt) || style.paddingPt < 0) {
+            pushCardFillError(prefix, errors);
+            return null;
+        }
+        parsed.paddingPt = style.paddingPt;
+    }
     if (typeof style.shadow !== "undefined") {
         if (!["none", "sm"].includes(String(style.shadow))) {
             pushCardFillError(prefix, errors);
@@ -1406,7 +1421,8 @@ export function compileTemplateSpec(args) {
                         return;
                     }
                     if (kindValue === "card") {
-                        validateItemFields(itemObj, new Set(["kind", "variant", "style", "header", "body", "footer"]), itemPrefix, args.strict, errors);
+                        validateItemFields(itemObj, new Set(["kind", "variant", "style", "header", "body", "footer", "paddingSlot"]), itemPrefix, args.strict, errors);
+                        const paddingSlot = resolvePaddingSlot(resolveSlot(itemObj.paddingSlot, placeholder.styleSlots?.padding, template.defaultSlots?.padding), itemPrefix, errors);
                         let cardVariant = placeholder.variant;
                         if (typeof itemObj.variant !== "undefined") {
                             if (!isVariant(itemObj.variant)) {
@@ -1443,11 +1459,18 @@ export function compileTemplateSpec(args) {
                         if (!cardBody) {
                             return;
                         }
+                        let compiledCardStyle = cardStyle ? { ...cardStyle } : undefined;
+                        if (typeof paddingSlot !== "undefined") {
+                            compiledCardStyle = {
+                                ...(compiledCardStyle ?? {}),
+                                paddingPt: args.theme.spaceScale[paddingSlot],
+                            };
+                        }
                         elements.push({
                             type: "card",
                             region: regionId,
                             variant: cardVariant,
-                            style: cardStyle ?? undefined,
+                            style: compiledCardStyle,
                             header: cardHeader ?? undefined,
                             body: cardBody,
                             footer: cardFooter ?? undefined,
@@ -1701,7 +1724,7 @@ export function compileTemplateSpec(args) {
                     continue;
                 }
                 if (args.strict) {
-                    const allowedFields = new Set(["variant", "style", "header", "body", "footer"]);
+                    const allowedFields = new Set(["variant", "style", "header", "body", "footer", "paddingSlot"]);
                     for (const key of Object.keys(fillObj)) {
                         if (!allowedFields.has(key)) {
                             pushCardFillError(placeholderPrefix, errors);
@@ -1720,6 +1743,7 @@ export function compileTemplateSpec(args) {
                     }
                     cardVariant = fillObj.variant;
                 }
+                const paddingSlot = resolvePaddingSlot(resolveSlot(fillObj.paddingSlot, placeholder.styleSlots?.padding, template.defaultSlots?.padding), placeholderPrefix, errors);
                 const cardStyle = typeof fillObj.style === "undefined"
                     ? undefined
                     : isPlainObject(fillObj.style)
@@ -1749,11 +1773,18 @@ export function compileTemplateSpec(args) {
                     continue;
                 }
                 const regionId = contentRegionId ?? placeholder.id;
+                let compiledCardStyle = cardStyle ? { ...cardStyle } : undefined;
+                if (typeof paddingSlot !== "undefined") {
+                    compiledCardStyle = {
+                        ...(compiledCardStyle ?? {}),
+                        paddingPt: args.theme.spaceScale[paddingSlot],
+                    };
+                }
                 const element = {
                     type: "card",
                     region: regionId,
                     variant: cardVariant,
-                    style: cardStyle ?? undefined,
+                    style: compiledCardStyle,
                     header: cardHeader ?? undefined,
                     body: cardBody,
                     footer: cardFooter ?? undefined,
@@ -1849,6 +1880,78 @@ export function compileTemplateSpec(args) {
                     region: regionId,
                     content: fillObj.content,
                     variant,
+                    z,
+                };
+                elements.push(element);
+                continue;
+            }
+            if (placeholder.kind === "chevron_flow") {
+                if (typeof fill === "undefined") {
+                    continue;
+                }
+                if (!fillObj) {
+                    continue;
+                }
+                validateFillFields(fillObj, new Set(["steps", "orientation", "layoutProfile"]), placeholderPrefix, args.strict, errors);
+                if (!Array.isArray(fillObj.steps) || fillObj.steps.length < 2 || fillObj.steps.length > 12) {
+                    errors.push(`${placeholderPrefix} template_fill_invalid`);
+                    continue;
+                }
+                const steps = [];
+                for (const [stepIdx, stepRaw] of fillObj.steps.entries()) {
+                    if (!isPlainObject(stepRaw)) {
+                        errors.push(`${placeholderPrefix} template_fill_invalid`);
+                        steps.length = 0;
+                        break;
+                    }
+                    const step = stepRaw;
+                    if (typeof step.label !== "string" || step.label.trim().length === 0) {
+                        errors.push(`${placeholderPrefix} template_fill_invalid`);
+                        steps.length = 0;
+                        break;
+                    }
+                    if (typeof step.icon !== "undefined" && typeof step.icon !== "string") {
+                        errors.push(`${placeholderPrefix} template_fill_invalid`);
+                        steps.length = 0;
+                        break;
+                    }
+                    steps.push({
+                        label: step.label.trim(),
+                        icon: typeof step.icon === "string" ? step.icon : undefined,
+                    });
+                    if (args.strict) {
+                        for (const key of Object.keys(step)) {
+                            if (!new Set(["label", "icon"]).has(key)) {
+                                errors.push(`${placeholderPrefix} template_fill_invalid`);
+                                steps.length = 0;
+                                break;
+                            }
+                        }
+                    }
+                    if (steps.length === 0 && stepIdx < fillObj.steps.length - 1) {
+                        break;
+                    }
+                }
+                if (steps.length === 0) {
+                    continue;
+                }
+                const orientation = typeof fillObj.orientation === "string" ? fillObj.orientation : undefined;
+                if (typeof orientation !== "undefined" && orientation !== "horizontal") {
+                    errors.push(`${placeholderPrefix} template_fill_invalid`);
+                    continue;
+                }
+                const layoutProfile = typeof fillObj.layoutProfile === "string" ? fillObj.layoutProfile : undefined;
+                if (typeof layoutProfile !== "undefined" && layoutProfile !== "flow.chevron" && layoutProfile !== "flow.card") {
+                    errors.push(`${placeholderPrefix} template_fill_invalid`);
+                    continue;
+                }
+                const regionId = contentRegionId ?? placeholder.id;
+                const element = {
+                    type: "chevron_flow",
+                    region: regionId,
+                    steps,
+                    orientation: orientation,
+                    layoutProfile: layoutProfile,
                     z,
                 };
                 elements.push(element);

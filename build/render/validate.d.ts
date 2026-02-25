@@ -1,5 +1,8 @@
 import type { Slide, ValidationReportEntry, ValidationAction } from "./types.js";
-export declare function validateSpec(spec: unknown, strict: boolean): {
+export interface ValidateSpecOptions {
+    enterpriseMode?: boolean;
+}
+export declare function validateSpec(spec: unknown, strict: boolean, options?: ValidateSpecOptions): {
     valid: boolean;
     errors: string[];
 };

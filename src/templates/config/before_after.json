@@ -1,0 +1,89 @@
+{
+  "id": "before_after",
+  "title": "Before / After",
+  "extends": "base_standard",
+  "placeholders": [
+    {
+      "id": "title",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 0,
+        "colSpan": 12,
+        "rowSpan": 1
+      },
+      "layer": "content",
+      "styleSlots": {
+        "text": "text.title",
+        "padding": 1
+      },
+      "allowedKinds": [
+        "text"
+      ],
+      "minItems": 1,
+      "maxItems": 1,
+      "layoutMode": "single"
+    },
+    {
+      "id": "before",
+      "kind": "card",
+      "region": {
+        "col": 0,
+        "row": 1,
+        "colSpan": 6,
+        "rowSpan": 6
+      },
+      "layer": "content",
+      "styleSlots": {
+        "padding": 0
+      },
+      "allowedKinds": [
+        "card"
+      ],
+      "minItems": 1,
+      "maxItems": 1,
+      "layoutMode": "single"
+    },
+    {
+      "id": "after",
+      "kind": "card",
+      "region": {
+        "col": 6,
+        "row": 1,
+        "colSpan": 6,
+        "rowSpan": 6
+      },
+      "layer": "content",
+      "styleSlots": {
+        "padding": 0
+      },
+      "allowedKinds": [
+        "card"
+      ],
+      "minItems": 1,
+      "maxItems": 1,
+      "layoutMode": "single"
+    },
+    {
+      "id": "summary",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 7,
+        "colSpan": 12,
+        "rowSpan": 1
+      },
+      "layer": "content",
+      "styleSlots": {
+        "text": "text.body",
+        "padding": 1
+      },
+      "allowedKinds": [
+        "text"
+      ],
+      "minItems": 1,
+      "maxItems": 1,
+      "layoutMode": "single"
+    }
+  ]
+}

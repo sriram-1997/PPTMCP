@@ -6,6 +6,7 @@ export type TemplateKind =
   | "list"
   | "table"
   | "chart"
+  | "chevron_flow"
   | "card"
   | "callout"
   | "connector"

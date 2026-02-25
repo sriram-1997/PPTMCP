@@ -13,20 +13,18 @@ import { ptToIn } from "./utils/units.js";
 import { estimateTextLayout } from "./text.js";
 import { resolveIconData } from "./utils/icons.js";
 import { layoutList, renderListLayout } from "./list.js";
+import { normalizeText } from "./utils/textRuns.js";
 
 type CardSurfaceToken = "background" | "surface" | "elevated" | "accent";
 
-function resolveCardPadding(value: "sm" | "md" | "lg" | undefined, theme: ConcreteTheme): number {
-  const sm = theme.spaceScale[2] ?? theme.spaceScale[1] ?? 0;
-  const md = theme.spaceScale[3] ?? sm;
-  const lg = theme.spaceScale[4] ?? md;
-  if (value === "sm") {
-    return sm;
+function resolveCardPaddingPt(
+  valuePt: number | undefined,
+  theme: ConcreteTheme
+): number {
+  if (typeof valuePt === "number" && Number.isFinite(valuePt) && valuePt >= 0) {
+    return valuePt;
   }
-  if (value === "lg") {
-    return lg;
-  }
-  return md;
+  return theme.spaceScale[3] ?? theme.spaceScale[2] ?? theme.spaceScale[1] ?? 0;
 }
 
 function resolveCardRadius(value: "sm" | "md" | "lg" | undefined, theme: ConcreteTheme): number {
@@ -85,7 +83,15 @@ function resolveShadow(
   };
 }
 
-type ResolvedCardStyle = Required<Omit<CardStyleSpec, "accent">> & { accent: CardStyleAccent };
+type ResolvedCardStyle = {
+  bg: NonNullable<CardStyleSpec["bg"]>;
+  border: NonNullable<CardStyleSpec["border"]>;
+  radius: NonNullable<CardStyleSpec["radius"]>;
+  padding: NonNullable<CardStyleSpec["padding"]>;
+  paddingPt?: number;
+  shadow: NonNullable<CardStyleSpec["shadow"]>;
+  accent: CardStyleAccent;
+};
 
 function resolveVariantDefaults(variant: CardElement["variant"] | undefined, theme: ConcreteTheme): ResolvedCardStyle {
   const baseAccent: CardStyleAccent = { edge: "none", color: "accent", width: theme.strokeScale.normal };
@@ -175,7 +181,7 @@ export function prepareCardElement(args: {
   const variantDefaults = resolveVariantDefaults(args.element.variant, args.theme);
   const styleSpec = mergeCardStyle(variantDefaults, args.element.style);
 
-  const paddingPt = resolveCardPadding(styleSpec.padding, args.theme);
+  const paddingPt = resolveCardPaddingPt(styleSpec.paddingPt, args.theme);
   const radius = resolveCardRadius(styleSpec.radius, args.theme);
   const surface = resolveSurfaceToken(styleSpec.bg, "surface", args.theme);
   const fill = surface.fill;
@@ -186,13 +192,15 @@ export function prepareCardElement(args: {
   const innerY = args.bbox.y + ptToIn(paddingPt);
   const innerW = args.bbox.width - ptToIn(paddingPt * 2);
   const innerH = args.bbox.height - ptToIn(paddingPt * 2);
+  const innerHeightPt = innerH * 72;
 
   if (innerW <= 0 || innerH <= 0) {
     args.hardErrors.push(`${prefix} card_overflow (zone=body overflowPx=${Math.round(Math.abs(innerH * 72))})`);
   }
 
-  const headerGapPt = args.theme.spaceScale[2] ?? args.theme.spaceScale[1] ?? 0;
-  const footerGapPt = args.theme.spaceScale[2] ?? args.theme.spaceScale[1] ?? 0;
+  const sectionGapPt = Math.max(args.theme.spaceScale[1] ?? 0, paddingPt / 2);
+  const headerGapPt = sectionGapPt;
+  const footerGapPt = sectionGapPt;
 
   const minInsetPt = args.theme.spaceScale[1] ?? args.theme.spaceScale[0] ?? 0;
   const minInsetIn = ptToIn(minInsetPt);
@@ -200,6 +208,8 @@ export function prepareCardElement(args: {
   let header: PreparedCardElement["header"];
   let headerHeightPt = 0;
   if (args.element.header) {
+    const headerTitle = normalizeText(args.element.header.title ?? "");
+    const headerSubtitle = normalizeText(args.element.header.subtitle ?? "");
     const titleFont = args.theme.fontScale.subtitle;
     const subtitleFont = args.theme.fontScale.caption;
     const titleBold = titleFont.weight >= args.theme.type.weightBold;
@@ -219,22 +229,22 @@ export function prepareCardElement(args: {
     const titleLineHeight = lineHeightMultiple(titleFont.size, args.theme);
     const subtitleLineHeight = lineHeightMultiple(subtitleFont.size, args.theme);
     const titleHeightPt = estimateTextHeight({
-      text: args.element.header.title,
+      text: headerTitle,
       fontSize: titleFont.size,
       bold: titleBold,
       widthIn: Math.max(minInsetIn, textWidthIn),
       lineHeight: titleLineHeight,
     });
-    const subtitleHeightPt = args.element.header.subtitle
+    const subtitleHeightPt = headerSubtitle
       ? estimateTextHeight({
-          text: args.element.header.subtitle,
+          text: headerSubtitle,
           fontSize: subtitleFont.size,
           bold: subtitleBold,
           widthIn: Math.max(minInsetIn, textWidthIn),
           lineHeight: subtitleLineHeight,
         })
       : 0;
-    const subtitleGapPt = args.element.header.subtitle ? (args.theme.spaceScale[1] ?? args.theme.spaceScale[0] ?? 0) : 0;
+    const subtitleGapPt = headerSubtitle ? (args.theme.spaceScale[1] ?? args.theme.spaceScale[0] ?? 0) : 0;
     const textBlockHeightPt = titleHeightPt + subtitleGapPt + subtitleHeightPt;
     headerHeightPt = Math.max(iconSizePt, textBlockHeightPt);
 
@@ -266,7 +276,7 @@ export function prepareCardElement(args: {
       width: Math.max(minInsetIn, textWidthIn),
       height: Math.max(minInsetIn, titleHeightPt / 72),
     };
-    const subtitleBox: BBox | undefined = args.element.header.subtitle
+    const subtitleBox: BBox | undefined = headerSubtitle
       ? {
           x: textX,
           y: innerY + ptToIn(titleHeightPt + subtitleGapPt),
@@ -276,8 +286,8 @@ export function prepareCardElement(args: {
       : undefined;
 
     header = {
-      title: args.element.header.title,
-      subtitle: args.element.header.subtitle,
+      title: headerTitle,
+      subtitle: headerSubtitle || undefined,
       titleBox,
       subtitleBox,
       titleFont: {
@@ -286,7 +296,7 @@ export function prepareCardElement(args: {
         bold: titleBold,
         color: args.theme.text.colorPrimary,
       },
-      subtitleFont: args.element.header.subtitle
+      subtitleFont: headerSubtitle
         ? {
             face: subtitleFont.family,
             size: subtitleFont.size,
@@ -302,25 +312,27 @@ export function prepareCardElement(args: {
   let footer: PreparedCardElement["footer"];
   let footerHeightPt = 0;
   if (args.element.footer && (args.element.footer.label || args.element.footer.text)) {
-    const footerPaddingPt = args.theme.spaceScale[0] ?? 0;
+    const footerLabel = normalizeText(args.element.footer.label ?? "");
+    const footerText = normalizeText(args.element.footer.text ?? "");
+    const footerPaddingPt = paddingPt;
     const labelFont = args.theme.fontScale.body;
     const textFont = args.theme.fontScale.body;
     const labelBold = labelFont.weight >= args.theme.type.weightBold;
     const textBold = textFont.weight >= args.theme.type.weightBold;
     const footerContentWidthIn = innerW - ptToIn(footerPaddingPt * 2);
     const footerLineHeight = lineHeightMultiple(textFont.size, args.theme);
-    const labelHeightPt = args.element.footer.label
+    const labelHeightPt = footerLabel
       ? estimateTextHeight({
-          text: args.element.footer.label,
+          text: footerLabel,
           fontSize: labelFont.size,
           bold: labelBold,
           widthIn: Math.max(minInsetIn, footerContentWidthIn),
           lineHeight: footerLineHeight,
         })
       : 0;
-    const textHeightPt = args.element.footer.text
+    const textHeightPt = footerText
       ? estimateTextHeight({
-          text: args.element.footer.text,
+          text: footerText,
           fontSize: textFont.size,
           bold: textBold,
           widthIn: Math.max(minInsetIn, footerContentWidthIn),
@@ -328,12 +340,14 @@ export function prepareCardElement(args: {
         })
       : 0;
     const footerTextGapPt =
-      args.element.footer.label && args.element.footer.text
+      footerLabel && footerText
         ? (args.theme.spaceScale[1] ?? args.theme.spaceScale[0] ?? 0)
         : 0;
     const footerContentHeightPt = labelHeightPt + footerTextGapPt + textHeightPt;
-    const footerStripHeightPt =
-      args.theme.fontScale.body.size + (args.theme.spaceScale[2] ?? args.theme.spaceScale[1] ?? 0);
+    const footerStripHeightPt = Math.max(
+      args.theme.fontScale.body.size + footerPaddingPt * 2,
+      footerContentHeightPt + footerPaddingPt * 2
+    );
     const footerAvailablePt = footerStripHeightPt - footerPaddingPt * 2;
     if (footerContentHeightPt > footerAvailablePt && args.hardErrors) {
       args.hardErrors.push(
@@ -343,7 +357,7 @@ export function prepareCardElement(args: {
     footerHeightPt = footerStripHeightPt;
 
     const footerY = args.bbox.y + args.bbox.height - ptToIn(paddingPt) - ptToIn(footerHeightPt);
-    const labelBox: BBox | undefined = args.element.footer.label
+    const labelBox: BBox | undefined = footerLabel
       ? {
           x: innerX + ptToIn(footerPaddingPt),
           y: footerY + ptToIn(footerPaddingPt),
@@ -351,7 +365,7 @@ export function prepareCardElement(args: {
           height: Math.max(minInsetIn, labelHeightPt / 72),
         }
       : undefined;
-    const textBox: BBox | undefined = args.element.footer.text
+    const textBox: BBox | undefined = footerText
       ? {
           x: innerX + ptToIn(footerPaddingPt),
           y: footerY + ptToIn(footerPaddingPt + labelHeightPt + footerTextGapPt),
@@ -368,8 +382,8 @@ export function prepareCardElement(args: {
         width: args.bbox.width,
         height: ptToIn(footerHeightPt),
       },
-      label: args.element.footer.label,
-      text: args.element.footer.text,
+      label: footerLabel || undefined,
+      text: footerText || undefined,
       labelFont: labelBox
         ? {
             face: labelFont.family,
@@ -435,6 +449,11 @@ export function prepareCardElement(args: {
     args.hardErrors.push(`${prefix} card_overflow (zone=body overflowPx=${Math.round(bodyUsedPt - availableHeightPt)})`);
   }
 
+  const contentHeightPt =
+    (headerHeightPt > 0 ? headerHeightPt + headerGapPt : 0) +
+    bodyUsedPt +
+    (footerHeightPt > 0 ? footerHeightPt + footerGapPt : 0);
+
   let accent: PreparedCardElement["accent"];
   if (styleSpec.accent && styleSpec.accent.edge && styleSpec.accent.edge !== "none") {
     const accentWidthPt =
@@ -472,6 +491,7 @@ export function prepareCardElement(args: {
     id: args.id,
     region: args.element.region,
     bbox: args.bbox,
+    layoutProfile: args.element.layoutProfile,
     style: {
       fill,
       border: border.color,
@@ -483,6 +503,11 @@ export function prepareCardElement(args: {
     header,
     body: bodyLayouts,
     footer,
+    metrics: {
+      innerHeightPt,
+      contentHeightPt,
+      bodyUsedPt,
+    },
   };
 }
 
@@ -532,6 +557,7 @@ export function renderCardElement(slide: any, shapeType: any, element: PreparedC
       align: "left",
       valign: "top",
       margin: 0,
+      breakLine: true,
     });
     if (element.header.subtitle && element.header.subtitleBox && element.header.subtitleFont) {
       slide.addText(element.header.subtitle, {
@@ -546,6 +572,7 @@ export function renderCardElement(slide: any, shapeType: any, element: PreparedC
         align: "left",
         valign: "top",
         margin: 0,
+        breakLine: true,
       });
     }
   }
@@ -578,6 +605,7 @@ export function renderCardElement(slide: any, shapeType: any, element: PreparedC
         align: "left",
         valign: "top",
         margin: 0,
+        breakLine: true,
       });
     }
     if (element.footer.text && element.footer.textBox && element.footer.textFont) {
@@ -593,6 +621,7 @@ export function renderCardElement(slide: any, shapeType: any, element: PreparedC
         align: "left",
         valign: "top",
         margin: 0,
+        breakLine: true,
       });
     }
   }

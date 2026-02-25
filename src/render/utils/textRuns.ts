@@ -3,6 +3,13 @@ export interface TextRun {
   bold: boolean;
 }
 
+export function normalizeText(value: string): string {
+  if (!value) {
+    return "";
+  }
+  return value.replace(/\\n/g, "\n");
+}
+
 export function parseBoldRuns(text: string): TextRun[] {
   const runs: TextRun[] = [];
   if (!text) {

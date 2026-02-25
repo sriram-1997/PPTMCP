@@ -48,6 +48,41 @@ const TOKEN_KEYS = [
     "stroke_scale.thin",
     "stroke_scale.normal",
     "stroke_scale.heavy",
+    "diagram.node.icon_size_pt",
+    "diagram.node.icon_min_size_pt",
+    "diagram.node.icon_gap_pt",
+    "diagram.edge.min_length_in",
+    "chevron.tipRatio",
+    "chevron.notchRatio",
+    "chevron.innerPadX",
+    "chevron.innerPadY",
+    "chevron.step.icon_size_pt",
+    "chevron.step.icon_min_size_pt",
+    "chevron.step.icon_gap_pt",
+    "flow.gapX_in",
+    "flow.minStepW_in",
+    "flow.minStepH_in",
+    "flow.chevronHeightRatio",
+    "flow.cardHeightRatio",
+    "flow.connector.stroke_pt",
+    "flow.connector.arrow_size_pt",
+    "flow.connector.min_length_in",
+    "flowProfiles.flowChevron.overlapRatio",
+    "flowProfiles.flowChevron.stepHeightRatio",
+    "flowProfiles.flowChevron.innerPadX",
+    "flowProfiles.flowChevron.innerPadY",
+    "flowProfiles.flowChevron.tipRatio",
+    "flowProfiles.flowChevron.notchRatio",
+    "flowProfiles.flowChevron.connectorStrokePt",
+    "flowProfiles.flowChevron.connectorArrowSizePt",
+    "flowProfiles.flowCard.gapX_in",
+    "flowProfiles.flowCard.stepHeightRatio",
+    "flowProfiles.flowCard.innerPadX",
+    "flowProfiles.flowCard.innerPadY",
+    "flowProfiles.flowCard.connectorStrokePt",
+    "flowProfiles.flowCard.connectorArrowSizePt",
+    "flowProfiles.flowCard.minStepW_in",
+    "flowProfiles.flowCard.minStepH_in",
 ];
 const TOKEN_SET = new Set(TOKEN_KEYS);
 function isPlainObject(value) {
@@ -87,6 +122,12 @@ function normalizePalette(value, key) {
     }
     return value.map((entry) => normalizeHexColor(entry, key));
 }
+function normalizeRatio(value, key) {
+    if (typeof value !== "number" || !Number.isFinite(value) || value <= 0 || value > 1) {
+        throw new Error(`style_token_invalid (${key})`);
+    }
+    return value;
+}
 function normalizeTokenMap(tokens, requireAll) {
     const normalized = {};
     const keys = Object.keys(tokens);
@@ -118,6 +159,47 @@ function normalizeTokenMap(tokens, requireAll) {
         else if (key.startsWith("type.")) {
             if (key.includes("font_family")) {
                 normalized[key] = normalizeString(value, key);
+            }
+            else {
+                normalized[key] = normalizeNumber(value, key);
+            }
+        }
+        else if (key.startsWith("diagram.node.")) {
+            if (key.endsWith("gap_pt")) {
+                normalized[key] = normalizeNonNegativeNumber(value, key);
+            }
+            else {
+                normalized[key] = normalizeNumber(value, key);
+            }
+        }
+        else if (key.startsWith("diagram.edge.")) {
+            normalized[key] = normalizeNonNegativeNumber(value, key);
+        }
+        else if (key.startsWith("chevron.")) {
+            if (key.endsWith("Ratio")) {
+                normalized[key] = normalizeRatio(value, key);
+            }
+            else {
+                normalized[key] = normalizeNonNegativeNumber(value, key);
+            }
+        }
+        else if (key.startsWith("flow.")) {
+            if (key.endsWith("HeightRatio")) {
+                normalized[key] = normalizeRatio(value, key);
+            }
+            else if (key.endsWith("_in")) {
+                normalized[key] = normalizeNonNegativeNumber(value, key);
+            }
+            else {
+                normalized[key] = normalizeNumber(value, key);
+            }
+        }
+        else if (key.startsWith("flowProfiles.")) {
+            if (key.endsWith("Ratio")) {
+                normalized[key] = normalizeRatio(value, key);
+            }
+            else if (key.endsWith("_in")) {
+                normalized[key] = normalizeNonNegativeNumber(value, key);
             }
             else {
                 normalized[key] = normalizeNumber(value, key);
@@ -202,17 +284,17 @@ function validateContrast(theme, merged) {
         for (const surface of surfaceSlots) {
             const ratio = contrastRatio(theme.text.colorPrimary, surface.color);
             if (ratio < text.minRatio) {
-                throw new Error(`theme_contrast_invalid (text.${text.slot} vs surface.${surface.slot})`);
+                throw new Error(`theme_contrast_violation (text.${text.slot} vs surface.${surface.slot})`);
             }
         }
     }
     const tableRatio = contrastRatio(theme.table.headerTextColor, theme.table.headerFill);
     if (tableRatio < minUi) {
-        throw new Error("theme_contrast_invalid (table.headerTextColor vs table.headerFill)");
+        throw new Error("theme_contrast_violation (table.headerTextColor vs table.headerFill)");
     }
     const bodyRatio = contrastRatio(theme.table.bodyTextColor, theme.table.bodyFill);
     if (bodyRatio < minUi) {
-        throw new Error("theme_contrast_invalid (table.bodyTextColor vs table.bodyFill)");
+        throw new Error("theme_contrast_violation (table.bodyTextColor vs table.bodyFill)");
     }
 }
 function normalizeThemeInput(themeInput, styleTokensInput) {
@@ -344,7 +426,80 @@ export function resolveConcreteTheme(args) {
             leader: merged["color.primary"],
             textColor: merged["color.text_primary"],
         },
-        connector: { stroke: merged["color.primary"] },
+        connector: { stroke: merged["color.primary"], dash: "solid" },
+        module: {
+            fill: merged["color.surface_accent"],
+            stroke: merged["color.border_default"],
+            shadow: {
+                color: merged["color.border_default"],
+                blurPt: merged["space_scale.2"],
+                offsetPt: merged["space_scale.1"],
+                opacity: merged["stroke_scale.thin"] /
+                    (merged["stroke_scale.thin"] +
+                        merged["stroke_scale.normal"] +
+                        merged["stroke_scale.heavy"]),
+            },
+            badge: {
+                fill: merged["color.accent"],
+                textColor: merged["color.text_primary"],
+                stroke: merged["color.border_default"],
+            },
+        },
+        diagram: {
+            node: {
+                iconSizePt: merged["diagram.node.icon_size_pt"],
+                iconMinSizePt: merged["diagram.node.icon_min_size_pt"],
+                iconGapPt: merged["diagram.node.icon_gap_pt"],
+            },
+            edge: {
+                minLengthIn: merged["diagram.edge.min_length_in"],
+            },
+        },
+        chevron: {
+            tipRatio: merged["chevron.tipRatio"],
+            notchRatio: merged["chevron.notchRatio"],
+            innerPadXPt: merged["chevron.innerPadX"],
+            innerPadYPt: merged["chevron.innerPadY"],
+            step: {
+                iconSizePt: merged["chevron.step.icon_size_pt"],
+                iconMinSizePt: merged["chevron.step.icon_min_size_pt"],
+                iconGapPt: merged["chevron.step.icon_gap_pt"],
+            },
+        },
+        flow: {
+            gapXIn: merged["flow.gapX_in"],
+            minStepWIn: merged["flow.minStepW_in"],
+            minStepHIn: merged["flow.minStepH_in"],
+            chevronHeightRatio: merged["flow.chevronHeightRatio"],
+            cardHeightRatio: merged["flow.cardHeightRatio"],
+            connector: {
+                strokePt: merged["flow.connector.stroke_pt"],
+                arrowSizePt: merged["flow.connector.arrow_size_pt"],
+                minLengthIn: merged["flow.connector.min_length_in"],
+            },
+        },
+        flowProfiles: {
+            flowChevron: {
+                overlapRatio: merged["flowProfiles.flowChevron.overlapRatio"],
+                stepHeightRatio: merged["flowProfiles.flowChevron.stepHeightRatio"],
+                innerPadXPt: merged["flowProfiles.flowChevron.innerPadX"],
+                innerPadYPt: merged["flowProfiles.flowChevron.innerPadY"],
+                tipRatio: merged["flowProfiles.flowChevron.tipRatio"],
+                notchRatio: merged["flowProfiles.flowChevron.notchRatio"],
+                connectorStrokePt: merged["flowProfiles.flowChevron.connectorStrokePt"],
+                connectorArrowSizePt: merged["flowProfiles.flowChevron.connectorArrowSizePt"],
+            },
+            flowCard: {
+                gapXIn: merged["flowProfiles.flowCard.gapX_in"],
+                stepHeightRatio: merged["flowProfiles.flowCard.stepHeightRatio"],
+                innerPadXPt: merged["flowProfiles.flowCard.innerPadX"],
+                innerPadYPt: merged["flowProfiles.flowCard.innerPadY"],
+                connectorStrokePt: merged["flowProfiles.flowCard.connectorStrokePt"],
+                connectorArrowSizePt: merged["flowProfiles.flowCard.connectorArrowSizePt"],
+                minStepWIn: merged["flowProfiles.flowCard.minStepW_in"],
+                minStepHIn: merged["flowProfiles.flowCard.minStepH_in"],
+            },
+        },
         shape: { borderWidth: merged["shape.border_width_default"] },
         type: {
             fontFamilyPrimary: merged["type.font_family_primary"],

@@ -30,7 +30,10 @@
       "layer": "content",
       "layoutMode": "vstack",
       "gapToken": 2,
-      "allowedKinds": ["text", "list"],
+      "allowedKinds": [
+        "text",
+        "list"
+      ],
       "minItems": 1,
       "maxItems": 3,
       "styleSlots": {
@@ -50,7 +53,11 @@
       "layer": "content",
       "layoutMode": "vstack",
       "gapToken": 2,
-      "allowedKinds": ["text", "list", "callout"],
+      "allowedKinds": [
+        "text",
+        "list",
+        "callout"
+      ],
       "minItems": 1,
       "maxItems": 4,
       "styleSlots": {
@@ -72,9 +79,20 @@
   "variants": {
     "comfortable": {
       "placeholders": [
-        { "id": "title", "paddingToken": 2 },
-        { "id": "left", "paddingToken": 3, "gapToken": 3 },
-        { "id": "right", "paddingToken": 3, "gapToken": 3 }
+        {
+          "id": "title",
+          "paddingToken": 2
+        },
+        {
+          "id": "left",
+          "paddingToken": 3,
+          "gapToken": 3
+        },
+        {
+          "id": "right",
+          "paddingToken": 3,
+          "gapToken": 3
+        }
       ]
     }
   }

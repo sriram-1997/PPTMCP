@@ -1,0 +1,238 @@
+{
+    "title":  "Card Padding Matrix",
+    "metadata":  {
+                     "author":  "PPTMCP",
+                     "created":  "2026-02-20T00:00:00Z"
+                 },
+    "theme":  "consulting_light_v1",
+    "slides":  [
+                   {
+                       "id":  "card-padding-matrix",
+                       "title":  "Card Padding Matrix",
+                       "template":  {
+                                        "id":  "card_padding_matrix_inline",
+                                        "title":  "Card Padding Matrix Inline",
+                                        "extends":  "base_standard",
+                                        "placeholders":  [
+                                                             {
+                                                                 "id":  "title",
+                                                                 "kind":  "text",
+                                                                 "region":  {
+                                                                                "col":  0,
+                                                                                "row":  0,
+                                                                                "colSpan":  12,
+                                                                                "rowSpan":  1
+                                                                            },
+                                                                 "styleSlots":  {
+                                                                                    "text":  "text.title",
+                                                                                    "padding":  1
+                                                                                },
+                                                                 "allowedKinds":  [
+                                                                                      "text"
+                                                                                  ],
+                                                                 "minItems":  1,
+                                                                 "maxItems":  1,
+                                                                 "layoutMode":  "single"
+                                                             },
+                                                             {
+                                                                 "id":  "cards",
+                                                                 "kind":  "card",
+                                                                 "region":  {
+                                                                                "col":  0,
+                                                                                "row":  1,
+                                                                                "colSpan":  12,
+                                                                                "rowSpan":  7
+                                                                            },
+                                                                 "styleSlots":  {
+                                                                                    "padding":  0
+                                                                                },
+                                                                 "allowedKinds":  [
+                                                                                      "card"
+                                                                                  ],
+                                                                 "minItems":  6,
+                                                                 "maxItems":  6,
+                                                                 "layoutMode":  "hstack",
+                                                                 "gapToken":  0
+                                                             }
+                                                         ]
+                                    },
+                       "fills":  {
+                                     "title":  {
+                                                   "content":  "Card Padding Slot Matrix (0-5)"
+                                               },
+                                     "cards":  {
+                                                   "items":  [
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  0,
+                                                                     "style":  {
+                                                                                   "bg":  "surface",
+                                                                                   "border":  "default",
+                                                                                   "radius":  "md",
+                                                                                   "shadow":  "none"
+                                                                               },
+                                                                     "header":  {
+                                                                                    "title":  "Slot 0"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "paddingSlot=0"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ],
+                                                                     "footer":  {
+                                                                                    "strip":  true,
+                                                                                    "text":  "Footer"
+                                                                                }
+                                                                 },
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  1,
+                                                                     "style":  {
+                                                                                   "bg":  "surface",
+                                                                                   "border":  "default",
+                                                                                   "radius":  "md",
+                                                                                   "shadow":  "none"
+                                                                               },
+                                                                     "header":  {
+                                                                                    "title":  "Slot 1"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "paddingSlot=1"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ],
+                                                                     "footer":  {
+                                                                                    "strip":  true,
+                                                                                    "text":  "Footer"
+                                                                                }
+                                                                 },
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  2,
+                                                                     "style":  {
+                                                                                   "bg":  "surface",
+                                                                                   "border":  "default",
+                                                                                   "radius":  "md",
+                                                                                   "shadow":  "none"
+                                                                               },
+                                                                     "header":  {
+                                                                                    "title":  "Slot 2"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "paddingSlot=2"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ],
+                                                                     "footer":  {
+                                                                                    "strip":  true,
+                                                                                    "text":  "Footer"
+                                                                                }
+                                                                 },
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  3,
+                                                                     "style":  {
+                                                                                   "bg":  "surface",
+                                                                                   "border":  "default",
+                                                                                   "radius":  "md",
+                                                                                   "shadow":  "none"
+                                                                               },
+                                                                     "header":  {
+                                                                                    "title":  "Slot 3"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "paddingSlot=3"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ],
+                                                                     "footer":  {
+                                                                                    "strip":  true,
+                                                                                    "text":  "Footer"
+                                                                                }
+                                                                 },
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  4,
+                                                                     "style":  {
+                                                                                   "bg":  "surface",
+                                                                                   "border":  "default",
+                                                                                   "radius":  "md",
+                                                                                   "shadow":  "none"
+                                                                               },
+                                                                     "header":  {
+                                                                                    "title":  "Slot 4"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "paddingSlot=4"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ],
+                                                                     "footer":  {
+                                                                                    "strip":  true,
+                                                                                    "text":  "Footer"
+                                                                                }
+                                                                 },
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  5,
+                                                                     "style":  {
+                                                                                   "bg":  "surface",
+                                                                                   "border":  "default",
+                                                                                   "radius":  "md",
+                                                                                   "shadow":  "none"
+                                                                               },
+                                                                     "header":  {
+                                                                                    "title":  "Slot 5"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "paddingSlot=5"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ],
+                                                                     "footer":  {
+                                                                                    "strip":  true,
+                                                                                    "text":  "Footer"
+                                                                                }
+                                                                 }
+                                                             ]
+                                               }
+                                 }
+                   }
+               ]
+}

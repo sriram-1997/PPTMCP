@@ -1,0 +1,75 @@
+{
+  "title": "Enterprise Fixed Demo",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-25T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "enterprise-fixed-1",
+      "title": "Enterprise Guardrails Satisfied",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "header": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "bullets": { "col": 0, "row": 1, "colSpan": 6, "rowSpan": 3 },
+        "table": { "col": 0, "row": 4, "colSpan": 6, "rowSpan": 3 },
+        "diagram_canvas": { "col": 6, "row": 1, "colSpan": 6, "rowSpan": 6 },
+        "node_left": { "col": 7, "row": 2, "colSpan": 2, "rowSpan": 2 },
+        "node_right": { "col": 10, "row": 2, "colSpan": 2, "rowSpan": 2 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "header",
+          "content": "Enterprise Fixed Demo",
+          "style": { "fontSize": 30, "bold": true }
+        },
+        {
+          "type": "list",
+          "region": "bullets",
+          "style": "dot",
+          "items": [
+            { "text": "Theme is explicitly pinned in the spec." },
+            { "text": "Bullet density is at or below six items." },
+            { "text": "Bullet text length is below one hundred and twenty characters." },
+            { "text": "Only enterprise-approved element types are used." }
+          ]
+        },
+        {
+          "type": "table",
+          "region": "table",
+          "content": {
+            "headers": ["Control", "Status"],
+            "rows": [
+              ["Overflow policy", "Hard fail"],
+              ["Determinism", "Hash stable"],
+              ["Shape policy", "Restricted"]
+            ]
+          }
+        },
+        {
+          "type": "node",
+          "id": "n1",
+          "region": "node_left",
+          "shape": "rounded-rect",
+          "label": "Input"
+        },
+        {
+          "type": "node",
+          "id": "n2",
+          "region": "node_right",
+          "shape": "rounded-rect",
+          "label": "Output"
+        },
+        {
+          "type": "edge",
+          "region": "diagram_canvas",
+          "startNode": "n1",
+          "endNode": "n2",
+          "arrow": "triangle"
+        }
+      ]
+    }
+  ]
+}

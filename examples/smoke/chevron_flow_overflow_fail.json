@@ -1,0 +1,28 @@
+{
+  "title": "Chevron Flow Overflow Fail",
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "chevron-overflow-fail",
+      "title": "Chevron Overflow Fail",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "flow": { "col": 0, "row": 3, "colSpan": 3, "rowSpan": 1 }
+      },
+      "elements": [
+        {
+          "type": "chevron_flow",
+          "region": "flow",
+          "orientation": "horizontal",
+          "layoutProfile": "flow.chevron",
+          "steps": [
+            { "label": "Crossfunctionaldecisionalignmentwithoutsharedterminology" },
+            { "label": "Unboundedrequirementsaggregationwithoutscopecontrol" },
+            { "label": "Institutionalizationofmanualhandoffswithoutautomation" },
+            { "label": "Continuousreplanningwithoutstableoperatingcadence" }
+          ]
+        }
+      ]
+    }
+  ]
+}

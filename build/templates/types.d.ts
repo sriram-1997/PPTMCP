@@ -1,6 +1,6 @@
 import type { AnchorPoint } from "../render/types.js";
 export type TemplateVariant = "surface" | "elevated" | "accent";
-export type TemplateKind = "text" | "list" | "table" | "chart" | "card" | "callout" | "connector" | "image" | "icon";
+export type TemplateKind = "text" | "list" | "table" | "chart" | "chevron_flow" | "card" | "callout" | "connector" | "image" | "icon";
 export type TextStyleSlot = "text.title" | "text.subtitle" | "text.body" | "text.caption";
 export type StrokeSlot = "stroke.thin" | "stroke.normal" | "stroke.heavy";
 export interface TemplateGrid {

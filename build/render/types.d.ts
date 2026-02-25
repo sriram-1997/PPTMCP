@@ -11,6 +11,12 @@ export interface RegionConfig {
     row: number;
     colSpan: number;
     rowSpan: number;
+    __rect?: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
 }
 export interface Regions {
     [regionName: string]: RegionConfig;
@@ -36,6 +42,7 @@ export interface TextElement {
     z?: number;
 }
 export type ListBulletStyle = "dot" | "number" | "icon" | "none";
+export type FlowLayoutProfile = "flow.chevron" | "flow.card";
 export interface ListBulletSpec {
     size?: "sm" | "md";
     gap?: number;
@@ -71,6 +78,8 @@ export interface CardStyleSpec {
     border?: "default" | "subtle" | "none";
     radius?: "sm" | "md" | "lg";
     padding?: "sm" | "md" | "lg";
+    paddingSlot?: number;
+    paddingPt?: number;
     shadow?: "none" | "sm";
     accent?: CardStyleAccent;
 }
@@ -88,6 +97,7 @@ export interface CardElement {
     type: "card";
     region: string;
     variant?: "surface" | "elevated" | "accent";
+    layoutProfile?: FlowLayoutProfile;
     style?: CardStyleSpec;
     header?: CardHeaderSpec;
     body: Array<ListSpec & {
@@ -168,6 +178,18 @@ export interface ChartElement {
     overlays?: ChartOverlays;
     title?: string;
     variant?: "surface" | "elevated" | "accent";
+    z?: number;
+}
+export interface ChevronFlowStep {
+    label: string;
+    icon?: string;
+}
+export interface ChevronFlowElement {
+    type: "chevron_flow";
+    region: string;
+    steps: ChevronFlowStep[];
+    orientation?: "horizontal";
+    layoutProfile?: FlowLayoutProfile;
     z?: number;
 }
 export interface NodeElement {
@@ -282,7 +304,7 @@ export interface IconElement {
     verticalAlign?: "top" | "middle" | "bottom";
     z?: number;
 }
-export type Element = TextElement | ListElement | CardElement | TableElement | ChartElement | NodeElement | EdgeElement | CalloutElement | ConnectorElement | ImageElement | IconElement;
+export type Element = TextElement | ListElement | CardElement | TableElement | ChartElement | ChevronFlowElement | NodeElement | EdgeElement | CalloutElement | ConnectorElement | ImageElement | IconElement;
 export interface Slide {
     id: string;
     title: string;
@@ -336,6 +358,13 @@ export interface RenderResult {
     success: boolean;
     validation_report: ValidationReportEntry[];
     integrity_debug?: IntegrityDebugReport;
+    render_metrics?: {
+        total_slides: number;
+        total_elements: number;
+        overflow_count: number;
+        validation_failures: number;
+        render_time_ms: number;
+    };
 }
 export interface IntegrityWarning {
     code: string;
@@ -446,6 +475,48 @@ export interface PreparedChartElement {
     };
     overlays?: PreparedChartOverlayLine[];
 }
+export interface PreparedChevronStep {
+    bbox: BBox;
+    points: Array<{
+        x: number;
+        y: number;
+        moveTo?: boolean;
+    } | {
+        close: true;
+    }>;
+    fill: string;
+    stroke: string;
+    text: {
+        value: string;
+        bbox: BBox;
+        fontFace: string;
+        fontSize: number;
+        bold: boolean;
+        color: string;
+    };
+    icon?: {
+        bbox: BBox;
+        data: string;
+    };
+    textOverflow?: boolean;
+}
+export interface PreparedChevronFlowElement {
+    kind: "chevron_flow";
+    z: number;
+    order: number;
+    id: string;
+    region: string;
+    bbox: BBox;
+    steps: PreparedChevronStep[];
+    layoutProfile?: FlowLayoutProfile;
+    metrics?: {
+        groupBBox: BBox;
+        notchIn: number;
+        tipIn: number;
+        gapIn: number;
+        stepCount: number;
+    };
+}
 export interface PreparedChartOverlayLine {
     kind: "average" | "trend";
     start: {
@@ -497,6 +568,13 @@ export interface PreparedListLayout {
         color: string;
     };
     totalHeightPt: number;
+    metrics?: {
+        textStartX: number;
+        textBoxX: number;
+        hangingPt: number;
+        leftPt: number;
+        numberedInline: boolean;
+    };
 }
 export interface PreparedListElement extends PreparedListLayout {
     kind: "list";
@@ -512,6 +590,7 @@ export interface PreparedCardElement {
     id: string;
     region: string;
     bbox: BBox;
+    layoutProfile?: FlowLayoutProfile;
     style: {
         fill: string;
         border: string;
@@ -572,6 +651,11 @@ export interface PreparedCardElement {
         labelBox?: BBox;
         textBox?: BBox;
         stripFill?: string;
+    };
+    metrics?: {
+        innerHeightPt: number;
+        contentHeightPt: number;
+        bodyUsedPt: number;
     };
 }
 export interface PreparedCalloutElement {
@@ -655,13 +739,17 @@ export interface PreparedConnectorElement {
         endArrow: "none" | "triangle";
     };
     arrowHeads?: ArrowHead[];
+    customArrowheads?: boolean;
+    arrowSizePt?: number;
     lineRect: BBox;
     lineFlipV: boolean;
     lineFlipH: boolean;
 }
-export type PreparedElement = PreparedTextElement | PreparedListElement | PreparedCardElement | PreparedTableElement | PreparedChartElement | PreparedNodeElement | PreparedEdgeElement | PreparedCalloutElement | PreparedConnectorElement | PreparedImageElement | PreparedIconElement;
+export type PreparedElement = PreparedTextElement | PreparedListElement | PreparedCardElement | PreparedTableElement | PreparedChartElement | PreparedChevronFlowElement | PreparedNodeElement | PreparedEdgeElement | PreparedCalloutElement | PreparedConnectorElement | PreparedImageElement | PreparedIconElement;
 export interface PreparedSlide {
     elements: PreparedElement[];
+    diagramRegionId?: string;
+    diagramRegionBBox?: BBox;
 }
 export interface ArrowHead {
     bbox: BBox;
@@ -744,6 +832,10 @@ export interface PreparedNodeElement {
         bold: boolean;
         color: string;
     };
+    metrics?: {
+        innerHeightPt: number;
+        contentHeightPt: number;
+    };
 }
 export interface PreparedEdgeElement {
     kind: "edge";
@@ -777,5 +869,8 @@ export interface PreparedEdgeElement {
     lineRect: BBox;
     lineFlipV: boolean;
     lineFlipH: boolean;
+    metrics?: {
+        renderMode: "unified" | "split";
+    };
 }
 //# sourceMappingURL=types.d.ts.map

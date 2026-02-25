@@ -1,0 +1,352 @@
+{
+    "title":  "Home Depot EPS Forecast and Scenario Comparison",
+    "metadata":  {
+                     "author":  "PPTMCP",
+                     "created":  "2026-02-20T00:00:00Z"
+                 },
+    "theme":  "consulting_dark_v1",
+    "styleTokens":  {
+                        "font_scale.body.size":  11,
+                        "font_scale.subtitle.size":  16,
+                        "space_scale.5":  20,
+                        "chart.palette":  [
+                                              "#6D5EF8",
+                                              "#3D8DFF",
+                                              "#4A99FF",
+                                              "#4A85F5",
+                                              "#D05A58"
+                                          ]
+                    },
+    "slides":  [
+                   {
+                       "id":  "slide-1",
+                       "title":  "Home Depot EPS Forecast and Scenario Comparison",
+                       "template":  "analysis_5_col",
+                       "fills":  {
+                                     "title":  {
+                                                   "content":  "Home Depot EPS Forecast and Scenario Comparison"
+                                               },
+                                     "headers":  {
+                                                     "steps":  [
+                                                                   {
+                                                                       "label":  "Q4-2025 EPS Forecast"
+                                                                   },
+                                                                   {
+                                                                       "label":  "Scenario Comparison"
+                                                                   },
+                                                                   {
+                                                                       "label":  "Reliability Assessment"
+                                                                   },
+                                                                   {
+                                                                       "label":  "Economic Interpretation"
+                                                                   },
+                                                                   {
+                                                                       "label":  "Conclusion"
+                                                                   }
+                                                               ]
+                                                 },
+                                     "column_cards":  {
+                                                          "items":  [
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "style":  {
+                                                                                          "bg":  "background",
+                                                                                          "border":  "none",
+                                                                                          "radius":  "md",
+                                                                                          "shadow":  "none",
+                                                                                          "accent":  {
+                                                                                                         "edge":  "none"
+                                                                                                     }
+                                                                                      },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "none",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  " "
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        },
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "style":  {
+                                                                                          "bg":  "background",
+                                                                                          "border":  "none",
+                                                                                          "radius":  "md",
+                                                                                          "shadow":  "none",
+                                                                                          "accent":  {
+                                                                                                         "edge":  "none"
+                                                                                                     }
+                                                                                      },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "none",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  " "
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        },
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "style":  {
+                                                                                          "bg":  "background",
+                                                                                          "border":  "none",
+                                                                                          "radius":  "md",
+                                                                                          "shadow":  "none",
+                                                                                          "accent":  {
+                                                                                                         "edge":  "none"
+                                                                                                     }
+                                                                                      },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "none",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  " "
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        },
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "style":  {
+                                                                                          "bg":  "background",
+                                                                                          "border":  "none",
+                                                                                          "radius":  "md",
+                                                                                          "shadow":  "none",
+                                                                                          "accent":  {
+                                                                                                         "edge":  "none"
+                                                                                                     }
+                                                                                      },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "none",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  " "
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        },
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "style":  {
+                                                                                          "bg":  "background",
+                                                                                          "border":  "none",
+                                                                                          "radius":  "md",
+                                                                                          "shadow":  "none",
+                                                                                          "accent":  {
+                                                                                                         "edge":  "none"
+                                                                                                     }
+                                                                                      },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "none",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  " "
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        }
+                                                                    ]
+                                                      },
+                                     "column_icons":  {
+                                                          "items":  [
+                                                                        {
+                                                                            "kind":  "icon",
+                                                                            "name":  "calendar-days",
+                                                                            "sizeToken":  5,
+                                                                            "colorSlot":  "text.title",
+                                                                            "align":  "center",
+                                                                            "verticalAlign":  "middle"
+                                                                        },
+                                                                        {
+                                                                            "kind":  "icon",
+                                                                            "name":  "arrows-right-left",
+                                                                            "sizeToken":  5,
+                                                                            "colorSlot":  "text.title",
+                                                                            "align":  "center",
+                                                                            "verticalAlign":  "middle"
+                                                                        },
+                                                                        {
+                                                                            "kind":  "icon",
+                                                                            "name":  "clipboard-document-check",
+                                                                            "sizeToken":  5,
+                                                                            "colorSlot":  "text.title",
+                                                                            "align":  "center",
+                                                                            "verticalAlign":  "middle"
+                                                                        },
+                                                                        {
+                                                                            "kind":  "icon",
+                                                                            "name":  "book-open",
+                                                                            "sizeToken":  5,
+                                                                            "colorSlot":  "text.title",
+                                                                            "align":  "center",
+                                                                            "verticalAlign":  "middle"
+                                                                        },
+                                                                        {
+                                                                            "kind":  "icon",
+                                                                            "name":  "chart-bar",
+                                                                            "sizeToken":  5,
+                                                                            "colorSlot":  "text.title",
+                                                                            "align":  "center",
+                                                                            "verticalAlign":  "middle"
+                                                                        }
+                                                                    ]
+                                                      },
+                                     "column_highlights":  {
+                                                               "items":  [
+                                                                             {
+                                                                                 "kind":  "text",
+                                                                                 "text":  "2.79",
+                                                                                 "textStyleSlot":  "text.title",
+                                                                                 "paddingSlot":  0
+                                                                             },
+                                                                             {
+                                                                                 "kind":  "text",
+                                                                                 "text":  "3 modeling approaches",
+                                                                                 "textStyleSlot":  "text.subtitle",
+                                                                                 "paddingSlot":  0
+                                                                             },
+                                                                             {
+                                                                                 "kind":  "text",
+                                                                                 "text":  "Model captures key behaviors",
+                                                                                 "textStyleSlot":  "text.subtitle",
+                                                                                 "paddingSlot":  0
+                                                                             },
+                                                                             {
+                                                                                 "kind":  "text",
+                                                                                 "text":  "Understanding the forecast",
+                                                                                 "textStyleSlot":  "text.subtitle",
+                                                                                 "paddingSlot":  0
+                                                                             },
+                                                                             {
+                                                                                 "kind":  "text",
+                                                                                 "text":  "Final Summary",
+                                                                                 "textStyleSlot":  "text.subtitle",
+                                                                                 "paddingSlot":  0
+                                                                             }
+                                                                         ]
+                                                           },
+                                     "column_bullets":  {
+                                                            "items":  [
+                                                                          {
+                                                                              "kind":  "list",
+                                                                              "style":  "dot",
+                                                                              "bullet":  {
+                                                                                             "size":  "md",
+                                                                                             "gap":  8,
+                                                                                             "color":  "text"
+                                                                                         },
+                                                                              "indent":  {
+                                                                                             "left":  0,
+                                                                                             "hanging":  18
+                                                                                         },
+                                                                              "lineGap":  2,
+                                                                              "items":  [
+                                                                                            "95% Prediction Interval",
+                                                                                            "Previous Quarter (Q3-2025) EPS = 3.63 -\u003e indicates short-term normalization"
+                                                                                        ]
+                                                                          },
+                                                                          {
+                                                                              "kind":  "list",
+                                                                              "style":  "dot",
+                                                                              "bullet":  {
+                                                                                             "size":  "md",
+                                                                                             "gap":  8,
+                                                                                             "color":  "text"
+                                                                                         },
+                                                                              "indent":  {
+                                                                                             "left":  0,
+                                                                                             "hanging":  18
+                                                                                         },
+                                                                              "lineGap":  2,
+                                                                              "items":  [
+                                                                                            "1. Full Dataset Including COVID (2020)\nIssue: Pandemic demand surge biases upward prediction",
+                                                                                            "2. Adjusted COVID Averaging (2019-2021 blended 2020)\nIssue: Artificial smoothing reduces economic meaning",
+                                                                                            "3. Post-Shock Adjusted Seasonal Model (Final Model)\nChosen because it preserves long-run behavior while removing structural distortion"
+                                                                                        ]
+                                                                          },
+                                                                          {
+                                                                              "kind":  "list",
+                                                                              "style":  "dot",
+                                                                              "bullet":  {
+                                                                                             "size":  "md",
+                                                                                             "gap":  8,
+                                                                                             "color":  "text"
+                                                                                         },
+                                                                              "indent":  {
+                                                                                             "left":  0,
+                                                                                             "hanging":  18
+                                                                                         },
+                                                                              "lineGap":  2,
+                                                                              "items":  [
+                                                                                            "Long-term growth trend",
+                                                                                            "Quarterly seasonality",
+                                                                                            "Mean reversion after abnormal quarters",
+                                                                                            "Fit quality: High explanatory power (R^2 ~= 0.986)",
+                                                                                            "Lowest information criterion (best model stability)"
+                                                                                        ]
+                                                                          },
+                                                                          {
+                                                                              "kind":  "list",
+                                                                              "style":  "dot",
+                                                                              "bullet":  {
+                                                                                             "size":  "md",
+                                                                                             "gap":  8,
+                                                                                             "color":  "text"
+                                                                                         },
+                                                                              "indent":  {
+                                                                                             "left":  0,
+                                                                                             "hanging":  18
+                                                                                         },
+                                                                              "lineGap":  2,
+                                                                              "items":  [
+                                                                                            "Short-term EPS decline reflects normalization after strong quarters",
+                                                                                            "Not weakening fundamentals",
+                                                                                            "Earnings historically follow peaks and resume seasonal growth pattern"
+                                                                                        ]
+                                                                          },
+                                                                          {
+                                                                              "kind":  "list",
+                                                                              "style":  "dot",
+                                                                              "bullet":  {
+                                                                                             "size":  "md",
+                                                                                             "gap":  8,
+                                                                                             "color":  "text"
+                                                                                         },
+                                                                              "indent":  {
+                                                                                             "left":  0,
+                                                                                             "hanging":  18
+                                                                                         },
+                                                                              "lineGap":  2,
+                                                                              "items":  [
+                                                                                            "Forecast represents cyclical normalization",
+                                                                                            "Not structural downturn"
+                                                                                        ]
+                                                                          }
+                                                                      ]
+                                                        }
+                                 }
+                   }
+               ]
+}

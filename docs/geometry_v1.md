@@ -42,5 +42,11 @@ Final geometry is rounded to **1e-4 inches** to ensure stable, deterministic out
 - `connector_outside_region`
 - `callout_no_feasible_placement`
 
-## Warnings
-- `arrowhead_scaled` (arrowheads scaled down to fit very short lines)
+## Arrowhead Policy
+- Arrowheads may scale silently only within the 80%-100% target size band.
+- If required scaling drops below 80%, rendering hard-fails with `line_too_short`.
+- `line_too_short` now includes threshold diagnostics:
+  - `segmentLengthIn`
+  - `requiredHeadLengthIn`
+  - `computedScale`
+  - `thresholdUsed`

@@ -1,0 +1,68 @@
+{
+  "title": "Enterprise Failure Demo",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-25T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "enterprise-fail-1",
+      "title": "Enterprise Guardrail Violations",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "header": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "bullets": { "col": 0, "row": 1, "colSpan": 8, "rowSpan": 4 },
+        "overflow": { "col": 8, "row": 1, "colSpan": 4, "rowSpan": 2 },
+        "invalid_shape": { "col": 8, "row": 3, "colSpan": 4, "rowSpan": 4 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "header",
+          "content": "Enterprise Failure Demo",
+          "style": { "fontSize": 30, "bold": true }
+        },
+        {
+          "type": "list",
+          "region": "bullets",
+          "style": "dot",
+          "bullet": { "size": "md", "gap": 8, "color": "text" },
+          "indent": { "left": 0, "hanging": 18 },
+          "lineGap": 5,
+          "items": [
+            {
+              "text": "This first bullet intentionally exceeds one hundred and twenty characters so enterprise mode should reject it immediately with a clear validation error."
+            },
+            { "text": "Second bullet exceeds per-slide density budget." },
+            { "text": "Third bullet exceeds per-slide density budget." },
+            { "text": "Fourth bullet exceeds per-slide density budget." },
+            { "text": "Fifth bullet exceeds per-slide density budget." },
+            { "text": "Sixth bullet exceeds per-slide density budget." },
+            { "text": "Seventh bullet exceeds per-slide density budget." }
+          ]
+        },
+        {
+          "type": "text",
+          "region": "overflow",
+          "content": "This paragraph is intentionally too long for the overflow region and uses fit none to prevent shrinking. It is expected to overflow in enterprise hard-fail mode once schema violations are resolved.",
+          "style": { "fontSize": 18, "fit": "none", "paddingPt": 2 }
+        },
+        {
+          "type": "card",
+          "region": "invalid_shape",
+          "variant": "surface",
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Card is intentionally disallowed in enterprise mode." }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

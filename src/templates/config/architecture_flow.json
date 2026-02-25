@@ -1,0 +1,69 @@
+{
+  "id": "architecture_flow",
+  "title": "Architecture Flow",
+  "extends": "base_standard",
+  "placeholders": [
+    {
+      "id": "title",
+      "kind": "text",
+      "region": {
+        "col": 0,
+        "row": 0,
+        "colSpan": 12,
+        "rowSpan": 1
+      },
+      "layer": "content",
+      "styleSlots": {
+        "text": "text.title",
+        "padding": 1
+      },
+      "allowedKinds": [
+        "text"
+      ],
+      "minItems": 1,
+      "maxItems": 1,
+      "layoutMode": "single"
+    },
+    {
+      "id": "flow_steps",
+      "kind": "chevron_flow",
+      "region": {
+        "col": 0,
+        "row": 1,
+        "colSpan": 12,
+        "rowSpan": 2
+      },
+      "layer": "content",
+      "styleSlots": {
+        "padding": 0
+      },
+      "allowedKinds": [
+        "chevron_flow"
+      ],
+      "minItems": 1,
+      "maxItems": 1,
+      "layoutMode": "single"
+    },
+    {
+      "id": "detail_cards",
+      "kind": "card",
+      "region": {
+        "col": 0,
+        "row": 3,
+        "colSpan": 12,
+        "rowSpan": 5
+      },
+      "layer": "content",
+      "styleSlots": {
+        "padding": 0
+      },
+      "allowedKinds": [
+        "card"
+      ],
+      "minItems": 4,
+      "maxItems": 4,
+      "layoutMode": "hstack",
+      "gapToken": 1
+    }
+  ]
+}

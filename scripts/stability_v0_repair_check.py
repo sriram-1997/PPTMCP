@@ -4,8 +4,8 @@ import shutil
 import subprocess
 import sys
 
-PPTX = "out/demos/pptmcp_capabilities_deck_v1.pptx"
-OUT = "out/demos/pptmcp_capabilities_deck_v1.repair_check.json"
+DEFAULT_PPTX = "out/demos/pptmcp_capabilities_deck_v1.pptx"
+DEFAULT_OUT = "out/demos/pptmcp_capabilities_deck_v1.repair_check.json"
 
 
 def find_powerpoint() -> str:
@@ -39,9 +39,20 @@ def get_version(path: str) -> str:
 
 
 def main() -> int:
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
+    args = sys.argv[1:]
+    if args:
+        if len(args) != 2:
+            print("Usage: python scripts/stability_v0_repair_check.py <pptx> <out_json>")
+            return 1
+        pptx_path = args[0]
+        out_path = args[1]
+    else:
+        pptx_path = DEFAULT_PPTX
+        out_path = DEFAULT_OUT
+
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
     result = {
-        "pptx": PPTX,
+        "pptx": pptx_path,
         "powerpoint_available": False,
         "powerpoint_path": "",
         "powerpoint_version": "",
@@ -54,7 +65,7 @@ def main() -> int:
     ppt = find_powerpoint()
     if not ppt:
         result["reason"] = "PowerPoint not available"
-        with open(OUT, "w", encoding="utf-8") as f:
+        with open(out_path, "w", encoding="utf-8") as f:
             json.dump(result, f, indent=2)
             f.write("\n")
         return 0
@@ -63,23 +74,23 @@ def main() -> int:
     result["powerpoint_path"] = ppt
     result["powerpoint_version"] = get_version(ppt)
 
-    if not os.path.exists(PPTX):
+    if not os.path.exists(pptx_path):
         result["reason"] = "PPTX missing"
-        with open(OUT, "w", encoding="utf-8") as f:
+        with open(out_path, "w", encoding="utf-8") as f:
             json.dump(result, f, indent=2)
             f.write("\n")
         return 1
 
     try:
         result["open_attempted"] = True
-        subprocess.Popen([ppt, PPTX], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.Popen([ppt, pptx_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         result["open_launched"] = True
         result["reason"] = "manual confirmation required"
     except Exception as e:
         result["open_launched"] = False
         result["reason"] = f"launch_failed: {e}"
 
-    with open(OUT, "w", encoding="utf-8") as f:
+    with open(out_path, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2)
         f.write("\n")
     return 0

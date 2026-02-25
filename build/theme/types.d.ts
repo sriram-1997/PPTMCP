@@ -84,6 +84,77 @@ export interface ConcreteTheme {
     };
     connector: {
         stroke: string;
+        dash?: "solid" | "dash" | "dot";
+    };
+    module: {
+        fill: string;
+        stroke: string;
+        shadow: {
+            color: string;
+            blurPt: number;
+            offsetPt: number;
+            opacity: number;
+        };
+        badge: {
+            fill: string;
+            textColor: string;
+            stroke: string;
+        };
+    };
+    diagram: {
+        node: {
+            iconSizePt: number;
+            iconMinSizePt: number;
+            iconGapPt: number;
+        };
+        edge: {
+            minLengthIn: number;
+        };
+    };
+    chevron: {
+        tipRatio: number;
+        notchRatio: number;
+        innerPadXPt: number;
+        innerPadYPt: number;
+        step: {
+            iconSizePt: number;
+            iconMinSizePt: number;
+            iconGapPt: number;
+        };
+    };
+    flow: {
+        gapXIn: number;
+        minStepWIn: number;
+        minStepHIn: number;
+        chevronHeightRatio: number;
+        cardHeightRatio: number;
+        connector: {
+            strokePt: number;
+            arrowSizePt: number;
+            minLengthIn: number;
+        };
+    };
+    flowProfiles: {
+        flowChevron: {
+            overlapRatio: number;
+            stepHeightRatio: number;
+            innerPadXPt: number;
+            innerPadYPt: number;
+            tipRatio: number;
+            notchRatio: number;
+            connectorStrokePt: number;
+            connectorArrowSizePt: number;
+        };
+        flowCard: {
+            gapXIn: number;
+            stepHeightRatio: number;
+            innerPadXPt: number;
+            innerPadYPt: number;
+            connectorStrokePt: number;
+            connectorArrowSizePt: number;
+            minStepWIn: number;
+            minStepHIn: number;
+        };
     };
     shape: {
         borderWidth: number;

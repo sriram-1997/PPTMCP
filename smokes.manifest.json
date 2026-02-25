@@ -1,0 +1,110 @@
+[
+  {
+    "id": "layout-core",
+    "spec": "examples/pptmcp_case_mode_v0.1.json",
+    "output": "out/layout-smoke.pptx",
+    "expect": "pass",
+    "groups": ["layout", "all"]
+  },
+  {
+    "id": "themes-stress-light",
+    "spec": "examples/themes/themes_stress.json",
+    "output": "out/themes-stress-light.pptx",
+    "expect": "pass",
+    "groups": ["themes-stress", "all"]
+  },
+  {
+    "id": "themes-stress-dark",
+    "spec": "examples/themes/themes_stress_dark.json",
+    "output": "out/themes-stress-dark.pptx",
+    "expect": "pass",
+    "groups": ["themes-stress", "all"]
+  },
+  {
+    "id": "geometry-v1",
+    "spec": "examples/geometry_v1_smoke.json",
+    "output": "out/geometry-v1-smoke.pptx",
+    "expect": "pass",
+    "groups": ["geometry-v1", "all"]
+  },
+  {
+    "id": "templates-v1-light",
+    "spec": "examples/smoke/templates_v1_light.json",
+    "output": "out/smokes/templates_v1_light.pptx",
+    "expect": "pass",
+    "groups": ["templates-v1", "all"]
+  },
+  {
+    "id": "templates-v1-dark",
+    "spec": "examples/smoke/templates_v1_dark.json",
+    "output": "out/smokes/templates_v1_dark.pptx",
+    "expect": "pass",
+    "groups": ["templates-v1", "all"]
+  },
+  {
+    "id": "chevron-width-stress-light",
+    "spec": "examples/smoke/chevron_width_stress.json",
+    "output": "out/smokes/chevron_width_stress_light.pptx",
+    "expect": "pass",
+    "groups": ["chevron-width-stress", "all"]
+  },
+  {
+    "id": "chevron-width-stress-dark",
+    "spec": "examples/smoke/chevron_width_stress_dark.json",
+    "output": "out/smokes/chevron_width_stress_dark.pptx",
+    "expect": "pass",
+    "groups": ["chevron-width-stress", "all"]
+  },
+  {
+    "id": "card-padding-matrix",
+    "spec": "examples/smoke/card_padding_matrix.json",
+    "output": "out/smokes/card_padding_matrix.pptx",
+    "expect": "pass",
+    "groups": ["card-padding-matrix", "all"]
+  },
+  {
+    "id": "ir-canonicalization-equivalence",
+    "spec": "examples/smoke/ir_canonicalization_equivalence.json",
+    "output": "out/smokes/ir_canonicalization_equivalence.pptx",
+    "expect": "pass",
+    "assert": "ir_card_equivalence",
+    "groups": ["hardening", "all"]
+  },
+  {
+    "id": "list-alignment-matrix-light",
+    "spec": "examples/smoke/list_alignment_matrix.json",
+    "output": "out/smokes/list_alignment_matrix_light.pptx",
+    "expect": "pass",
+    "groups": ["hardening", "all"]
+  },
+  {
+    "id": "list-alignment-matrix-dark",
+    "spec": "examples/smoke/list_alignment_matrix_dark.json",
+    "output": "out/smokes/list_alignment_matrix_dark.pptx",
+    "expect": "pass",
+    "groups": ["hardening", "all"]
+  },
+  {
+    "id": "chevron-flow-long-labels-shrink",
+    "spec": "examples/smoke/chevron_flow_long_labels_shrink.json",
+    "output": "out/smokes/chevron_flow_long_labels_shrink.pptx",
+    "expect": "pass",
+    "groups": ["hardening", "all"]
+  },
+  {
+    "id": "chevron-flow-overflow-fail",
+    "spec": "examples/smoke/chevron_flow_overflow_fail.json",
+    "output": "out/smokes/chevron_flow_overflow_fail.pptx",
+    "expect": "fail",
+    "error": "chevron_label_overflow",
+    "groups": ["hardening", "all"]
+  },
+  {
+    "id": "arrowhead-threshold-band",
+    "spec": "examples/smoke/arrowhead_threshold_band.json",
+    "output": "out/smokes/arrowhead_threshold_band.pptx",
+    "expect": "fail",
+    "error": "line_too_short",
+    "groups": ["hardening", "all"]
+  }
+]

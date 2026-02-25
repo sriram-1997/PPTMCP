@@ -135,6 +135,7 @@ def main() -> int:
     geometry_hits: List[str] = []
     per_slide_bullets: Dict[str, List[str]] = {}
     all_styles: Set[str] = set()
+    numbered_prefix_hits: List[str] = []
 
     for i, slide in enumerate(slides, start=1):
         if not isinstance(slide, dict):
@@ -155,6 +156,28 @@ def main() -> int:
         # bullet styles per slide
         styles: Set[str] = set()
         collect_list_styles(slide, styles)
+        # Detect numeric prefixes in numbered list items
+        def scan_numbered(obj: Any):
+            if isinstance(obj, dict):
+                if obj.get("type") == "list" or obj.get("kind") == "list":
+                    if obj.get("style") == "number":
+                        items = obj.get("items", [])
+                        if isinstance(items, list):
+                            for item in items:
+                                text = None
+                                if isinstance(item, str):
+                                    text = item
+                                elif isinstance(item, dict):
+                                    text = item.get("text")
+                                if isinstance(text, str) and text.strip().startswith(tuple(str(i) for i in range(1, 10))):
+                                    if text.strip().split()[0].rstrip(".").isdigit():
+                                        numbered_prefix_hits.append(f"Slide {i}: '{text}'")
+                for v in obj.values():
+                    scan_numbered(v)
+            elif isinstance(obj, list):
+                for v in obj:
+                    scan_numbered(v)
+        scan_numbered(slide)
         # only report styles we care about
         used = sorted([s for s in styles if s in BULLET_STYLES])
         per_slide_bullets[str(i)] = used
@@ -165,6 +188,7 @@ def main() -> int:
 
     audit["bullet_styles_per_slide"] = per_slide_bullets
     audit["bullet_styles_overall"] = sorted(list(all_styles))
+    audit["numbered_list_prefix_hits"] = numbered_prefix_hits
 
     # C) Nested card rule
     nested_card_findings: List[str] = []

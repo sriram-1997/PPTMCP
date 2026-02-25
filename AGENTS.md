@@ -347,7 +347,7 @@ Rules:
 ### Element Validation Rules
 
 1. **Region Reference**: All elements must have a valid `region` that exists in the slide's `regions` object.
-2. **Unsupported Types**: If `type` is not in {text, list, card, table, chart, callout, connector, image, icon}, hard-fail with actionable error.
+2. **Unsupported Types**: If `type` is not in {text, list, card, table, chart, chevron_flow, callout, connector, image, icon}, hard-fail with actionable error.
 3. **Missing Fields**: If required fields (type, region, content) are missing, hard-fail.
 4. **Chart Types**: Only `chartType="column"` and `chartType="line"` are supported. Anything else hard-fails with `chart_type_not_supported`.
 5. **Chart Data**: Column charts use `dataSeries` (1-2 series, aligned categories, `[label, number]` points) and invalid data hard-fails with `chart_data_invalid`. Line charts require `data.labels` plus `data.series[].values` length matches; empty series hard-fails with `chart_no_series`; non-numeric values hard-fail with `chart_invalid_value`.
@@ -360,6 +360,87 @@ Rules:
 ### Anchors v0
 - Supported: `type="region"` with `targetRegion`, `point`, `dxPt`, `dyPt`.
 - Reserved (hard-fail `anchor_type_not_supported`): `chart_point`, `element_point`, `table_cell`.
+
+## Component Library v1
+
+Canonical templates under `src/templates/config/`:
+- `analysis_5_col`
+- `comparison_3_col`
+- `kpi_dashboard`
+- `architecture_flow`
+- `before_after`
+- `timeline_horizontal`
+- `strategy_stack`
+- `matrix_2x2`
+
+Template requirements:
+- Deterministic compile-to-regions only (no absolute x/y).
+- `layoutMode` explicitly declared per placeholder.
+- `gapToken` required for `vstack|hstack|grid`.
+- `allowedKinds` explicitly declared.
+- `minItems`/`maxItems` enforced.
+
+## IR Canonicalization v0.2
+
+Canonicalization runs after template compilation and before validation/render.
+
+- Entry point: `src/compiler/canonicalize.ts` (`canonicalizeIR`).
+- Card padding authority:
+  - `style.paddingSlot` + `style.paddingPt` together hard-fail with `card_padding_ambiguous`.
+  - `style.paddingSlot` resolves to `style.paddingPt` from theme `space_scale`.
+  - Runtime IR removes `paddingSlot`; renderer consumes `paddingPt` only.
+- Quantization:
+  - Grid/region geometry and resolved insets are quantized to `EMU_STEP`.
+  - Region rects are persisted on IR (`region.__rect`) and reused downstream.
+- Z-order stabilization:
+  - Deterministic bucket order: `background -> surfaces -> shapes -> connectors -> text -> overlays`.
+  - Tie-breaker uses stable element id key and source order.
+
+## Geometry Stabilization v2
+
+### Chevron geometry
+- Chevron tip/notch depth is fixed from header height (not region width-proportional).
+- `tipDepthIn = min(0.25 * headerHeight, constantMax)`.
+- `notchDepthIn = tipDepthIn` unless narrow-width fallback applies.
+- Narrow-width fallback: if `width < 2*tipDepthIn + minTextPadding`, notch is removed (trapezoid fallback).
+
+### Arrowhead scaling policy
+- Minimum viable line length invariant remains `0.01 in`.
+- Arrowhead scaling in `80%-100%` band is silent.
+- If required arrow scaling is `<80%`, hard-fail with `line_too_short`.
+- `arrowhead_scaled` warning is removed.
+
+### Card padding slot enforcement
+- Template compiler resolves card padding from `space_scale[paddingSlot]` into compiled card IR (`style.paddingPt`).
+- Card body/inner padding and footer strip padding consume resolved slot-driven padding.
+- No compiler hardcoded card padding fallback values.
+
+## Typography Invariants v0.1
+
+### List Metrics
+- Canonical list metrics are centralized in `src/typography/listMetrics.ts`.
+- Dot metrics:
+  - `leftIndentPt = 18`
+  - `hangingPt = 12`
+  - `bulletGapPt = 6`
+- Number metrics:
+  - Fixed prefix width; text left edge aligned to dot style.
+- Icon metrics:
+  - `iconBoxWidthPt = 12`
+  - text left edge aligned to dot/number styles
+  - baseline nudge is deterministic
+- Invariants:
+  - text left edge is style-invariant (`dot|number|icon`)
+  - `hangingPt <= leftIndentPt`
+  - inline bold runs never alter indentation.
+
+### Rhythm
+- Rhythm rules are centralized in `src/typography/rhythm.ts`.
+- Slots:
+  - `title`: `lineHeight=1.05`, paragraph spacing before/after `0`
+  - `body`: `lineHeight=1.15`, paragraph spacing before/after `0`
+  - `lists`: `lineHeight=1.15`, paragraph spacing before/after `0`
+- Out-of-band line-height overrides hard-fail with `rhythm_override_out_of_band`.
 
 ## render_pptmcp Tool Specification
 

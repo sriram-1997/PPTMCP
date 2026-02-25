@@ -8,6 +8,39 @@ function isInteger(value) {
 function isVariant(value) {
     return value === "surface" || value === "elevated" || value === "accent";
 }
+function isFlowProfile(value) {
+    return value === "flow.chevron" || value === "flow.card";
+}
+function textRhythmTargetForRegion(regionName) {
+    const lower = typeof regionName === "string" ? regionName.toLowerCase() : "";
+    if (lower.includes("title") || lower.includes("header")) {
+        return 1.05;
+    }
+    return 1.15;
+}
+const ENTERPRISE_ALLOWED_ELEMENT_TYPES = new Set([
+    "text",
+    "list",
+    "table",
+    "chevron_flow",
+    "node",
+    "edge",
+    "callout",
+    "connector",
+]);
+const ENTERPRISE_MAX_BULLETS_PER_SLIDE = 6;
+const ENTERPRISE_MAX_BULLET_CHARS = 120;
+function normalizeBulletText(value) {
+    if (typeof value !== "string") {
+        return "";
+    }
+    return value
+        .replace(/\r\n/g, "\n")
+        .replace(/\r/g, "\n")
+        .replace(/\*\*/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+}
 function validateTextElementSchema(element, elemPrefix, strict, errors) {
     if (typeof element.content !== "string") {
         errors.push(`${elemPrefix} Text content must be a string`);
@@ -50,6 +83,14 @@ function validateTextElementSchema(element, elemPrefix, strict, errors) {
     }
     if (typeof style.lineHeight !== "undefined" && typeof style.lineHeight !== "number") {
         errors.push(`${elemPrefix} style.lineHeight must be a number`);
+    }
+    if (typeof style.lineHeight === "number") {
+        const target = textRhythmTargetForRegion(element.region);
+        const min = target - 0.05;
+        const max = target + 0.05;
+        if (style.lineHeight < min || style.lineHeight > max) {
+            errors.push(`${elemPrefix} rhythm_override_out_of_band`);
+        }
     }
     if (strict) {
         const allowedStyleFields = new Set([
@@ -549,6 +590,44 @@ function validateListElementSchema(element, elemPrefix, strict, errors, nested) 
         }
     }
 }
+function validateChevronFlowElementSchema(element, elemPrefix, strict, errors) {
+    if ("x" in element || "y" in element || "w" in element || "h" in element) {
+        errors.push(`${elemPrefix} absolute_position_forbidden`);
+    }
+    const orientation = element.orientation;
+    if (typeof orientation !== "undefined" && orientation !== "horizontal") {
+        errors.push(`${elemPrefix} chevron_orientation_invalid`);
+    }
+    if (typeof element.layoutProfile !== "undefined" && !isFlowProfile(element.layoutProfile)) {
+        errors.push(`${elemPrefix} flow_profile_invalid`);
+    }
+    if (!Array.isArray(element.steps) || element.steps.length < 2 || element.steps.length > 12) {
+        errors.push(`${elemPrefix} chevron_steps_invalid`);
+    }
+    else {
+        element.steps.forEach((rawStep, idx) => {
+            if (!isPlainObject(rawStep)) {
+                errors.push(`${elemPrefix} chevron_step_invalid (${idx + 1})`);
+                return;
+            }
+            const step = rawStep;
+            if (typeof step.label !== "string" || step.label.trim().length === 0) {
+                errors.push(`${elemPrefix} chevron_step_invalid (${idx + 1})`);
+            }
+            if (typeof step.icon !== "undefined" && typeof step.icon !== "string") {
+                errors.push(`${elemPrefix} chevron_step_invalid (${idx + 1})`);
+            }
+        });
+    }
+    if (strict) {
+        const allowedFields = new Set(["type", "region", "steps", "orientation", "layoutProfile", "z"]);
+        for (const key of Object.keys(element)) {
+            if (!allowedFields.has(key)) {
+                errors.push(`${elemPrefix} Unknown field '${key}'`);
+            }
+        }
+    }
+}
 function validateNodeElementSchema(element, elemPrefix, strict, errors) {
     if ("x" in element || "y" in element || "w" in element || "h" in element) {
         errors.push(`${elemPrefix} absolute_position_forbidden`);
@@ -639,6 +718,9 @@ function validateCardElementSchema(element, elemPrefix, strict, errors) {
     if (typeof element.variant !== "undefined" && !["surface", "elevated", "accent"].includes(String(element.variant))) {
         errors.push(`${elemPrefix} style_variant_invalid`);
     }
+    if (typeof element.layoutProfile !== "undefined" && !isFlowProfile(element.layoutProfile)) {
+        errors.push(`${elemPrefix} flow_profile_invalid`);
+    }
     if (typeof element.style !== "undefined") {
         if (!isPlainObject(element.style)) {
             errors.push(`${elemPrefix} card_style_invalid`);
@@ -657,6 +739,17 @@ function validateCardElementSchema(element, elemPrefix, strict, errors) {
             }
             if (typeof style.padding !== "undefined" && !["sm", "md", "lg"].includes(String(style.padding))) {
                 errors.push(`${elemPrefix} card_style_invalid`);
+            }
+            if (typeof style.paddingSlot !== "undefined" &&
+                (typeof style.paddingSlot !== "number" || !Number.isInteger(style.paddingSlot) || style.paddingSlot < 0)) {
+                errors.push(`${elemPrefix} card_style_invalid`);
+            }
+            if (typeof style.paddingPt !== "undefined" &&
+                (typeof style.paddingPt !== "number" || !Number.isFinite(style.paddingPt) || style.paddingPt < 0)) {
+                errors.push(`${elemPrefix} card_style_invalid`);
+            }
+            if (typeof style.paddingSlot !== "undefined" && typeof style.paddingPt !== "undefined") {
+                errors.push(`${elemPrefix} card_padding_ambiguous`);
             }
             if (typeof style.shadow !== "undefined" && !["none", "sm"].includes(String(style.shadow))) {
                 errors.push(`${elemPrefix} card_style_invalid`);
@@ -735,7 +828,17 @@ function validateCardElementSchema(element, elemPrefix, strict, errors) {
         }
     }
     if (strict) {
-        const allowedFields = new Set(["type", "region", "variant", "style", "header", "body", "footer", "z"]);
+        const allowedFields = new Set([
+            "type",
+            "region",
+            "variant",
+            "layoutProfile",
+            "style",
+            "header",
+            "body",
+            "footer",
+            "z",
+        ]);
         for (const key of Object.keys(element)) {
             if (!allowedFields.has(key)) {
                 errors.push(`${elemPrefix} Unknown field '${key}'`);
@@ -1039,8 +1142,9 @@ function validateIconElementSchema(element, elemPrefix, strict, errors) {
         }
     }
 }
-export function validateSpec(spec, strict) {
+export function validateSpec(spec, strict, options) {
     const errors = [];
+    const enterpriseMode = options?.enterpriseMode === true;
     if (!spec || typeof spec !== "object") {
         return { valid: false, errors: ["Spec must be a JSON object"] };
     }
@@ -1069,6 +1173,9 @@ export function validateSpec(spec, strict) {
     }
     if (typeof root.styleTokens !== "undefined" && !isPlainObject(root.styleTokens)) {
         errors.push("style_tokens_invalid_type");
+    }
+    if (enterpriseMode && typeof root.theme === "undefined") {
+        errors.push("enterprise_theme_required (top-level 'theme' must be explicitly set)");
     }
     if (!Array.isArray(root.slides)) {
         errors.push("Missing or invalid 'slides' array");
@@ -1145,6 +1252,7 @@ export function validateSpec(spec, strict) {
             errors.push(`${prefix} Missing or invalid 'elements' array`);
             return;
         }
+        let slideBulletCount = 0;
         const nodeIds = new Set();
         slide.elements.forEach((rawElement) => {
             if (!rawElement || typeof rawElement !== "object") {
@@ -1171,9 +1279,25 @@ export function validateSpec(spec, strict) {
                 errors.push(`${elemPrefix} Missing or invalid 'type'`);
                 return;
             }
-            if (!["text", "list", "card", "table", "chart", "node", "edge", "callout", "connector", "image", "icon"].includes(element.type)) {
+            if (![
+                "text",
+                "list",
+                "card",
+                "table",
+                "chart",
+                "chevron_flow",
+                "node",
+                "edge",
+                "callout",
+                "connector",
+                "image",
+                "icon",
+            ].includes(element.type)) {
                 errors.push(`${elemPrefix} Unsupported element type '${element.type}'`);
                 return;
+            }
+            if (enterpriseMode && !ENTERPRISE_ALLOWED_ELEMENT_TYPES.has(element.type)) {
+                errors.push(`${elemPrefix} enterprise_shape_not_allowed ('${element.type}' is not permitted in enterprise mode)`);
             }
             if (["text", "table", "chart", "node", "edge", "callout", "connector", "image", "icon"].includes(element.type) &&
                 typeof element.variant !== "undefined" &&
@@ -1197,6 +1321,9 @@ export function validateSpec(spec, strict) {
             }
             if (element.type === "chart") {
                 validateChartElementSchema(element, elemPrefix, strict, errors);
+            }
+            if (element.type === "chevron_flow") {
+                validateChevronFlowElementSchema(element, elemPrefix, strict, errors);
             }
             if (element.type === "node") {
                 validateNodeElementSchema(element, elemPrefix, strict, errors);
@@ -1228,6 +1355,31 @@ export function validateSpec(spec, strict) {
             if (element.type === "icon") {
                 validateIconElementSchema(element, elemPrefix, strict, errors);
             }
+            if (enterpriseMode && element.type === "list" && Array.isArray(element.items)) {
+                slideBulletCount += element.items.length;
+                element.items.forEach((rawItem, itemIdx) => {
+                    const itemText = isPlainObject(rawItem) ? rawItem.text : undefined;
+                    const normalized = normalizeBulletText(itemText);
+                    if (normalized.length > ENTERPRISE_MAX_BULLET_CHARS) {
+                        errors.push(`${elemPrefix} enterprise_bullet_char_limit_exceeded (item ${itemIdx + 1}, ${normalized.length} > ${ENTERPRISE_MAX_BULLET_CHARS})`);
+                    }
+                });
+            }
+            if (enterpriseMode && element.type === "card" && Array.isArray(element.body)) {
+                element.body.forEach((rawBody, bodyIdx) => {
+                    if (!isPlainObject(rawBody) || !Array.isArray(rawBody.items)) {
+                        return;
+                    }
+                    slideBulletCount += rawBody.items.length;
+                    rawBody.items.forEach((rawItem, itemIdx) => {
+                        const itemText = isPlainObject(rawItem) ? rawItem.text : undefined;
+                        const normalized = normalizeBulletText(itemText);
+                        if (normalized.length > ENTERPRISE_MAX_BULLET_CHARS) {
+                            errors.push(`${elemPrefix} enterprise_bullet_char_limit_exceeded (body ${bodyIdx + 1} item ${itemIdx + 1}, ${normalized.length} > ${ENTERPRISE_MAX_BULLET_CHARS})`);
+                        }
+                    });
+                });
+            }
             if (typeof element.region !== "string" || element.region.trim().length === 0) {
                 errors.push(`${elemPrefix} Missing or invalid 'region'`);
                 return;
@@ -1245,6 +1397,9 @@ export function validateSpec(spec, strict) {
                 errors.push(`${elemPrefix} Missing 'content'`);
             }
         });
+        if (enterpriseMode && slideBulletCount > ENTERPRISE_MAX_BULLETS_PER_SLIDE) {
+            errors.push(`${prefix} enterprise_bullet_density_exceeded (${slideBulletCount} > ${ENTERPRISE_MAX_BULLETS_PER_SLIDE})`);
+        }
         if (strict) {
             const allowedSlideFields = new Set(["id", "title", "grid", "regions", "elements"]);
             for (const key of Object.keys(slide)) {

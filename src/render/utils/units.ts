@@ -20,3 +20,22 @@ export function inchesToEmu(valueIn: number): number {
   return valueIn * EMU_PER_INCH;
 }
 
+export function emuToInches(valueEmu: number): number {
+  return valueEmu / EMU_PER_INCH;
+}
+
+export function quantizeInchesToEmuStep(valueIn: number): number {
+  if (!Number.isFinite(valueIn)) {
+    return valueIn;
+  }
+  const emu = Math.round((valueIn * EMU_PER_INCH) / EMU_STEP) * EMU_STEP;
+  return emu / EMU_PER_INCH;
+}
+
+export function quantizePtToEmuStep(valuePt: number): number {
+  if (!Number.isFinite(valuePt)) {
+    return valuePt;
+  }
+  return inToPt(quantizeInchesToEmuStep(ptToIn(valuePt)));
+}
+

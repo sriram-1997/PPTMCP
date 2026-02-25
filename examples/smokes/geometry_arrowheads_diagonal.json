@@ -62,25 +62,25 @@
           "type": "text",
           "region": "ne_label",
           "content": "NE",
-          "style": { "fontSize": 12, "bold": true, "color": "#000000" }
+          "style": { "fontSize": 14, "bold": true, "color": "#000000" }
         },
         {
           "type": "text",
           "region": "se_label",
           "content": "SE",
-          "style": { "fontSize": 12, "bold": true, "color": "#000000" }
+          "style": { "fontSize": 14, "bold": true, "color": "#000000" }
         },
         {
           "type": "text",
           "region": "nw_label",
           "content": "NW",
-          "style": { "fontSize": 12, "bold": true, "color": "#000000" }
+          "style": { "fontSize": 14, "bold": true, "color": "#000000" }
         },
         {
           "type": "text",
           "region": "sw_label",
           "content": "SW",
-          "style": { "fontSize": 12, "bold": true, "color": "#000000" }
+          "style": { "fontSize": 14, "bold": true, "color": "#000000" }
         }
       ]
     },
@@ -141,25 +141,25 @@
           "type": "text",
           "region": "ne_label",
           "content": "NE short",
-          "style": { "fontSize": 10, "bold": true, "color": "#000000" }
+          "style": { "fontSize": 14, "bold": true, "color": "#000000" }
         },
         {
           "type": "text",
           "region": "se_label",
           "content": "SE short",
-          "style": { "fontSize": 10, "bold": true, "color": "#000000" }
+          "style": { "fontSize": 14, "bold": true, "color": "#000000" }
         },
         {
           "type": "text",
           "region": "nw_label",
           "content": "NW short",
-          "style": { "fontSize": 10, "bold": true, "color": "#000000" }
+          "style": { "fontSize": 14, "bold": true, "color": "#000000" }
         },
         {
           "type": "text",
           "region": "sw_label",
           "content": "SW short",
-          "style": { "fontSize": 10, "bold": true, "color": "#000000" }
+          "style": { "fontSize": 14, "bold": true, "color": "#000000" }
         }
       ]
     }

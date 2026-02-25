@@ -7,11 +7,13 @@ import { validateSpec } from "./validate.js";
 import { buildIntegrityDebug, prepareSlides } from "./slide.js";
 import { resolveGeometryV1 } from "./geometry.js";
 import { compileTemplateSpec } from "../templates/compiler.js";
+import { canonicalizeIR } from "../compiler/canonicalize.js";
 import { renderTextElement } from "./text.js";
 import { renderTableElement } from "./table.js";
 import { renderChartElement } from "./chart.js";
 import { renderListElement } from "./list.js";
 import { renderCardElement } from "./card.js";
+import { renderChevronFlowElement } from "./chevron.js";
 import { renderCalloutElement } from "./callout.js";
 import { renderConnectorElement } from "./connector.js";
 import { renderEdgeElement } from "./edge.js";
@@ -19,8 +21,13 @@ import { renderImageElement } from "./image.js";
 import { renderIconElement } from "./icon.js";
 import { renderNodeElement } from "./node.js";
 async function renderPptmcp(args) {
+    const startMs = Date.now();
     const strict = args.strict !== false;
-    const allowOverflow = args.allow_overflow === true;
+    const enterpriseMode = args.enterprise_mode === true;
+    if (enterpriseMode && args.allow_overflow === true) {
+        throw new Error("enterprise_overflow_policy_violation (--allow-overflow is disabled in enterprise mode)");
+    }
+    const allowOverflow = enterpriseMode ? false : args.allow_overflow === true;
     const allowDenseCharts = args.allow_dense_charts === true;
     const exportPdf = args.export_pdf === true;
     const debugIntegrity = args.debug_integrity === true;
@@ -45,8 +52,12 @@ async function renderPptmcp(args) {
     if (compiled.errors.length > 0 || !compiled.spec) {
         throw new Error(`Spec validation failed:\n${compiled.errors.join("\n")}`);
     }
-    const spec = compiled.spec;
-    const validation = validateSpec(spec, strict);
+    const spec = canonicalizeIR({
+        ...compiled.spec,
+        __themeSpaceScale: theme.spaceScale,
+    });
+    const totalElements = spec.slides.reduce((sum, slide) => sum + slide.elements.length, 0);
+    const validation = validateSpec(spec, strict, { enterpriseMode });
     if (!validation.valid) {
         throw new Error(`Spec validation failed:\n${validation.errors.join("\n")}`);
     }
@@ -61,6 +72,12 @@ async function renderPptmcp(args) {
         hardErrors,
     });
     resolveGeometryV1({ slides: preparedSlides, warnings, hardErrors });
+    if (enterpriseMode) {
+        const softOverflowEntries = validationReport.filter((entry) => entry.action_taken === "truncate");
+        softOverflowEntries.forEach((entry) => {
+            hardErrors.push(`Slide ${entry.slide_index} element ${entry.element_index}: enterprise_overflow_hard_fail (truncation disabled)`);
+        });
+    }
     if (hardErrors.length > 0) {
         throw new Error(`Layout validation failed:
 ${hardErrors.join("\n")}`);
@@ -98,6 +115,9 @@ ${hardErrors.join("\n")}`);
             else if (element.kind === "chart") {
                 renderChartElement(slide, shapeType, element, theme);
             }
+            else if (element.kind === "chevron_flow") {
+                renderChevronFlowElement(slide, shapeType, element, theme);
+            }
             else if (element.kind === "node") {
                 renderNodeElement(slide, shapeType, element);
             }
@@ -129,6 +149,9 @@ ${hardErrors.join("\n")}`);
         const debugPath = `${args.output_path}.integrity.json`;
         fs.writeFileSync(debugPath, JSON.stringify(integrityDebug, null, 2), "utf-8");
     }
+    const overflowCount = validationReport.filter((entry) => entry.overflow.width || entry.overflow.height).length;
+    const validationFailures = validationReport.filter((entry) => entry.action_taken === "error").length;
+    const renderTimeMs = Date.now() - startMs;
     return {
         output_path: args.output_path,
         slides_rendered: spec.slides.length,
@@ -136,6 +159,13 @@ ${hardErrors.join("\n")}`);
         success: true,
         validation_report: validationReport,
         integrity_debug: integrityDebug,
+        render_metrics: {
+            total_slides: spec.slides.length,
+            total_elements: totalElements,
+            overflow_count: overflowCount,
+            validation_failures: validationFailures,
+            render_time_ms: renderTimeMs,
+        },
     };
 }
 export const pptRenderer = {
@@ -183,6 +213,11 @@ export const pptRenderer = {
                 description: "If true, emit integrity diagnostics and write an .integrity.json file",
                 default: false,
             },
+            enterprise_mode: {
+                type: "boolean",
+                description: "If true, enforce enterprise guardrails (theme lock, bullet density limits, shape restrictions, hard overflow policy)",
+                default: false,
+            },
         },
         required: ["spec_path", "output_path"],
     },
@@ -200,6 +235,7 @@ export const pptRenderer = {
                 `Allow dense charts: ${args.allow_dense_charts === true ? "true" : "false"}`,
                 `Export PDF: ${args.export_pdf === true ? "true" : "false"}`,
                 `Debug integrity: ${args.debug_integrity === true ? "true" : "false"}`,
+                `Enterprise mode: ${args.enterprise_mode === true ? "true" : "false"}`,
                 `Layout actions: shrink=${shrinkCount}, truncate=${truncateCount}`,
             ];
             if (result.warnings.length > 0) {

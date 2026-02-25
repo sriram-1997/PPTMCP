@@ -163,6 +163,60 @@ Prepared system for Theme/Style Tokens v0.
 - Updated theme readability matrix to render via `matrix_3x3` template.
 - Added templates smoke (light/dark) for deterministic layout verification.
 
+## Chevron Geometry v2
+- Replaced width-proportional chevron tip/notch construction with fixed-depth geometry derived from header height.
+- Enforced cap: tip depth never exceeds 25% of chevron header height.
+- Added deterministic narrow-width fallback (no-notch trapezoid mode) to avoid distorted shapes.
+- Added chevron width stress smoke (light/dark) with geometry invariance checks.
+
+## Arrowhead Policy Stabilization
+- Removed noisy `arrowhead_scaled` warning path.
+- Arrowhead scaling is allowed silently only in 80%-100% band.
+- If required scaling drops below 80%, renderer hard-fails with `line_too_short`.
+- Geometry arrowhead quadrant/vertical smokes remain green.
+
+## Component Library v1
+- Added 8 canonical templates:
+  - `analysis_5_col`
+  - `comparison_3_col`
+  - `kpi_dashboard`
+  - `architecture_flow`
+  - `before_after`
+  - `timeline_horizontal`
+  - `strategy_stack`
+  - `matrix_2x2`
+- Added template v1 light/dark smoke specs with cross-theme geometry invariance verification.
+- Rebuilt EPS forecast demo on `analysis_5_col` template.
+
+## Card Padding Slot Enforcement
+- Template compiler now resolves card `paddingSlot` directly to compiled `style.paddingPt`.
+- Card renderer consumes resolved slot-driven padding for inner/body/footer spacing.
+- Added card padding matrix smoke (slots 0-5).
+
+## Invariants Preserved
+- No schema-breaking changes.
+- Deterministic compile/render behavior retained.
+- Strict validation behavior retained (unknown fields and unsupported usages still hard-fail).
+
+## Hardening Patch v0.2 (2026-02-25)
+- Added IR canonicalization pass (`src/compiler/canonicalize.ts`) before validation/render:
+  - card padding authority unification (`paddingSlot -> paddingPt`, `card_padding_ambiguous` on conflict)
+  - deterministic EMU-step quantization for IR geometry/insets
+  - deterministic layer bucket ordering.
+- Centralized arrowhead viability in `src/render/arrowhead.ts` and unified geometry usage:
+  - silent scaling in 80%-100% band
+  - `<80%` hard-fails with `line_too_short` diagnostics.
+- Added typography invariants:
+  - canonical list metrics (`src/typography/listMetrics.ts`)
+  - rhythm rules (`src/typography/rhythm.ts`) with `rhythm_override_out_of_band` enforcement.
+- Hardened `chevron_flow`:
+  - strict step cardinality (`2..12`) and required labels
+  - overflow guard with shrink-first policy and `chevron_label_overflow`.
+- Consolidated smoke harness:
+  - `smokes.manifest.json`
+  - `scripts/smoke-runner.mjs`
+  - `npm run smoke:all` + grouped smoke commands.
+
 ## Design Vocabulary Expansion (2026-02-13)
 - Table v0.1: header/body fills + text colors + border driven by theme tokens with contrast validation.
 - Icons v0: deterministic registry in `src/assets/iconRegistry.json` and assets in `src/assets/icons/`.

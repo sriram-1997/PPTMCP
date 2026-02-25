@@ -1,0 +1,41 @@
+{
+  "title": "Feature Expansion v1",
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "slide-1",
+      "title": "Chevron Flow",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "title": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "flow": { "col": 0, "row": 1, "colSpan": 12, "rowSpan": 4 },
+        "caption": { "col": 0, "row": 5, "colSpan": 12, "rowSpan": 2 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "title",
+          "content": "Chevron Flow",
+          "style": { "bold": true }
+        },
+        {
+          "type": "chevron_flow",
+          "region": "flow",
+          "orientation": "horizontal",
+          "steps": [
+            { "label": "Concept" },
+            { "label": "Research" },
+            { "label": "Analysis" },
+            { "label": "Develop" },
+            { "label": "Launch" }
+          ]
+        },
+        {
+          "type": "text",
+          "region": "caption",
+          "content": "Token-driven chevrons with deterministic wrapping and centering."
+        }
+      ]
+    }
+  ]
+}

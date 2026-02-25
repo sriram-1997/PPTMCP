@@ -1,0 +1,944 @@
+{
+    "title":  "Templates v1 Smoke",
+    "metadata":  {
+                     "author":  "PPTMCP",
+                     "created":  "2026-02-20T00:00:00Z"
+                 },
+    "theme":  "consulting_light_v1",
+    "slides":  [
+                   {
+                       "id":  "tmpl-analysis-5-col",
+                       "title":  "Analysis 5 Col",
+                       "template":  "analysis_5_col",
+                       "fills":  {
+                                     "title":  {
+                                                   "content":  "Analysis 5-Column"
+                                               },
+                                     "headers":  {
+                                                     "steps":  [
+                                                                   {
+                                                                       "label":  "Forecast"
+                                                                   },
+                                                                   {
+                                                                       "label":  "Scenarios"
+                                                                   },
+                                                                   {
+                                                                       "label":  "Reliability"
+                                                                   },
+                                                                   {
+                                                                       "label":  "Economics"
+                                                                   },
+                                                                   {
+                                                                       "label":  "Conclusion"
+                                                                   }
+                                                               ]
+                                                 },
+                                     "column_cards":  {
+                                                          "items":  [
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "style":  {
+                                                                                          "bg":  "background",
+                                                                                          "border":  "subtle",
+                                                                                          "radius":  "md",
+                                                                                          "shadow":  "none"
+                                                                                      },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "none",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  " "
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        },
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "style":  {
+                                                                                          "bg":  "background",
+                                                                                          "border":  "subtle",
+                                                                                          "radius":  "md",
+                                                                                          "shadow":  "none"
+                                                                                      },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "none",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  " "
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        },
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "style":  {
+                                                                                          "bg":  "background",
+                                                                                          "border":  "subtle",
+                                                                                          "radius":  "md",
+                                                                                          "shadow":  "none"
+                                                                                      },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "none",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  " "
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        },
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "style":  {
+                                                                                          "bg":  "background",
+                                                                                          "border":  "subtle",
+                                                                                          "radius":  "md",
+                                                                                          "shadow":  "none"
+                                                                                      },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "none",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  " "
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        },
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "style":  {
+                                                                                          "bg":  "background",
+                                                                                          "border":  "subtle",
+                                                                                          "radius":  "md",
+                                                                                          "shadow":  "none"
+                                                                                      },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "none",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  " "
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        }
+                                                                    ]
+                                                      },
+                                     "column_icons":  {
+                                                          "items":  [
+                                                                        {
+                                                                            "kind":  "icon",
+                                                                            "name":  "calendar-days",
+                                                                            "sizeToken":  5,
+                                                                            "colorSlot":  "text.body",
+                                                                            "align":  "center",
+                                                                            "verticalAlign":  "middle"
+                                                                        },
+                                                                        {
+                                                                            "kind":  "icon",
+                                                                            "name":  "arrows-right-left",
+                                                                            "sizeToken":  5,
+                                                                            "colorSlot":  "text.body",
+                                                                            "align":  "center",
+                                                                            "verticalAlign":  "middle"
+                                                                        },
+                                                                        {
+                                                                            "kind":  "icon",
+                                                                            "name":  "clipboard-document-check",
+                                                                            "sizeToken":  5,
+                                                                            "colorSlot":  "text.body",
+                                                                            "align":  "center",
+                                                                            "verticalAlign":  "middle"
+                                                                        },
+                                                                        {
+                                                                            "kind":  "icon",
+                                                                            "name":  "book-open",
+                                                                            "sizeToken":  5,
+                                                                            "colorSlot":  "text.body",
+                                                                            "align":  "center",
+                                                                            "verticalAlign":  "middle"
+                                                                        },
+                                                                        {
+                                                                            "kind":  "icon",
+                                                                            "name":  "chart-bar",
+                                                                            "sizeToken":  5,
+                                                                            "colorSlot":  "text.body",
+                                                                            "align":  "center",
+                                                                            "verticalAlign":  "middle"
+                                                                        }
+                                                                    ]
+                                                      },
+                                     "column_highlights":  {
+                                                               "items":  [
+                                                                             {
+                                                                                 "kind":  "text",
+                                                                                 "text":  "2.79",
+                                                                                 "textStyleSlot":  "text.subtitle",
+                                                                                 "paddingSlot":  0
+                                                                             },
+                                                                             {
+                                                                                 "kind":  "text",
+                                                                                 "text":  "3 approaches",
+                                                                                 "textStyleSlot":  "text.subtitle",
+                                                                                 "paddingSlot":  0
+                                                                             },
+                                                                             {
+                                                                                 "kind":  "text",
+                                                                                 "text":  "High fit",
+                                                                                 "textStyleSlot":  "text.subtitle",
+                                                                                 "paddingSlot":  0
+                                                                             },
+                                                                             {
+                                                                                 "kind":  "text",
+                                                                                 "text":  "Normalization",
+                                                                                 "textStyleSlot":  "text.subtitle",
+                                                                                 "paddingSlot":  0
+                                                                             },
+                                                                             {
+                                                                                 "kind":  "text",
+                                                                                 "text":  "Summary",
+                                                                                 "textStyleSlot":  "text.subtitle",
+                                                                                 "paddingSlot":  0
+                                                                             }
+                                                                         ]
+                                                           },
+                                     "column_bullets":  {
+                                                            "items":  [
+                                                                          {
+                                                                              "kind":  "list",
+                                                                              "style":  "dot",
+                                                                              "items":  [
+                                                                                            "EPS interval",
+                                                                                            "Short-term mean reversion"
+                                                                                        ]
+                                                                          },
+                                                                          {
+                                                                              "kind":  "list",
+                                                                              "style":  "dot",
+                                                                              "items":  [
+                                                                                            "Model set",
+                                                                                            "Compare assumptions"
+                                                                                        ]
+                                                                          },
+                                                                          {
+                                                                              "kind":  "list",
+                                                                              "style":  "dot",
+                                                                              "items":  [
+                                                                                            "Trend + seasonality",
+                                                                                            "Stability checks"
+                                                                                        ]
+                                                                          },
+                                                                          {
+                                                                              "kind":  "list",
+                                                                              "style":  "dot",
+                                                                              "items":  [
+                                                                                            "Cyclical decline",
+                                                                                            "No structural break"
+                                                                                        ]
+                                                                          },
+                                                                          {
+                                                                              "kind":  "list",
+                                                                              "style":  "dot",
+                                                                              "items":  [
+                                                                                            "Normalization",
+                                                                                            "Preserve long run"
+                                                                                        ]
+                                                                          }
+                                                                      ]
+                                                        }
+                                 }
+                   },
+                   {
+                       "id":  "tmpl-comparison-3-col",
+                       "title":  "Comparison 3 Col",
+                       "template":  "comparison_3_col",
+                       "fills":  {
+                                     "title":  {
+                                                   "content":  "Comparison (3 Columns)"
+                                               },
+                                     "columns":  {
+                                                     "items":  [
+                                                                   {
+                                                                       "kind":  "card",
+                                                                       "paddingSlot":  2,
+                                                                       "header":  {
+                                                                                      "title":  "Option A"
+                                                                                  },
+                                                                       "body":  [
+                                                                                    {
+                                                                                        "type":  "list",
+                                                                                        "style":  "dot",
+                                                                                        "items":  [
+                                                                                                      {
+                                                                                                          "text":  "Higher speed"
+                                                                                                      },
+                                                                                                      {
+                                                                                                          "text":  "Higher risk"
+                                                                                                      }
+                                                                                                  ]
+                                                                                    }
+                                                                                ]
+                                                                   },
+                                                                   {
+                                                                       "kind":  "card",
+                                                                       "paddingSlot":  2,
+                                                                       "header":  {
+                                                                                      "title":  "Option B"
+                                                                                  },
+                                                                       "body":  [
+                                                                                    {
+                                                                                        "type":  "list",
+                                                                                        "style":  "dot",
+                                                                                        "items":  [
+                                                                                                      {
+                                                                                                          "text":  "Balanced"
+                                                                                                      },
+                                                                                                      {
+                                                                                                          "text":  "Moderate cost"
+                                                                                                      }
+                                                                                                  ]
+                                                                                    }
+                                                                                ]
+                                                                   },
+                                                                   {
+                                                                       "kind":  "card",
+                                                                       "paddingSlot":  2,
+                                                                       "header":  {
+                                                                                      "title":  "Option C"
+                                                                                  },
+                                                                       "body":  [
+                                                                                    {
+                                                                                        "type":  "list",
+                                                                                        "style":  "dot",
+                                                                                        "items":  [
+                                                                                                      {
+                                                                                                          "text":  "Lower risk"
+                                                                                                      },
+                                                                                                      {
+                                                                                                          "text":  "Slower delivery"
+                                                                                                      }
+                                                                                                  ]
+                                                                                    }
+                                                                                ]
+                                                                   }
+                                                               ]
+                                                 }
+                                 }
+                   },
+                   {
+                       "id":  "tmpl-kpi-dashboard",
+                       "title":  "KPI Dashboard",
+                       "template":  "kpi_dashboard",
+                       "fills":  {
+                                     "title":  {
+                                                   "content":  "KPI Dashboard"
+                                               },
+                                     "kpis":  {
+                                                  "items":  [
+                                                                {
+                                                                    "kind":  "card",
+                                                                    "paddingSlot":  2,
+                                                                    "header":  {
+                                                                                   "title":  "Revenue"
+                                                                               },
+                                                                    "body":  [
+                                                                                 {
+                                                                                     "type":  "list",
+                                                                                     "style":  "none",
+                                                                                     "items":  [
+                                                                                                   {
+                                                                                                       "text":  "$18.2M"
+                                                                                                   }
+                                                                                               ]
+                                                                                 }
+                                                                             ]
+                                                                },
+                                                                {
+                                                                    "kind":  "card",
+                                                                    "paddingSlot":  2,
+                                                                    "header":  {
+                                                                                   "title":  "Margin"
+                                                                               },
+                                                                    "body":  [
+                                                                                 {
+                                                                                     "type":  "list",
+                                                                                     "style":  "none",
+                                                                                     "items":  [
+                                                                                                   {
+                                                                                                       "text":  "41%"
+                                                                                                   }
+                                                                                               ]
+                                                                                 }
+                                                                             ]
+                                                                },
+                                                                {
+                                                                    "kind":  "card",
+                                                                    "paddingSlot":  2,
+                                                                    "header":  {
+                                                                                   "title":  "Retention"
+                                                                               },
+                                                                    "body":  [
+                                                                                 {
+                                                                                     "type":  "list",
+                                                                                     "style":  "none",
+                                                                                     "items":  [
+                                                                                                   {
+                                                                                                       "text":  "92%"
+                                                                                                   }
+                                                                                               ]
+                                                                                 }
+                                                                             ]
+                                                                },
+                                                                {
+                                                                    "kind":  "card",
+                                                                    "paddingSlot":  2,
+                                                                    "header":  {
+                                                                                   "title":  "NPS"
+                                                                               },
+                                                                    "body":  [
+                                                                                 {
+                                                                                     "type":  "list",
+                                                                                     "style":  "none",
+                                                                                     "items":  [
+                                                                                                   {
+                                                                                                       "text":  "48"
+                                                                                                   }
+                                                                                               ]
+                                                                                 }
+                                                                             ]
+                                                                }
+                                                            ]
+                                              },
+                                     "trend_chart":  {
+                                                         "content":  {
+                                                                         "chartType":  "column",
+                                                                         "title":  "Quarterly Trend",
+                                                                         "dataSeries":  [
+                                                                                            {
+                                                                                                "name":  "Actual",
+                                                                                                "data":  [
+                                                                                                             [
+                                                                                                                 "Q1",
+                                                                                                                 12
+                                                                                                             ],
+                                                                                                             [
+                                                                                                                 "Q2",
+                                                                                                                 15
+                                                                                                             ],
+                                                                                                             [
+                                                                                                                 "Q3",
+                                                                                                                 14
+                                                                                                             ],
+                                                                                                             [
+                                                                                                                 "Q4",
+                                                                                                                 17
+                                                                                                             ]
+                                                                                                         ]
+                                                                                            }
+                                                                                        ]
+                                                                     }
+                                                     },
+                                     "insights":  {
+                                                      "items":  [
+                                                                    {
+                                                                        "kind":  "list",
+                                                                        "style":  "dot",
+                                                                        "items":  [
+                                                                                      "Growth remains resilient",
+                                                                                      "Operating leverage improving"
+                                                                                  ]
+                                                                    },
+                                                                    {
+                                                                        "kind":  "list",
+                                                                        "style":  "dot",
+                                                                        "items":  [
+                                                                                      "Watch promo intensity",
+                                                                                      "Protect margin quality"
+                                                                                  ]
+                                                                    }
+                                                                ]
+                                                  }
+                                 }
+                   },
+                   {
+                       "id":  "tmpl-architecture-flow",
+                       "title":  "Architecture Flow",
+                       "template":  "architecture_flow",
+                       "fills":  {
+                                     "title":  {
+                                                   "content":  "Architecture Flow"
+                                               },
+                                     "flow_steps":  {
+                                                        "steps":  [
+                                                                      {
+                                                                          "label":  "Ingest"
+                                                                      },
+                                                                      {
+                                                                          "label":  "Transform"
+                                                                      },
+                                                                      {
+                                                                          "label":  "Serve"
+                                                                      },
+                                                                      {
+                                                                          "label":  "Observe"
+                                                                      }
+                                                                  ]
+                                                    },
+                                     "detail_cards":  {
+                                                          "items":  [
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "header":  {
+                                                                                           "title":  "Source"
+                                                                                       },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "dot",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  "APIs"
+                                                                                                           },
+                                                                                                           {
+                                                                                                               "text":  "Files"
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        },
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "header":  {
+                                                                                           "title":  "Compute"
+                                                                                       },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "dot",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  "Batch"
+                                                                                                           },
+                                                                                                           {
+                                                                                                               "text":  "Stream"
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        },
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "header":  {
+                                                                                           "title":  "Storage"
+                                                                                       },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "dot",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  "Lake"
+                                                                                                           },
+                                                                                                           {
+                                                                                                               "text":  "Warehouse"
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        },
+                                                                        {
+                                                                            "kind":  "card",
+                                                                            "paddingSlot":  1,
+                                                                            "header":  {
+                                                                                           "title":  "Consumption"
+                                                                                       },
+                                                                            "body":  [
+                                                                                         {
+                                                                                             "type":  "list",
+                                                                                             "style":  "dot",
+                                                                                             "items":  [
+                                                                                                           {
+                                                                                                               "text":  "BI"
+                                                                                                           },
+                                                                                                           {
+                                                                                                               "text":  "Apps"
+                                                                                                           }
+                                                                                                       ]
+                                                                                         }
+                                                                                     ]
+                                                                        }
+                                                                    ]
+                                                      }
+                                 }
+                   },
+                   {
+                       "id":  "tmpl-before-after",
+                       "title":  "Before After",
+                       "template":  "before_after",
+                       "fills":  {
+                                     "title":  {
+                                                   "content":  "Before / After"
+                                               },
+                                     "before":  {
+                                                    "paddingSlot":  2,
+                                                    "header":  {
+                                                                   "title":  "Before"
+                                                               },
+                                                    "body":  [
+                                                                 {
+                                                                     "type":  "list",
+                                                                     "style":  "dot",
+                                                                     "items":  [
+                                                                                   {
+                                                                                       "text":  "Manual reporting"
+                                                                                   },
+                                                                                   {
+                                                                                       "text":  "Delayed insights"
+                                                                                   }
+                                                                               ]
+                                                                 }
+                                                             ]
+                                                },
+                                     "after":  {
+                                                   "paddingSlot":  2,
+                                                   "header":  {
+                                                                  "title":  "After"
+                                                              },
+                                                   "body":  [
+                                                                {
+                                                                    "type":  "list",
+                                                                    "style":  "dot",
+                                                                    "items":  [
+                                                                                  {
+                                                                                      "text":  "Automated pipeline"
+                                                                                  },
+                                                                                  {
+                                                                                      "text":  "Daily insights"
+                                                                                  }
+                                                                              ]
+                                                                }
+                                                            ]
+                                               },
+                                     "summary":  {
+                                                     "content":  "Cycle time and decision latency reduced"
+                                                 }
+                                 }
+                   },
+                   {
+                       "id":  "tmpl-timeline-horizontal",
+                       "title":  "Timeline Horizontal",
+                       "template":  "timeline_horizontal",
+                       "fills":  {
+                                     "title":  {
+                                                   "content":  "Timeline"
+                                               },
+                                     "timeline":  {
+                                                      "steps":  [
+                                                                    {
+                                                                        "label":  "Plan"
+                                                                    },
+                                                                    {
+                                                                        "label":  "Design"
+                                                                    },
+                                                                    {
+                                                                        "label":  "Build"
+                                                                    },
+                                                                    {
+                                                                        "label":  "Test"
+                                                                    },
+                                                                    {
+                                                                        "label":  "Launch"
+                                                                    }
+                                                                ]
+                                                  },
+                                     "milestones":  {
+                                                        "items":  [
+                                                                      {
+                                                                          "kind":  "card",
+                                                                          "paddingSlot":  1,
+                                                                          "header":  {
+                                                                                         "title":  "M1"
+                                                                                     },
+                                                                          "body":  [
+                                                                                       {
+                                                                                           "type":  "list",
+                                                                                           "style":  "none",
+                                                                                           "items":  [
+                                                                                                         {
+                                                                                                             "text":  "Scope"
+                                                                                                         }
+                                                                                                     ]
+                                                                                       }
+                                                                                   ]
+                                                                      },
+                                                                      {
+                                                                          "kind":  "card",
+                                                                          "paddingSlot":  1,
+                                                                          "header":  {
+                                                                                         "title":  "M2"
+                                                                                     },
+                                                                          "body":  [
+                                                                                       {
+                                                                                           "type":  "list",
+                                                                                           "style":  "none",
+                                                                                           "items":  [
+                                                                                                         {
+                                                                                                             "text":  "UX"
+                                                                                                         }
+                                                                                                     ]
+                                                                                       }
+                                                                                   ]
+                                                                      },
+                                                                      {
+                                                                          "kind":  "card",
+                                                                          "paddingSlot":  1,
+                                                                          "header":  {
+                                                                                         "title":  "M3"
+                                                                                     },
+                                                                          "body":  [
+                                                                                       {
+                                                                                           "type":  "list",
+                                                                                           "style":  "none",
+                                                                                           "items":  [
+                                                                                                         {
+                                                                                                             "text":  "Core"
+                                                                                                         }
+                                                                                                     ]
+                                                                                       }
+                                                                                   ]
+                                                                      },
+                                                                      {
+                                                                          "kind":  "card",
+                                                                          "paddingSlot":  1,
+                                                                          "header":  {
+                                                                                         "title":  "M4"
+                                                                                     },
+                                                                          "body":  [
+                                                                                       {
+                                                                                           "type":  "list",
+                                                                                           "style":  "none",
+                                                                                           "items":  [
+                                                                                                         {
+                                                                                                             "text":  "QA"
+                                                                                                         }
+                                                                                                     ]
+                                                                                       }
+                                                                                   ]
+                                                                      },
+                                                                      {
+                                                                          "kind":  "card",
+                                                                          "paddingSlot":  1,
+                                                                          "header":  {
+                                                                                         "title":  "M5"
+                                                                                     },
+                                                                          "body":  [
+                                                                                       {
+                                                                                           "type":  "list",
+                                                                                           "style":  "none",
+                                                                                           "items":  [
+                                                                                                         {
+                                                                                                             "text":  "Go-live"
+                                                                                                         }
+                                                                                                     ]
+                                                                                       }
+                                                                                   ]
+                                                                      }
+                                                                  ]
+                                                    }
+                                 }
+                   },
+                   {
+                       "id":  "tmpl-strategy-stack",
+                       "title":  "Strategy Stack",
+                       "template":  "strategy_stack",
+                       "fills":  {
+                                     "title":  {
+                                                   "content":  "Strategy Stack"
+                                               },
+                                     "stack":  {
+                                                   "items":  [
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  2,
+                                                                     "header":  {
+                                                                                    "title":  "Vision"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "North star"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ]
+                                                                 },
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  2,
+                                                                     "header":  {
+                                                                                    "title":  "Priorities"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "Focus areas"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ]
+                                                                 },
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  2,
+                                                                     "header":  {
+                                                                                    "title":  "Execution"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "Operating model"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ]
+                                                                 },
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  2,
+                                                                     "header":  {
+                                                                                    "title":  "Metrics"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "Outcomes"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ]
+                                                                 }
+                                                             ]
+                                               }
+                                 }
+                   },
+                   {
+                       "id":  "tmpl-matrix-2x2",
+                       "title":  "Matrix 2x2",
+                       "template":  "matrix_2x2",
+                       "fills":  {
+                                     "title":  {
+                                                   "content":  "2x2 Matrix"
+                                               },
+                                     "cells":  {
+                                                   "items":  [
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  2,
+                                                                     "header":  {
+                                                                                    "title":  "High Impact / High Effort"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "Strategic bets"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ]
+                                                                 },
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  2,
+                                                                     "header":  {
+                                                                                    "title":  "High Impact / Low Effort"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "Quick wins"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ]
+                                                                 },
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  2,
+                                                                     "header":  {
+                                                                                    "title":  "Low Impact / High Effort"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "De-prioritize"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ]
+                                                                 },
+                                                                 {
+                                                                     "kind":  "card",
+                                                                     "paddingSlot":  2,
+                                                                     "header":  {
+                                                                                    "title":  "Low Impact / Low Effort"
+                                                                                },
+                                                                     "body":  [
+                                                                                  {
+                                                                                      "type":  "list",
+                                                                                      "style":  "none",
+                                                                                      "items":  [
+                                                                                                    {
+                                                                                                        "text":  "Backlog"
+                                                                                                    }
+                                                                                                ]
+                                                                                  }
+                                                                              ]
+                                                                 }
+                                                             ]
+                                               }
+                                 }
+                   }
+               ]
+}

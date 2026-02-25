@@ -287,5 +287,7 @@ export function renderCalloutElement(slide: any, shapeType: any, element: Prepar
     fit: "none",
     margin: element.text.style.paddingPt,
     breakLine: true,
+    paraSpaceBeforePt: 0,
+    paraSpaceAfterPt: 0,
   });
 }

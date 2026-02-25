@@ -3,7 +3,8 @@ import type { ConcreteTheme } from "../theme/types.js";
 import { resolveIconData } from "./utils/icons.js";
 import { normalizeColor } from "./utils/color.js";
 import { ptToIn } from "./utils/units.js";
-import { estimateTextLayout } from "./text.js";
+import { estimateTextLayout, truncateTextToFit } from "./text.js";
+import { normalizeText } from "./utils/textRuns.js";
 
 const DEFAULT_LINE_HEIGHT = 1.2;
 
@@ -45,6 +46,7 @@ export function prepareNodeElement(args: {
   const innerY = args.bbox.y + ptToIn(paddingPt);
   const innerW = args.bbox.width - ptToIn(paddingPt * 2);
   const innerH = args.bbox.height - ptToIn(paddingPt * 2);
+  const innerHeightPt = innerH * 72;
 
   if (innerW <= 0 || innerH <= 0) {
     args.hardErrors.push(`${prefix} node_overflow`);
@@ -52,31 +54,61 @@ export function prepareNodeElement(args: {
 
   const font = args.theme.fontScale.body;
   const bold = font.weight >= args.theme.type.weightBold;
-  const labelText = args.element.label ?? "";
-  const textEstimate = estimateTextLayout({
-    text: labelText,
-    fontSize: font.size,
-    bold,
-    bbox: { x: 0, y: 0, width: Math.max(0, innerW), height: Math.max(0, innerH) },
-    paddingPt: 0,
-    lineHeight: DEFAULT_LINE_HEIGHT,
-  });
-  const labelHeightPt = textEstimate.requiredHeightPt;
+  let labelText = normalizeText(args.element.label ?? "");
+  let labelHeightPt = 0;
+  if (labelText) {
+    const textEstimate = estimateTextLayout({
+      text: labelText,
+      fontSize: font.size,
+      bold,
+      bbox: { x: 0, y: 0, width: Math.max(0, innerW), height: Math.max(0, innerH) },
+      paddingPt: 0,
+      lineHeight: DEFAULT_LINE_HEIGHT,
+    });
+    labelText = textEstimate.wrappedLines.join("\n");
+    labelHeightPt = textEstimate.requiredHeightPt;
+  }
 
   let iconBox: PreparedNodeElement["icon"] | undefined;
   let iconSizePt = 0;
   let iconGapPt = 0;
 
   if (args.element.icon) {
-    iconSizePt = args.theme.spaceScale[4] ?? args.theme.spaceScale[3] ?? font.size;
-    iconGapPt = args.theme.spaceScale[1] ?? 0;
-    const maxIconPt = Math.max(0, Math.min(innerW * 72, innerH * 72 - labelHeightPt - iconGapPt));
-    if (maxIconPt <= 0) {
+    const iconTargetPt = args.theme.diagram.node.iconSizePt;
+    const iconMinPt = args.theme.diagram.node.iconMinSizePt;
+    iconSizePt = Math.max(iconTargetPt, iconMinPt);
+    iconGapPt = args.theme.diagram.node.iconGapPt;
+    const availableHeightPt = innerH * 72;
+    const availableWidthPt = innerW * 72;
+
+    if (availableHeightPt < iconMinPt - 0.01 || availableWidthPt < iconMinPt - 0.01) {
+      args.hardErrors.push(`${prefix} diagram_icon_too_small`);
+    }
+
+    let totalContentPt = iconSizePt + iconGapPt + labelHeightPt;
+    if (totalContentPt > availableHeightPt) {
+      const overflowPt = totalContentPt - availableHeightPt;
+      iconGapPt = Math.max(0, iconGapPt - overflowPt);
+      totalContentPt = iconSizePt + iconGapPt + labelHeightPt;
+    }
+
+    if (labelText && totalContentPt > availableHeightPt) {
+      const labelBoxHeightPt = Math.max(0, availableHeightPt - iconSizePt - iconGapPt);
+      const truncated = truncateTextToFit({
+        text: labelText,
+        fontSize: font.size,
+        bold,
+        bbox: { x: 0, y: 0, width: Math.max(0, innerW), height: Math.max(0, labelBoxHeightPt / 72) },
+        paddingPt: 0,
+        lineHeight: DEFAULT_LINE_HEIGHT,
+      });
+      labelText = truncated.text;
+      labelHeightPt = truncated.estimate.requiredHeightPt;
+      totalContentPt = iconSizePt + iconGapPt + labelHeightPt;
+    }
+
+    if (totalContentPt > availableHeightPt + 0.1) {
       args.hardErrors.push(`${prefix} node_overflow`);
-      iconSizePt = 0;
-      iconGapPt = 0;
-    } else if (iconSizePt > maxIconPt) {
-      iconSizePt = maxIconPt;
     }
 
     const iconResult = resolveIconData({
@@ -87,8 +119,7 @@ export function prepareNodeElement(args: {
       args.hardErrors.push(`${prefix} icon_not_found`);
     } else {
       const iconSizeIn = ptToIn(iconSizePt);
-      const totalContentPt = iconSizePt + iconGapPt + labelHeightPt;
-      const startY = innerY + ptToIn(Math.max(0, (innerH * 72 - totalContentPt) / 2));
+      const startY = innerY + ptToIn(Math.max(0, (availableHeightPt - totalContentPt) / 2));
       iconBox = {
         bbox: {
           x: innerX + Math.max(0, (innerW - iconSizeIn) / 2),
@@ -137,6 +168,10 @@ export function prepareNodeElement(args: {
       fontSize: font.size,
       bold,
       color: surface.textColor,
+    },
+    metrics: {
+      innerHeightPt,
+      contentHeightPt: totalContentPt,
     },
   };
 }

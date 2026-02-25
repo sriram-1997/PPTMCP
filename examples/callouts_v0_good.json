@@ -1,125 +1,281 @@
 {
-  "title": "Callouts v0 Good",
-  "metadata": {
-    "author": "PPTMCP",
-    "created": "2026-02-11T00:00:00Z"
-  },
-  "slides": [
-    {
-      "id": "callouts-good-1",
-      "title": "Callouts v0 - Good",
-      "grid": {
-        "cols": 12,
-        "rows": 8,
-        "gutter": 0.05
-      },
-      "regions": {
-        "title": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
-        "chart": { "col": 0, "row": 1, "colSpan": 7, "rowSpan": 5 },
-        "table": { "col": 7, "row": 1, "colSpan": 5, "rowSpan": 5 },
-        "notes": { "col": 0, "row": 6, "colSpan": 12, "rowSpan": 2 },
-        "canvas": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 }
-      },
-      "elements": [
-        {
-          "type": "text",
-          "region": "title",
-          "content": "Callouts v0 (Design-first)",
-          "style": { "fontSize": 28, "bold": true, "color": "#1F4788" },
-          "z": 5
-        },
-        {
-          "type": "chart",
-          "region": "chart",
-          "z": 0,
-          "content": {
-            "chartType": "column",
-            "title": "Quarterly Sales",
-            "dataSeries": [
-              { "name": "A", "data": [["Q1", 10], ["Q2", 12], ["Q3", 11], ["Q4", 14]] },
-              { "name": "B", "data": [["Q1", 8], ["Q2", 9], ["Q3", 10], ["Q4", 12]] }
-            ]
-          }
-        },
-        {
-          "type": "table",
-          "region": "table",
-          "z": 0,
-          "content": {
-            "headers": ["Metric", "Value"],
-            "rows": [
-              ["Gross Margin", "42%"],
-              ["NPS", "38"],
-              ["Churn", "2.4%"]
-            ]
-          },
-          "style": { "headerColor": "#F5F5F5", "borderColor": "#CCCCCC" }
-        },
-        {
-          "type": "connector",
-          "id": "conn_1",
-          "region": "canvas",
-          "z": 110,
-          "start": { "type": "region", "targetRegion": "chart", "point": "e" },
-          "end": { "type": "region", "targetRegion": "table", "point": "w" },
-          "style": { "widthPt": 1 }
-        },
-        {
-          "type": "connector",
-          "id": "conn_2",
-          "region": "canvas",
-          "z": 110,
-          "start": { "type": "region", "targetRegion": "chart", "point": "s" },
-          "end": { "type": "region", "targetRegion": "notes", "point": "n" },
-          "style": { "widthPt": 1 }
-        },
-        {
-          "type": "callout",
-          "id": "callout_1",
-          "region": "canvas",
-          "z": 120,
-          "anchor": { "type": "region", "targetRegion": "chart", "point": "ne" },
-          "box": { "wIn": 2.2, "hIn": 0.8, "placement": "auto", "paddingPt": 6 },
-          "text": {
-            "value": "Margin inflects here (+210 bps).",
-            "style": { "fontSize": 12, "minFont": 9, "bold": true, "color": "000000" }
-          },
-          "leader": { "style": "line", "endCap": "none" }
-        },
-        {
-          "type": "callout",
-          "id": "callout_2",
-          "region": "canvas",
-          "z": 120,
-          "anchor": { "type": "region", "targetRegion": "table", "point": "nw" },
-          "box": { "wIn": 2.0, "hIn": 0.8, "placement": "sw", "paddingPt": 6 },
-          "text": {
-            "value": "Churn is stabilizing.",
-            "style": { "fontSize": 11, "minFont": 9, "color": "000000" }
-          },
-          "leader": { "style": "line", "endCap": "none" }
-        },
-        {
-          "type": "callout",
-          "id": "callout_3",
-          "region": "canvas",
-          "z": 120,
-          "anchor": { "type": "region", "targetRegion": "notes", "point": "center" },
-          "box": { "wIn": 2.4, "hIn": 0.9, "placement": "n", "paddingPt": 6 },
-          "text": {
-            "value": "Drivers: mix + pricing.",
-            "style": { "fontSize": 11, "minFont": 9, "color": "000000" }
-          },
-          "leader": { "style": "line", "endCap": "none" }
-        },
-        {
-          "type": "text",
-          "region": "notes",
-          "content": "Notes region used for connector anchoring and callout placement.",
-          "style": { "fontSize": 12, "color": "#666666" },
-          "z": 5
-        }
-      ]
-    }
-  ]
+    "title":  "Callouts v0 Good",
+    "metadata":  {
+                     "author":  "PPTMCP",
+                     "created":  "2026-02-11T00:00:00Z"
+                 },
+    "slides":  [
+                   {
+                       "id":  "callouts-good-1",
+                       "title":  "Callouts v0 - Good",
+                       "grid":  {
+                                    "cols":  12,
+                                    "rows":  8,
+                                    "gutter":  0.05
+                                },
+                       "regions":  {
+                                       "title":  {
+                                                     "col":  0,
+                                                     "row":  0,
+                                                     "colSpan":  12,
+                                                     "rowSpan":  1
+                                                 },
+                                       "chart":  {
+                                                     "col":  0,
+                                                     "row":  1,
+                                                     "colSpan":  7,
+                                                     "rowSpan":  5
+                                                 },
+                                       "table":  {
+                                                     "col":  7,
+                                                     "row":  1,
+                                                     "colSpan":  5,
+                                                     "rowSpan":  5
+                                                 },
+                                       "notes":  {
+                                                     "col":  0,
+                                                     "row":  6,
+                                                     "colSpan":  12,
+                                                     "rowSpan":  2
+                                                 },
+                                       "canvas":  {
+                                                      "col":  0,
+                                                      "row":  0,
+                                                      "colSpan":  12,
+                                                      "rowSpan":  8
+                                                  }
+                                   },
+                       "elements":  [
+                                        {
+                                            "type":  "text",
+                                            "region":  "title",
+                                            "content":  "Callouts v0 (Design-first)",
+                                            "style":  {
+                                                          "fontSize":  28,
+                                                          "bold":  true,
+                                                          "color":  "#1F4788"
+                                                      },
+                                            "z":  5
+                                        },
+                                        {
+                                            "type":  "chart",
+                                            "region":  "chart",
+                                            "z":  0,
+                                            "content":  {
+                                                            "chartType":  "column",
+                                                            "title":  "Quarterly Sales",
+                                                            "dataSeries":  [
+                                                                               {
+                                                                                   "name":  "A",
+                                                                                   "data":  [
+                                                                                                [
+                                                                                                    "Q1",
+                                                                                                    10
+                                                                                                ],
+                                                                                                [
+                                                                                                    "Q2",
+                                                                                                    12
+                                                                                                ],
+                                                                                                [
+                                                                                                    "Q3",
+                                                                                                    11
+                                                                                                ],
+                                                                                                [
+                                                                                                    "Q4",
+                                                                                                    14
+                                                                                                ]
+                                                                                            ]
+                                                                               },
+                                                                               {
+                                                                                   "name":  "B",
+                                                                                   "data":  [
+                                                                                                [
+                                                                                                    "Q1",
+                                                                                                    8
+                                                                                                ],
+                                                                                                [
+                                                                                                    "Q2",
+                                                                                                    9
+                                                                                                ],
+                                                                                                [
+                                                                                                    "Q3",
+                                                                                                    10
+                                                                                                ],
+                                                                                                [
+                                                                                                    "Q4",
+                                                                                                    12
+                                                                                                ]
+                                                                                            ]
+                                                                               }
+                                                                           ]
+                                                        }
+                                        },
+                                        {
+                                            "type":  "table",
+                                            "region":  "table",
+                                            "z":  0,
+                                            "content":  {
+                                                            "headers":  [
+                                                                            "Metric",
+                                                                            "Value"
+                                                                        ],
+                                                            "rows":  [
+                                                                         [
+                                                                             "Gross Margin",
+                                                                             "42%"
+                                                                         ],
+                                                                         [
+                                                                             "NPS",
+                                                                             "38"
+                                                                         ],
+                                                                         [
+                                                                             "Churn",
+                                                                             "2.4%"
+                                                                         ]
+                                                                     ]
+                                                        },
+                                            "style":  {
+                                                          "headerColor":  "#F5F5F5",
+                                                          "borderColor":  "#CCCCCC"
+                                                      }
+                                        },
+                                        {
+                                            "type":  "connector",
+                                            "id":  "conn_1",
+                                            "region":  "canvas",
+                                            "z":  110,
+                                            "start":  {
+                                                          "type":  "region",
+                                                          "targetRegion":  "chart",
+                                                          "point":  "e"
+                                                      },
+                                            "end":  {
+                                                        "type":  "region",
+                                                        "targetRegion":  "table",
+                                                        "point":  "w"
+                                                    },
+                                            "style":  {
+                                                          "widthPt":  1
+                                                      }
+                                        },
+                                        {
+                                            "type":  "connector",
+                                            "id":  "conn_2",
+                                            "region":  "canvas",
+                                            "z":  110,
+                                            "start":  {
+                                                          "type":  "region",
+                                                          "targetRegion":  "chart",
+                                                          "point":  "s"
+                                                      },
+                                            "end":  {
+                                                        "type":  "region",
+                                                        "targetRegion":  "notes",
+                                                        "point":  "n"
+                                                    },
+                                            "style":  {
+                                                          "widthPt":  1
+                                                      }
+                                        },
+                                        {
+                                            "type":  "callout",
+                                            "id":  "callout_1",
+                                            "region":  "canvas",
+                                            "z":  120,
+                                            "anchor":  {
+                                                           "type":  "region",
+                                                           "targetRegion":  "chart",
+                                                           "point":  "ne"
+                                                       },
+                                            "box":  {
+                                                        "wIn":  2.2,
+                                                        "hIn":  0.8,
+                                                        "placement":  "auto",
+                                                        "paddingPt":  6
+                                                    },
+                                            "text":  {
+                                                         "value":  "Margin inflects here (+210 bps).",
+                                                         "style":  {
+                                                                       "fontSize":  14,
+                                                                       "minFont":  9,
+                                                                       "bold":  true,
+                                                                       "color":  "000000"
+                                                                   }
+                                                     },
+                                            "leader":  {
+                                                           "style":  "line",
+                                                           "endCap":  "none"
+                                                       }
+                                        },
+                                        {
+                                            "type":  "callout",
+                                            "id":  "callout_2",
+                                            "region":  "canvas",
+                                            "z":  120,
+                                            "anchor":  {
+                                                           "type":  "region",
+                                                           "targetRegion":  "table",
+                                                           "point":  "nw"
+                                                       },
+                                            "box":  {
+                                                        "wIn":  2.0,
+                                                        "hIn":  0.8,
+                                                        "placement":  "sw",
+                                                        "paddingPt":  6
+                                                    },
+                                            "text":  {
+                                                         "value":  "Churn is stabilizing.",
+                                                         "style":  {
+                                                                       "fontSize":  14,
+                                                                       "minFont":  9,
+                                                                       "color":  "000000"
+                                                                   }
+                                                     },
+                                            "leader":  {
+                                                           "style":  "line",
+                                                           "endCap":  "none"
+                                                       }
+                                        },
+                                        {
+                                            "type":  "callout",
+                                            "id":  "callout_3",
+                                            "region":  "canvas",
+                                            "z":  120,
+                                            "anchor":  {
+                                                           "type":  "region",
+                                                           "targetRegion":  "notes",
+                                                           "point":  "center"
+                                                       },
+                                            "box":  {
+                                                        "wIn":  2.4,
+                                                        "hIn":  0.9,
+                                                        "placement":  "n",
+                                                        "paddingPt":  6
+                                                    },
+                                            "text":  {
+                                                         "value":  "Drivers: mix + pricing.",
+                                                         "style":  {
+                                                                       "fontSize":  14,
+                                                                       "minFont":  9,
+                                                                       "color":  "000000"
+                                                                   }
+                                                     },
+                                            "leader":  {
+                                                           "style":  "line",
+                                                           "endCap":  "none"
+                                                       }
+                                        },
+                                        {
+                                            "type":  "text",
+                                            "region":  "notes",
+                                            "content":  "Notes region used for connector anchoring and callout placement.",
+                                            "style":  {
+                                                          "fontSize":  14,
+                                                          "color":  "#666666"
+                                                      },
+                                            "z":  5
+                                        }
+                                    ]
+                   }
+               ]
 }

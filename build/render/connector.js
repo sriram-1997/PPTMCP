@@ -2,14 +2,8 @@ import { resolveElementStyleDefaults } from "../theme/styleDefaults.js";
 import { normalizeColor } from "./utils/color.js";
 import { EPSILON_INCHES, ptToIn } from "./utils/units.js";
 import { isPointInside, resolveRegionAnchor } from "./slide.js";
+import { computeArrowhead, formatLineTooShortFromArrowhead } from "./arrowhead.js";
 const DEFAULT_CONNECTOR_WIDTH_PT = 1;
-const ARROW_MIN_LEN_PT = 6;
-const ARROW_MAX_LEN_PT = 14;
-const ARROW_MIN_WIDTH_PT = 4;
-const ARROW_MAX_WIDTH_PT = 12;
-function clamp(value, min, max) {
-    return Math.max(min, Math.min(max, value));
-}
 function buildCenteredArrowHead(args) {
     const halfWidth = args.widthIn / 2;
     const baseCenter = {
@@ -44,6 +38,34 @@ function buildCenteredArrowHead(args) {
         ],
         color: args.color,
     };
+}
+function anchorPointFromBox(bbox, point) {
+    const x0 = bbox.x;
+    const y0 = bbox.y;
+    const x1 = bbox.x + bbox.width;
+    const y1 = bbox.y + bbox.height;
+    const cx = bbox.x + bbox.width / 2;
+    const cy = bbox.y + bbox.height / 2;
+    switch (point) {
+        case "n":
+            return { x: cx, y: y0 };
+        case "ne":
+            return { x: x1, y: y0 };
+        case "e":
+            return { x: x1, y: cy };
+        case "se":
+            return { x: x1, y: y1 };
+        case "s":
+            return { x: cx, y: y1 };
+        case "sw":
+            return { x: x0, y: y1 };
+        case "w":
+            return { x: x0, y: cy };
+        case "nw":
+            return { x: x0, y: y0 };
+        default:
+            return { x: cx, y: cy };
+    }
 }
 export function lineRectFromPoints(start, end) {
     const dx = end.x - start.x;
@@ -86,29 +108,35 @@ export function computeLineWithArrowheads(args) {
     const dy = args.end.y - args.start.y;
     const lineLength = Math.hypot(dx, dy);
     if (!Number.isFinite(lineLength) || lineLength === 0) {
-        return { lineStart: args.start, lineEnd: args.end, arrowHeads: [] };
+        return { lineStart: args.start, lineEnd: args.end, arrowHeads: [], error: "line_zero_length" };
     }
     const unit = { x: dx / lineLength, y: dy / lineLength };
-    const headLenPt = clamp(Math.round(4 * args.widthPt), ARROW_MIN_LEN_PT, ARROW_MAX_LEN_PT);
-    const headWidthPt = clamp(Math.round(2.5 * args.widthPt), ARROW_MIN_WIDTH_PT, ARROW_MAX_WIDTH_PT);
-    let headLen = ptToIn(headLenPt);
-    let headWidth = ptToIn(headWidthPt);
     const endArrow = args.endArrow === "triangle";
     const startArrow = args.startArrow === "triangle";
     if (startArrow && endArrow && args.warnings && args.warnPrefix) {
         args.warnings.push(`${args.warnPrefix} arrowhead_double_requested`);
     }
     const arrowHeads = [];
-    if (endArrow) {
-        const maxLen = Math.max(lineLength - EPSILON_INCHES, 0);
-        if (headLen > maxLen) {
-            const scale = maxLen > 0 ? maxLen / headLen : 0;
-            headLen *= scale;
-            headWidth *= scale;
-            if (args.warnings && args.warnPrefix) {
-                args.warnings.push(`${args.warnPrefix} arrowhead_scaled`);
-            }
+    let headLen = 0;
+    let headWidth = 0;
+    if (startArrow || endArrow) {
+        const arrowMeta = computeArrowhead({
+            strokeWidthPt: args.widthPt,
+            segmentLengthIn: lineLength,
+            preferredHeadLengthPt: args.arrowSizePt,
+        });
+        if (!arrowMeta.valid) {
+            return {
+                lineStart: args.start,
+                lineEnd: args.end,
+                arrowHeads: [],
+                error: formatLineTooShortFromArrowhead(arrowMeta.diagnostics),
+            };
         }
+        headLen = ptToIn(arrowMeta.headLengthPt);
+        headWidth = ptToIn(arrowMeta.headWidthPt);
+    }
+    if (endArrow) {
         arrowHeads.push(buildCenteredArrowHead({
             tip: args.end,
             direction: unit,
@@ -128,7 +156,7 @@ export function computeLineWithArrowheads(args) {
     }
     const lineStart = args.start;
     const lineEnd = endArrow ? { x: args.end.x - unit.x * headLen, y: args.end.y - unit.y * headLen } : args.end;
-    return { lineStart, lineEnd, arrowHeads };
+    return { lineStart, lineEnd, arrowHeads, error: null };
 }
 export function renderArrowHeads(slide, shapeType, arrowHeads) {
     for (const arrow of arrowHeads) {
@@ -145,18 +173,41 @@ export function renderArrowHeads(slide, shapeType, arrowHeads) {
 }
 export function prepareConnectorElement(args) {
     const defaults = resolveElementStyleDefaults(args.element, args.theme);
-    const start = resolveRegionAnchor({
+    let start = resolveRegionAnchor({
         anchor: args.element.start,
         regions: args.slide.regions,
         grid: args.slide.grid,
     });
-    const end = resolveRegionAnchor({
+    let end = resolveRegionAnchor({
         anchor: args.element.end,
         regions: args.slide.regions,
         grid: args.slide.grid,
     });
+    const startBox = args.flow?.stepBoxes && args.element.start.type === "region"
+        ? args.flow.stepBoxes.get(args.element.start.targetRegion)
+        : undefined;
+    const endBox = args.flow?.stepBoxes && args.element.end.type === "region"
+        ? args.flow.stepBoxes.get(args.element.end.targetRegion)
+        : undefined;
+    if (startBox) {
+        const anchored = anchorPointFromBox(startBox, args.element.start.point);
+        start = { x: anchored.x, y: startBox.y + startBox.height / 2 };
+    }
+    if (endBox) {
+        const anchored = anchorPointFromBox(endBox, args.element.end.point);
+        end = { x: anchored.x, y: endBox.y + endBox.height / 2 };
+    }
     const widthPt = args.element.style?.widthPt ?? defaults.strokeStyle?.widthPt ?? args.theme.strokeScale.normal ?? DEFAULT_CONNECTOR_WIDTH_PT;
-    if (!Number.isFinite(widthPt) || widthPt <= 0) {
+    const flowActive = Boolean(startBox && endBox);
+    const flowWidthPt = flowActive ? args.flow?.strokePt : undefined;
+    let flowArrowSizePt = flowActive ? args.flow?.arrowSizePt : undefined;
+    if (flowActive && flowArrowSizePt && Number.isFinite(flowArrowSizePt)) {
+        const lengthIn = Math.hypot(end.x - start.x, end.y - start.y);
+        const maxArrowPt = Math.max(0, (lengthIn - EPSILON_INCHES) * 72);
+        flowArrowSizePt = Math.min(flowArrowSizePt, maxArrowPt);
+    }
+    const resolvedWidthPt = flowWidthPt && Number.isFinite(flowWidthPt) ? Math.max(widthPt, flowWidthPt) : widthPt;
+    if (!Number.isFinite(resolvedWidthPt) || resolvedWidthPt <= 0) {
         args.hardErrors.push(`Slide ${args.slideIndex + 1} element ${args.elementIndex + 1}: line_width_invalid`);
     }
     if (!isPointInside(args.bbox, start) || !isPointInside(args.bbox, end)) {
@@ -179,18 +230,23 @@ export function prepareConnectorElement(args) {
         lineStart: start,
         lineEnd: end,
         style: {
-            widthPt,
+            widthPt: resolvedWidthPt,
             color,
             startArrow,
             endArrow,
         },
         arrowHeads: [],
+        customArrowheads: flowActive && Boolean(flowArrowSizePt),
+        arrowSizePt: flowActive ? flowArrowSizePt : undefined,
         lineRect: baseRect.rect,
         lineFlipV: baseRect.flipV,
         lineFlipH: baseRect.flipH,
     };
 }
 export function renderConnectorElement(slide, shapeType, element) {
+    const useCustom = Boolean(element.arrowHeads && element.arrowHeads.length > 0);
+    const beginArrowType = useCustom ? "none" : element.style.startArrow === "triangle" ? "triangle" : "none";
+    const endArrowType = useCustom ? "none" : element.style.endArrow === "triangle" ? "triangle" : "none";
     slide.addShape(shapeType.line, {
         x: element.lineRect.x,
         y: element.lineRect.y,
@@ -201,10 +257,12 @@ export function renderConnectorElement(slide, shapeType, element) {
         line: {
             color: element.style.color,
             width: element.style.widthPt,
+            beginArrowType,
+            endArrowType,
         },
     });
-    if (element.arrowHeads && element.arrowHeads.length > 0) {
-        renderArrowHeads(slide, shapeType, element.arrowHeads);
+    if (useCustom) {
+        renderArrowHeads(slide, shapeType, element.arrowHeads || []);
     }
 }
 //# sourceMappingURL=connector.js.map

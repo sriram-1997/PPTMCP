@@ -7,10 +7,10 @@ import statistics
 import xml.etree.ElementTree as ET
 from typing import Dict, List
 
-LIGHT = "out/demos/pptmcp_capabilities_deck_v1.pptx"
-DARK = "out/demos/pptmcp_capabilities_deck_v1_dark.pptx"
-OUT_LIGHT = "out/demos/pptmcp_capabilities_deck_v1.shape_counts.json"
-OUT_DARK = "out/demos/pptmcp_capabilities_deck_v1_dark.shape_counts.json"
+DEFAULT_LIGHT = "out/demos/pptmcp_capabilities_deck_v1.pptx"
+DEFAULT_DARK = "out/demos/pptmcp_capabilities_deck_v1_dark.pptx"
+DEFAULT_OUT_LIGHT = "out/demos/pptmcp_capabilities_deck_v1.shape_counts.json"
+DEFAULT_OUT_DARK = "out/demos/pptmcp_capabilities_deck_v1_dark.shape_counts.json"
 
 TAGS = {"sp", "pic", "graphicFrame", "cxnSp", "grpSp"}
 
@@ -87,8 +87,21 @@ def build_report(path: str, out_path: str) -> None:
 
 def main() -> int:
     try:
-        build_report(LIGHT, OUT_LIGHT)
-        build_report(DARK, OUT_DARK)
+        args = sys.argv[1:]
+        if args:
+            if len(args) % 2 != 0:
+                print(
+                    "Usage: python scripts/stability_v0_shape_counts.py <pptx> <out_json> [pptx out_json ...]"
+                )
+                return 1
+            pairs = list(zip(args[0::2], args[1::2]))
+        else:
+            pairs = [
+                (DEFAULT_LIGHT, DEFAULT_OUT_LIGHT),
+                (DEFAULT_DARK, DEFAULT_OUT_DARK),
+            ]
+        for pptx, out_path in pairs:
+            build_report(pptx, out_path)
     except Exception as e:
         print(f"Shape count failed: {e}")
         return 1

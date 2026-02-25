@@ -1,0 +1,563 @@
+{
+  "title": "YouTube Strategic Rebalance Deck",
+  "metadata": {
+    "author": "Strategy Team",
+    "created": "2026-02-17T00:00:00Z"
+  },
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "slide-1",
+      "title": "Title Slide",
+      "template": {
+        "id": "yt_title_hero",
+        "extends": "base_standard",
+        "placeholders": [
+          {
+            "id": "title",
+            "kind": "text",
+            "region": { "col": 0, "row": 0, "colSpan": 7, "rowSpan": 2 },
+            "layer": "content",
+            "styleSlots": { "text": "text.title", "padding": 1 }
+          },
+          {
+            "id": "subtitle",
+            "kind": "text",
+            "region": { "col": 0, "row": 2, "colSpan": 7, "rowSpan": 2 },
+            "layer": "content",
+            "styleSlots": { "text": "text.subtitle", "padding": 1 }
+          },
+          {
+            "id": "bullets",
+            "kind": "list",
+            "region": { "col": 7, "row": 4, "colSpan": 5, "rowSpan": 2 },
+            "layer": "content",
+            "layoutMode": "vstack",
+            "gapToken": 1,
+            "allowedKinds": ["list"]
+          },
+          {
+            "id": "hero",
+            "kind": "image",
+            "region": { "col": 7, "row": 0, "colSpan": 5, "rowSpan": 4 },
+            "layer": "content"
+          },
+          {
+            "id": "takeaway",
+            "kind": "card",
+            "region": { "col": 0, "row": 4, "colSpan": 7, "rowSpan": 3 },
+            "layer": "content"
+          },
+          {
+            "id": "footer",
+            "kind": "text",
+            "region": { "col": 0, "row": 7, "colSpan": 12, "rowSpan": 1 },
+            "layer": "content",
+            "styleSlots": { "text": "text.caption", "padding": 1 }
+          }
+        ]
+      },
+      "fills": {
+        "title": { "content": "YouTube: From Ad Maximization to Economic Coordination" },
+        "subtitle": {
+          "content": "Reduce structural monetization exposure while preserving discovery neutrality"
+        },
+        "bullets": {
+          "items": [
+            {
+              "kind": "list",
+              "style": "icon",
+              "bullet": { "size": "md", "icon": "video", "color": "text" },
+              "items": [{ "text": "Preserve neutral discovery at scale." }]
+            },
+            {
+              "kind": "list",
+              "style": "icon",
+              "bullet": { "size": "md", "icon": "users", "color": "text" },
+              "items": [{ "text": "Create opt-in creator–brand coordination." }]
+            },
+            {
+              "kind": "list",
+              "style": "icon",
+              "bullet": { "size": "md", "icon": "shield", "color": "text" },
+              "items": [{ "text": "Reduce strategic dependence on ads." }]
+            }
+          ]
+        },
+        "hero": {
+          "src": "../assets/pptmcp_mark.png",
+          "fit": "contain"
+        },
+        "takeaway": {
+          "variant": "surface",
+          "style": { "border": "subtle", "radius": "md", "padding": "md" },
+          "body": [
+            {
+              "type": "list",
+              "style": "none",
+              "items": [{ "text": "Rebalance revenue without pay-to-play ranking." }]
+            }
+          ],
+          "footer": {
+            "strip": true,
+            "label": "Key takeaway"
+          }
+        },
+        "footer": { "content": "Team Orion | Strategy Practicum | Feb 17, 2026" }
+      }
+    },
+    {
+      "id": "slide-2",
+      "title": "Executive Summary",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "title": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "summary": { "col": 0, "row": 1, "colSpan": 12, "rowSpan": 4 },
+        "outcomes": { "col": 0, "row": 5, "colSpan": 12, "rowSpan": 3 }
+      },
+      "elements": [
+        { "type": "text", "region": "title", "content": "Executive Summary", "style": { "bold": true } },
+        {
+          "type": "text",
+          "region": "summary",
+          "content": "Major change: expand from ad-only value capture into opt-in economic coordination.\nCritical decision: protect neutral discovery while shifting monetization mix.\nRecommendation: adopt a Hybrid Coordination Model that scales sponsorships, services, and analytics."
+        },
+        {
+          "type": "list",
+          "region": "outcomes",
+          "style": "dot",
+          "items": [
+            { "text": "Sustain session time while improving creator trust" },
+            { "text": "Diversify revenue beyond ad cycles" },
+            { "text": "Increase brand-safe coordination volume" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-3",
+      "title": "Five Forces",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "title": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "force_1": { "col": 0, "row": 1, "colSpan": 4, "rowSpan": 2 },
+        "force_2": { "col": 4, "row": 1, "colSpan": 4, "rowSpan": 2 },
+        "force_3": { "col": 8, "row": 1, "colSpan": 4, "rowSpan": 2 },
+        "force_4": { "col": 2, "row": 3, "colSpan": 4, "rowSpan": 2 },
+        "force_5": { "col": 6, "row": 3, "colSpan": 4, "rowSpan": 2 },
+        "banner": { "col": 0, "row": 5, "colSpan": 12, "rowSpan": 3 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "title",
+          "content": "Five Forces — Exposure in Ad Monetization",
+          "style": { "bold": true }
+        },
+        {
+          "type": "card",
+          "region": "force_1",
+          "variant": "surface",
+          "header": { "title": "Rivalry — High" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "TikTok/Reels/Twitch attention pressure" },
+                { "text": "Algorithm arms race" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "force_2",
+          "variant": "surface",
+          "header": { "title": "Supplier Power — Rising" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Creator multi-homing" },
+                { "text": "Off-platform monetization" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "force_3",
+          "variant": "surface",
+          "header": { "title": "Buyer Power — High" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "ROI scrutiny + brand safety" },
+                { "text": "Spend concentration" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "force_4",
+          "variant": "surface",
+          "header": { "title": "Substitutes — High" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Ad blockers" },
+                { "text": "Direct-to-creator ecosystems" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "force_5",
+          "variant": "surface",
+          "header": { "title": "New Entrants — Mixed" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Low at scale" },
+                { "text": "High in niches" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "banner",
+          "variant": "accent",
+          "style": { "border": "none", "padding": "md" },
+          "body": [
+            {
+              "type": "list",
+              "style": "none",
+              "items": [
+                { "text": "Bottom line: Ad concentration amplifies exposure to supplier, buyer, and substitute forces." }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-4",
+      "title": "Strategic Fork",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "title": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "left_header": { "col": 0, "row": 1, "colSpan": 6, "rowSpan": 1 },
+        "right_header": { "col": 6, "row": 1, "colSpan": 6, "rowSpan": 1 },
+        "left_body": { "col": 0, "row": 2, "colSpan": 6, "rowSpan": 5 },
+        "right_body": { "col": 6, "row": 2, "colSpan": 6, "rowSpan": 5 },
+        "footer": { "col": 0, "row": 7, "colSpan": 12, "rowSpan": 1 }
+      },
+      "elements": [
+        { "type": "text", "region": "title", "content": "Strategic Fork in Value Capture", "style": { "bold": true } },
+        { "type": "text", "region": "left_header", "content": "Path 1: Optimize ad yield" },
+        { "type": "text", "region": "right_header", "content": "Path 2: Coordination" },
+        {
+          "type": "list",
+          "region": "left_body",
+          "style": "dot",
+          "items": [
+            { "text": "Near-term revenue lift" },
+            { "text": "Higher force exposure" }
+          ]
+        },
+        {
+          "type": "list",
+          "region": "right_body",
+          "style": "dot",
+          "items": [
+            { "text": "Diversifies capture" },
+            { "text": "Reduces exposure to ad cycles" }
+          ]
+        },
+        {
+          "type": "text",
+          "region": "footer",
+          "content": "Decision criterion: maximize long-run session time + legitimacy while sustaining revenue."
+        }
+      ]
+    },
+    {
+      "id": "slide-5",
+      "title": "Three Strategic Options",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "title": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "opt_a": { "col": 0, "row": 1, "colSpan": 4, "rowSpan": 6 },
+        "opt_b": { "col": 4, "row": 1, "colSpan": 4, "rowSpan": 6 },
+        "opt_c": { "col": 8, "row": 1, "colSpan": 4, "rowSpan": 6 }
+      },
+      "elements": [
+        { "type": "text", "region": "title", "content": "Three Strategic Options", "style": { "bold": true } },
+        {
+          "type": "card",
+          "region": "opt_a",
+          "variant": "surface",
+          "header": { "title": "A) Ads Intensification" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Pro: Near-term revenue lift" },
+                { "text": "Pro: Operationally familiar" },
+                { "text": "Con: Higher buyer leverage" },
+                { "text": "Con: Brand safety risk" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "opt_b",
+          "variant": "surface",
+          "header": { "title": "B) Commerce Pivot" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Pro: New GMV streams" },
+                { "text": "Pro: Creator monetization" },
+                { "text": "Con: Heavy ops + logistics" },
+                { "text": "Con: Discovery distortion risk" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "opt_c",
+          "variant": "accent",
+          "header": { "title": "C) Hybrid Coordination Model" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Pro: Diversifies capture" },
+                { "text": "Pro: Preserves neutrality" },
+                { "text": "Con: Requires marketplace build" },
+                { "text": "Con: Governance complexity" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-6",
+      "title": "Hybrid Model Architecture",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "title": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "layer_1": { "col": 0, "row": 1, "colSpan": 12, "rowSpan": 3 },
+        "layer_2": { "col": 0, "row": 4, "colSpan": 12, "rowSpan": 3 },
+        "note": { "col": 0, "row": 7, "colSpan": 12, "rowSpan": 1 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "title",
+          "content": "Hybrid Model: Neutral Discovery + Opt-In Economic Layer",
+          "style": { "bold": true }
+        },
+        {
+          "type": "card",
+          "region": "layer_1",
+          "variant": "surface",
+          "header": { "title": "Public Discovery Layer (Neutral)" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Creator autonomy + open distribution" },
+                { "text": "Monetization-neutral ranking" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "layer_2",
+          "variant": "elevated",
+          "header": { "title": "Economic Layer (Opt-In)" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Sponsorship marketplace + verified partnerships" },
+                { "text": "Voluntary marketing surfaces" },
+                { "text": "Analytics/services with low take-rate" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "region": "note",
+          "content": "Design principle: no pay-to-play ranking."
+        }
+      ]
+    },
+    {
+      "id": "slide-7",
+      "title": "Causal Mechanism",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "title": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "canvas": { "col": 0, "row": 1, "colSpan": 12, "rowSpan": 4 },
+        "n1": { "col": 0, "row": 1, "colSpan": 2, "rowSpan": 2 },
+        "n2": { "col": 2, "row": 1, "colSpan": 2, "rowSpan": 2 },
+        "n3": { "col": 4, "row": 1, "colSpan": 2, "rowSpan": 2 },
+        "n4": { "col": 6, "row": 1, "colSpan": 2, "rowSpan": 2 },
+        "n5": { "col": 8, "row": 1, "colSpan": 2, "rowSpan": 2 },
+        "n6": { "col": 10, "row": 1, "colSpan": 2, "rowSpan": 2 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "title",
+          "content": "Mechanism: Sponsorship Improves Organic Performance",
+          "style": { "bold": true }
+        },
+        { "type": "node", "id": "node1", "region": "n1", "shape": "rounded-rect", "label": "Sponsorship" },
+        { "type": "node", "id": "node2", "region": "n2", "shape": "rounded-rect", "label": "Production\nResources" },
+        { "type": "node", "id": "node3", "region": "n3", "shape": "rounded-rect", "label": "Content\nQuality" },
+        { "type": "node", "id": "node4", "region": "n4", "shape": "rounded-rect", "label": "Immersion" },
+        { "type": "node", "id": "node5", "region": "n5", "shape": "rounded-rect", "label": "Watch Time" },
+        { "type": "node", "id": "node6", "region": "n6", "shape": "rounded-rect", "label": "Organic\nAmplification" },
+        { "type": "edge", "region": "canvas", "startNode": "node1", "endNode": "node2", "arrow": "triangle" },
+        { "type": "edge", "region": "canvas", "startNode": "node2", "endNode": "node3", "arrow": "triangle" },
+        { "type": "edge", "region": "canvas", "startNode": "node3", "endNode": "node4", "arrow": "triangle" },
+        { "type": "edge", "region": "canvas", "startNode": "node4", "endNode": "node5", "arrow": "triangle" },
+        { "type": "edge", "region": "canvas", "startNode": "node5", "endNode": "node6", "arrow": "triangle" },
+        {
+          "type": "callout",
+          "region": "canvas",
+          "anchor": { "type": "region", "targetRegion": "n4", "point": "s" },
+          "box": { "wIn": 3.2, "hIn": 0.9, "placement": "s" },
+          "content": {
+            "icon": "tag",
+            "text": "Brands care: better content earns reach."
+          },
+          "leader": { "style": "line", "endCap": "none", "endArrow": "none" }
+        }
+      ]
+    },
+    {
+      "id": "slide-8",
+      "title": "Impact on Competitive Forces",
+      "template": "table_full",
+      "fills": {
+        "title": { "content": "Impact on Competitive Forces" },
+        "table": {
+          "content": {
+            "headers": ["Force", "Current (Ad-Centric)", "Hybrid Impact"],
+            "rows": [
+              ["Rivalry", "Compete on ad sophistication", "Compete on ecosystem depth"],
+              ["Supplier power", "Creator leakage / multi-home", "Switching costs via tooling"],
+              ["Buyer power", "Advertiser pricing pressure", "Coordination + services"],
+              ["Substitutes", "Ad blockers attack core", "Lower dependence on impressions"],
+              ["New entrants", "Niche monetization siphons", "Deeper economic integration"]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "slide-9",
+      "title": "Engagement Plan",
+      "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+      "regions": {
+        "title": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "phase_1": { "col": 0, "row": 1, "colSpan": 4, "rowSpan": 3 },
+        "phase_2": { "col": 4, "row": 1, "colSpan": 4, "rowSpan": 3 },
+        "phase_3": { "col": 8, "row": 1, "colSpan": 4, "rowSpan": 3 },
+        "team": { "col": 0, "row": 4, "colSpan": 8, "rowSpan": 3 },
+        "kpis": { "col": 8, "row": 4, "colSpan": 4, "rowSpan": 3 }
+      },
+      "elements": [
+        { "type": "text", "region": "title", "content": "Engagement Plan (Partner-Led)", "style": { "bold": true } },
+        {
+          "type": "card",
+          "region": "phase_1",
+          "variant": "surface",
+          "header": { "title": "Phase 1: Diagnostic" },
+          "body": [
+            { "type": "list", "style": "dot", "items": [{ "text": "6–8 weeks" }, { "text": "Force mapping + baseline" }] }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "phase_2",
+          "variant": "surface",
+          "header": { "title": "Phase 2: Pilot" },
+          "body": [
+            { "type": "list", "style": "dot", "items": [{ "text": "10–12 weeks" }, { "text": "Marketplace + analytics MVP" }] }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "phase_3",
+          "variant": "surface",
+          "header": { "title": "Phase 3: Scale" },
+          "body": [
+            { "type": "list", "style": "dot", "items": [{ "text": "8–12 weeks" }, { "text": "Governance + rollout" }] }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "team",
+          "variant": "elevated",
+          "header": { "title": "Team + Relationships" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Partner, EM, 2 Associates, 2 Analysts + SMEs" },
+                { "text": "Primary: CEO/YouTube, CBO, Ads, Creator Partnerships" },
+                { "text": "Secondary: Legal/Regulatory, Trust & Safety, Finance" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "kpis",
+          "variant": "accent",
+          "header": { "title": "KPIs" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Primary: session time + continuation" },
+                { "text": "Secondary: creator income stability" },
+                { "text": "Secondary: revenue mix diversification" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

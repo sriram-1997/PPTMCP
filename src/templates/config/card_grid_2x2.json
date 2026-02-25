@@ -1,17 +1,28 @@
 {
   "id": "card_grid_2x2",
   "title": "Card Grid 2x2",
-  "grid": { "cols": 12, "rows": 8, "gutter": 0.1 },
+  "grid": {
+    "cols": 12,
+    "rows": 8,
+    "gutter": 0.1
+  },
   "placeholders": [
     {
       "id": "cards",
       "kind": "card",
-      "region": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 8 },
+      "region": {
+        "col": 0,
+        "row": 0,
+        "colSpan": 12,
+        "rowSpan": 8
+      },
       "layoutMode": "grid",
       "gridRows": 2,
       "gridCols": 2,
       "gapToken": 2,
-      "allowedKinds": ["card"]
+      "allowedKinds": [
+        "card"
+      ]
     }
   ]
 }

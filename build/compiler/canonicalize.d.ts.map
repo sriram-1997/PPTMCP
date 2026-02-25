@@ -1,0 +1,1 @@
+{"version":3,"file":"canonicalize.d.ts","sourceRoot":"","sources":["../../src/compiler/canonicalize.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAQV,gBAAgB,EAGjB,MAAM,oBAAoB,CAAC;AAQ5B,MAAM,MAAM,OAAO,GAAG,gBAAgB,GAAG;IACvC,iBAAiB,CAAC,EAAE,MAAM,EAAE,CAAC;CAC9B,CAAC;AAwDF,wBAAgB,yBAAyB,CAAC,IAAI,EAAE,MAAM,GAAG,MAAM,CAoB9D;AA0LD,wBAAgB,cAAc,CAAC,EAAE,EAAE,OAAO,GAAG,OAAO,CAmFnD"}

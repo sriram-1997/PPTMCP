@@ -38,7 +38,12 @@
       "gridRows": 3,
       "gridCols": 3,
       "gapToken": 0,
-      "allowedKinds": ["text", "chart", "table", "image"],
+      "allowedKinds": [
+        "text",
+        "chart",
+        "table",
+        "image"
+      ],
       "minItems": 0,
       "maxItems": 9,
       "styleSlots": {
@@ -50,8 +55,15 @@
   "variants": {
     "compact": {
       "placeholders": [
-        { "id": "header", "paddingToken": 1 },
-        { "id": "metrics", "paddingToken": 0, "gapToken": 0 }
+        {
+          "id": "header",
+          "paddingToken": 1
+        },
+        {
+          "id": "metrics",
+          "paddingToken": 0,
+          "gapToken": 0
+        }
       ]
     }
   }

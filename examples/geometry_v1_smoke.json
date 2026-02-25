@@ -81,7 +81,7 @@
           "region": "center",
           "content": "CENTER",
           "style": {
-            "fontSize": 12,
+            "fontSize": 14,
             "bold": true,
             "align": "center",
             "verticalAlign": "middle"
@@ -92,7 +92,7 @@
           "region": "north",
           "content": "N",
           "style": {
-            "fontSize": 10,
+            "fontSize": 14,
             "bold": true,
             "align": "center",
             "verticalAlign": "middle"
@@ -103,7 +103,7 @@
           "region": "south",
           "content": "S",
           "style": {
-            "fontSize": 10,
+            "fontSize": 14,
             "bold": true,
             "align": "center",
             "verticalAlign": "middle"
@@ -114,7 +114,7 @@
           "region": "west",
           "content": "W",
           "style": {
-            "fontSize": 10,
+            "fontSize": 14,
             "bold": true,
             "align": "center",
             "verticalAlign": "middle"
@@ -125,7 +125,7 @@
           "region": "east",
           "content": "E",
           "style": {
-            "fontSize": 10,
+            "fontSize": 14,
             "bold": true,
             "align": "center",
             "verticalAlign": "middle"
@@ -136,7 +136,7 @@
           "region": "nw",
           "content": "NW",
           "style": {
-            "fontSize": 10,
+            "fontSize": 14,
             "bold": true,
             "align": "center",
             "verticalAlign": "middle"
@@ -147,7 +147,7 @@
           "region": "ne",
           "content": "NE",
           "style": {
-            "fontSize": 10,
+            "fontSize": 14,
             "bold": true,
             "align": "center",
             "verticalAlign": "middle"
@@ -158,7 +158,7 @@
           "region": "sw",
           "content": "SW",
           "style": {
-            "fontSize": 10,
+            "fontSize": 14,
             "bold": true,
             "align": "center",
             "verticalAlign": "middle"
@@ -169,7 +169,7 @@
           "region": "se",
           "content": "SE",
           "style": {
-            "fontSize": 10,
+            "fontSize": 14,
             "bold": true,
             "align": "center",
             "verticalAlign": "middle"
@@ -354,7 +354,7 @@
           "text": {
             "value": "Top hit",
             "style": {
-              "fontSize": 10
+              "fontSize": 14
             }
           },
           "leader": {
@@ -382,7 +382,7 @@
           "text": {
             "value": "Bottom hit",
             "style": {
-              "fontSize": 10
+              "fontSize": 14
             }
           },
           "leader": {
@@ -410,7 +410,7 @@
           "text": {
             "value": "Left hit",
             "style": {
-              "fontSize": 10
+              "fontSize": 14
             }
           },
           "leader": {
@@ -438,7 +438,7 @@
           "text": {
             "value": "Right hit",
             "style": {
-              "fontSize": 10
+              "fontSize": 14
             }
           },
           "leader": {

@@ -1,3 +1,9 @@
+export function normalizeText(value) {
+    if (!value) {
+        return "";
+    }
+    return value.replace(/\\n/g, "\n");
+}
 export function parseBoldRuns(text) {
     const runs = [];
     if (!text) {

@@ -1,10 +1,10 @@
 import { normalizeColor } from "./utils/color.js";
 import { ptToIn } from "./utils/units.js";
 import { textUnits } from "./text.js";
-import { parseBoldRuns } from "./utils/textRuns.js";
+import { normalizeText, parseBoldRuns } from "./utils/textRuns.js";
 import { resolveIconData } from "./utils/icons.js";
-const DEFAULT_LINE_HEIGHT = 1.2;
-const DEFAULT_BULLET_GAP_PT = 6;
+import { hasValidCanonicalIndent, resolveCanonicalListMetrics } from "../typography/listMetrics.js";
+import { resolveListRhythm } from "../typography/rhythm.js";
 const DEFAULT_LINE_GAP_PT = 6;
 const BASELINE_RATIO = 0.8;
 function glyphUnits(char) {
@@ -76,6 +76,24 @@ function tokensToRuns(tokens) {
         runs.pop();
     }
     return runs;
+}
+function splitRunsOnNewline(runs) {
+    const paragraphs = [];
+    let current = [];
+    runs.forEach((run) => {
+        const parts = run.text.split("\n");
+        parts.forEach((part, idx) => {
+            if (part.length > 0) {
+                current.push({ text: part, bold: run.bold });
+            }
+            if (idx < parts.length - 1) {
+                paragraphs.push(current);
+                current = [];
+            }
+        });
+    });
+    paragraphs.push(current);
+    return paragraphs;
 }
 function wrapRuns(runs, maxUnitsPerLine) {
     const tokens = tokenizeRuns(runs);
@@ -168,23 +186,31 @@ export function layoutList(args) {
             args.hardErrors.push(`${prefix}invalid_bullet_style`);
         }
     }
-    const bulletSizePt = resolveBulletSize(args.list.bullet?.size, args.theme);
-    const bulletGapPt = typeof args.list.bullet?.gap === "number" ? args.list.bullet.gap : DEFAULT_BULLET_GAP_PT;
-    const bulletColor = normalizeColor(resolveBulletColor(args.list.bullet?.color, args.theme), args.theme.text.colorPrimary);
-    const leftPt = typeof args.list.indent?.left === "number" ? args.list.indent.left : 0;
-    const hangingPt = typeof args.list.indent?.hanging === "number" ? args.list.indent.hanging : bulletSizePt + bulletGapPt;
-    const lineGapPt = typeof args.list.lineGap === "number" ? args.list.lineGap : DEFAULT_LINE_GAP_PT;
-    if (hangingPt < bulletSizePt + bulletGapPt - 0.1 && args.hardErrors) {
+    const canonicalMetrics = resolveCanonicalListMetrics(style);
+    if (!hasValidCanonicalIndent(canonicalMetrics) && args.hardErrors) {
         args.hardErrors.push(`${prefix}list_indent_invalid`);
     }
-    const textStartX = args.bbox.x + ptToIn(leftPt + hangingPt);
-    const textWidthIn = args.bbox.width - ptToIn(leftPt + hangingPt);
+    const bulletSizePt = resolveBulletSize(args.list.bullet?.size, args.theme);
+    const bulletGapPt = canonicalMetrics.bulletGapPt;
+    const bulletColor = normalizeColor(resolveBulletColor(args.list.bullet?.color, args.theme), args.theme.text.colorPrimary);
+    const leftPt = canonicalMetrics.leftIndentPt;
+    const hangingPt = canonicalMetrics.hangingPt;
+    const lineGapPt = typeof args.list.lineGap === "number"
+        ? args.list.lineGap
+        : (args.theme.spaceScale[2] ?? args.theme.spaceScale[1] ?? DEFAULT_LINE_GAP_PT);
+    if (hangingPt > leftPt + 0.1 && args.hardErrors) {
+        args.hardErrors.push(`${prefix}list_indent_invalid`);
+    }
+    const textStartX = args.bbox.x + ptToIn(canonicalMetrics.textStartOffsetPt);
+    const textBoxX = textStartX;
+    const textWidthIn = args.bbox.width - ptToIn(canonicalMetrics.textStartOffsetPt);
     if (textWidthIn <= 0 && args.hardErrors) {
         args.hardErrors.push(`${prefix}list_indent_invalid`);
     }
     const fontFace = args.theme.fontScale.body.family;
     const fontSize = args.theme.fontScale.body.size;
-    const lineHeight = DEFAULT_LINE_HEIGHT;
+    const rhythm = resolveListRhythm({ contextLabel: prefix.trim() || "list" });
+    const lineHeight = rhythm.lineHeight;
     const lineHeightPt = fontSize * lineHeight;
     const baselineOffsetPt = Math.max(0, (lineHeightPt - fontSize) / 2 + fontSize * BASELINE_RATIO);
     const availableWidthPt = Math.max(1, textWidthIn * 72);
@@ -217,8 +243,19 @@ export function layoutList(args) {
     let cursorY = args.bbox.y;
     const items = [];
     (args.list.items ?? []).forEach((item, idx) => {
-        const runs = parseBoldRuns(item.text ?? "");
-        const lines = wrapRuns(runs, maxUnitsPerLine);
+        const normalized = normalizeText(item.text ?? "");
+        const runs = parseBoldRuns(normalized);
+        const paragraphs = splitRunsOnNewline(runs);
+        const lines = [];
+        paragraphs.forEach((paraRuns) => {
+            const wrapped = wrapRuns(paraRuns, maxUnitsPerLine);
+            if (wrapped.length === 0) {
+                lines.push({ runs: [{ text: "", bold: false }] });
+            }
+            else {
+                lines.push(...wrapped);
+            }
+        });
         const itemHeightPt = Math.max(lineHeightPt, lines.length * lineHeightPt);
         const itemHeightIn = itemHeightPt / 72;
         const textBox = {
@@ -228,44 +265,56 @@ export function layoutList(args) {
             height: itemHeightIn,
         };
         let bullet;
-        if (style !== "none") {
-            const bulletBoxX = args.bbox.x + ptToIn(leftPt);
-            const bulletBoxW = ptToIn(hangingPt);
+        if (style === "dot") {
             const bulletSizeIn = ptToIn(bulletSizePt);
-            const bulletRight = textStartX - ptToIn(bulletGapPt);
-            const bulletLeft = bulletRight - bulletSizeIn;
+            const bulletLeft = textStartX - ptToIn(bulletGapPt + bulletSizePt);
             const baselineY = cursorY + ptToIn(baselineOffsetPt);
             const bulletY = baselineY - ptToIn(bulletSizePt / 2);
             const bulletBottom = bulletY + ptToIn(bulletSizePt);
             const lineBottom = cursorY + ptToIn(lineHeightPt);
-            if ((style === "dot" || style === "icon") &&
-                (bulletY < cursorY - 0.01 || bulletBottom > lineBottom + 0.01) &&
-                args.hardErrors) {
+            if ((bulletY < cursorY - 0.01 || bulletBottom > lineBottom + 0.01) && args.hardErrors) {
                 args.hardErrors.push(`${prefix}list_alignment_invalid`);
             }
-            if (style === "number") {
-                bullet = {
-                    type: "number",
-                    bbox: { x: bulletBoxX, y: cursorY, width: bulletBoxW, height: lineHeightPt / 72 },
-                    color: bulletColor,
-                    text: `${idx + 1}.`,
-                };
+            bullet = {
+                type: "dot",
+                bbox: { x: bulletLeft, y: bulletY, width: bulletSizeIn, height: bulletSizeIn },
+                color: bulletColor,
+            };
+        }
+        else if (style === "icon") {
+            const iconWidthPt = canonicalMetrics.iconBoxWidthPt;
+            const iconWidthIn = ptToIn(iconWidthPt);
+            const bulletLeft = textStartX - ptToIn(bulletGapPt + iconWidthPt);
+            const baselineY = cursorY + ptToIn(baselineOffsetPt);
+            const bulletY = baselineY -
+                ptToIn(iconWidthPt / 2) +
+                ptToIn(canonicalMetrics.iconBaselineNudgePt);
+            const bulletBottom = bulletY + iconWidthIn;
+            const lineBottom = cursorY + ptToIn(lineHeightPt);
+            if ((bulletY < cursorY - 0.01 || bulletBottom > lineBottom + 0.01) && args.hardErrors) {
+                args.hardErrors.push(`${prefix}list_alignment_invalid`);
             }
-            else if (style === "dot") {
-                bullet = {
-                    type: "dot",
-                    bbox: { x: bulletLeft, y: bulletY, width: bulletSizeIn, height: bulletSizeIn },
-                    color: bulletColor,
-                };
-            }
-            else if (style === "icon") {
-                bullet = {
-                    type: "icon",
-                    bbox: { x: bulletLeft, y: bulletY, width: bulletSizeIn, height: bulletSizeIn },
-                    color: bulletColor,
-                    data: iconData ?? "",
-                };
-            }
+            bullet = {
+                type: "icon",
+                bbox: { x: bulletLeft, y: bulletY, width: iconWidthIn, height: iconWidthIn },
+                color: bulletColor,
+                data: iconData ?? "",
+            };
+        }
+        else if (style === "number") {
+            const numberPrefixWidthPt = canonicalMetrics.numberPrefixWidthPt;
+            const numberLeft = textStartX - ptToIn(numberPrefixWidthPt + bulletGapPt);
+            bullet = {
+                type: "number",
+                bbox: {
+                    x: numberLeft,
+                    y: cursorY,
+                    width: ptToIn(numberPrefixWidthPt),
+                    height: ptToIn(lineHeightPt),
+                },
+                color: bulletColor,
+                text: `${idx + 1}.`,
+            };
         }
         items.push({ textBox, lines, bullet });
         cursorY += itemHeightIn;
@@ -299,6 +348,13 @@ export function layoutList(args) {
             color: bulletColor,
         },
         totalHeightPt,
+        metrics: {
+            textStartX,
+            textBoxX,
+            hangingPt,
+            leftPt,
+            numberedInline: false,
+        },
     };
 }
 export function prepareListElement(args) {
@@ -336,22 +392,6 @@ export function renderListLayout(slide, shapeType, layout, overrides) {
                     line: { color: item.bullet.color, width: 0 },
                 });
             }
-            else if (item.bullet.type === "number") {
-                slide.addText(item.bullet.text ?? "", {
-                    x: item.bullet.bbox.x,
-                    y: item.bullet.bbox.y,
-                    w: item.bullet.bbox.width,
-                    h: item.bullet.bbox.height,
-                    fontFace,
-                    fontSize,
-                    color: item.bullet.color,
-                    bold: false,
-                    align: "right",
-                    valign: "top",
-                    margin: 0,
-                    lineSpacingMultiple: layout.textStyle.lineHeight,
-                });
-            }
             else if (item.bullet.type === "icon" && item.bullet.data) {
                 slide.addImage({
                     data: item.bullet.data,
@@ -359,6 +399,24 @@ export function renderListLayout(slide, shapeType, layout, overrides) {
                     y: item.bullet.bbox.y,
                     w: item.bullet.bbox.width,
                     h: item.bullet.bbox.height,
+                });
+            }
+            else if (item.bullet.type === "number" && item.bullet.text) {
+                slide.addText(item.bullet.text, {
+                    x: item.bullet.bbox.x,
+                    y: item.bullet.bbox.y,
+                    w: item.bullet.bbox.width,
+                    h: item.bullet.bbox.height,
+                    fontFace,
+                    fontSize,
+                    color: item.bullet.color,
+                    align: "right",
+                    valign: "top",
+                    margin: 0,
+                    breakLine: false,
+                    lineSpacingMultiple: layout.textStyle.lineHeight,
+                    paraSpaceBeforePt: 0,
+                    paraSpaceAfterPt: 0,
                 });
             }
         }
@@ -384,6 +442,8 @@ export function renderListLayout(slide, shapeType, layout, overrides) {
             margin: 0,
             breakLine: true,
             lineSpacingMultiple: layout.textStyle.lineHeight,
+            paraSpaceBeforePt: 0,
+            paraSpaceAfterPt: 0,
         });
     });
 }

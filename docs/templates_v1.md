@@ -40,7 +40,7 @@ Template files live under `src/templates/config/*.json` and are loaded by `templ
 ### Placeholder Fields
 
 - `id` (string): placeholder identifier and compiled region name.
-- `kind`: `text | table | chart | callout | connector | image | icon`.
+- `kind`: `text | table | chart | chevron_flow | callout | connector | image | icon`.
 - `region`: `{ col, row, colSpan, rowSpan }` (grid-based).
 - `layer` (optional): references a layer id to compute base z.
 - `z` (optional): integer offset added to layer z.
@@ -94,10 +94,18 @@ Slides can reference a template by id or embed a template inline. Variants are s
 - `text`: `content`, `textStyleSlot`, `paddingSlot`, `variant`.
 - `table`: `content`, `paddingSlot`, `variant`.
 - `chart`: `content`, `variant`.
+- `chevron_flow`: `steps`, `orientation?`, `layoutProfile?`.
 - `image`: `src`, `fit`, `opacity?`, `crop?`, `overlaySurfaceSlot?`, `overlayOpacity?`, `borderRadiusPt?`, `variant`.
 - `icon`: `name`, `sizeToken`, `colorSlot`, `align?`, `verticalAlign?`.
 - `callout`: `text`, `textStyleSlot`, `paddingSlot`, `variant`, `leader`.
 - `connector`: `strokeSlot`, `startArrow`, `endArrow`, `variant`.
+
+### `chevron_flow` strict schema (v0.2)
+- `steps` length must be between `2` and `12`.
+- Every step requires a non-empty `label` string.
+- `orientation` allowlist: `horizontal` only.
+- `layoutProfile` allowlist: `flow.chevron | flow.card`.
+- Long labels attempt deterministic shrink first; unresolved overflow hard-fails with `chevron_label_overflow`.
 
 ### Multi-item fill schema (layoutMode != single)
 - `text`: `{ "kind": "text", "text": "...", "textStyleSlot": "text.body" }`

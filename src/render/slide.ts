@@ -4,6 +4,7 @@ import type {
   CalloutElement,
   CardElement,
   ChartElement,
+  ChevronFlowElement,
   ConnectorElement,
   EdgeElement,
   GridConfig,
@@ -25,20 +26,44 @@ import type {
   ValidationReportEntry,
 } from "./types.js";
 import type { ConcreteTheme } from "../theme/types.js";
-import { EPSILON_INCHES, SLIDE_HEIGHT_INCHES, SLIDE_WIDTH_INCHES, ptToIn, roundInches } from "./utils/units.js";
+import {
+  EPSILON_INCHES,
+  SLIDE_HEIGHT_INCHES,
+  SLIDE_WIDTH_INCHES,
+  ptToIn,
+  quantizeInchesToEmuStep,
+  roundInches,
+} from "./utils/units.js";
 import { prepareTextElement } from "./text.js";
 import { prepareTableElement } from "./table.js";
 import { prepareChartElement } from "./chart.js";
 import { prepareListElement } from "./list.js";
 import { prepareCardElement } from "./card.js";
+import { prepareChevronFlowElement } from "./chevron.js";
 import { prepareCalloutElement } from "./callout.js";
 import { prepareConnectorElement } from "./connector.js";
 import { prepareEdgeElement } from "./edge.js";
 import { prepareImageElement } from "./image.js";
 import { prepareIconElement } from "./icon.js";
 import { prepareNodeElement } from "./node.js";
+import { computeFlowLayout } from "./flow.js";
+import { layerBucketForElementType } from "../compiler/canonicalize.js";
 
 export function computeRegionBBox(region: RegionConfig, grid: GridConfig): BBox {
+  if (
+    region.__rect &&
+    Number.isFinite(region.__rect.x) &&
+    Number.isFinite(region.__rect.y) &&
+    Number.isFinite(region.__rect.width) &&
+    Number.isFinite(region.__rect.height)
+  ) {
+    return {
+      x: quantizeInchesToEmuStep(region.__rect.x),
+      y: quantizeInchesToEmuStep(region.__rect.y),
+      width: quantizeInchesToEmuStep(region.__rect.width),
+      height: quantizeInchesToEmuStep(region.__rect.height),
+    };
+  }
   const { cols, rows, gutter } = grid;
   const totalGutterWidth = (cols - 1) * gutter;
   const totalGutterHeight = (rows - 1) * gutter;
@@ -48,7 +73,12 @@ export function computeRegionBBox(region: RegionConfig, grid: GridConfig): BBox 
   const y = region.row * cellHeight + region.row * gutter;
   const width = region.colSpan * cellWidth + (region.colSpan - 1) * gutter;
   const height = region.rowSpan * cellHeight + (region.rowSpan - 1) * gutter;
-  return { x, y, width, height };
+  return {
+    x: quantizeInchesToEmuStep(x),
+    y: quantizeInchesToEmuStep(y),
+    width: quantizeInchesToEmuStep(width),
+    height: quantizeInchesToEmuStep(height),
+  };
 }
 
 function anchorPointFromRegion(bbox: BBox, point: AnchorPoint): { x: number; y: number } {
@@ -116,6 +146,13 @@ export function isBoxInside(container: BBox, box: BBox): boolean {
     box.x + box.width <= container.x + container.width + EPSILON_INCHES &&
     box.y + box.height <= container.y + container.height + EPSILON_INCHES
   );
+}
+
+function stepIndexFromRegion(region: string): number | null {
+  const match = region.match(/^step_(\d+)$/);
+  if (!match) return null;
+  const value = Number.parseInt(match[1], 10);
+  return Number.isFinite(value) ? value : null;
 }
 
 export function nearestPointOnBoxPerimeter(box: BBox, point: { x: number; y: number }): { x: number; y: number } {
@@ -186,6 +223,62 @@ export function prepareSlides(args: {
   args.spec.slides.forEach((slideSpec, slideIndex) => {
     const preparedElements: PreparedElement[] = [];
     const nodeBBoxes = new Map<string, BBox>();
+    const flowStepBoxes = new Map<string, BBox>();
+    let flowContext:
+      | {
+          stepBoxes: Map<string, BBox>;
+          strokePt: number;
+          arrowSizePt: number;
+          layoutProfile: "flow.chevron" | "flow.card";
+          profileExplicit: boolean;
+        }
+      | undefined;
+    const flowRegionSpec = slideSpec.regions["canvas"];
+    if (flowRegionSpec) {
+      const stepCards = slideSpec.elements
+        .filter((el) => el.type === "card")
+        .map((el) => ({
+          region: el.region,
+          index: stepIndexFromRegion(el.region),
+          layoutProfile: (el as { layoutProfile?: "flow.chevron" | "flow.card" }).layoutProfile,
+        }))
+        .filter((entry) => entry.index !== null) as Array<{
+          region: string;
+          index: number;
+          layoutProfile?: "flow.chevron" | "flow.card";
+        }>;
+      if (stepCards.length >= 2) {
+        stepCards.sort((a, b) => a.index - b.index);
+        const explicitProfile = stepCards.find((entry) => entry.layoutProfile)?.layoutProfile;
+        const resolvedProfile = explicitProfile === "flow.chevron" || explicitProfile === "flow.card" ? explicitProfile : "flow.card";
+        const profile = resolvedProfile === "flow.chevron" ? args.theme.flowProfiles.flowChevron : args.theme.flowProfiles.flowCard;
+        const flowLayout = computeFlowLayout({
+          region: computeRegionBBox(flowRegionSpec, slideSpec.grid),
+          count: stepCards.length,
+          kind: "card",
+          theme: args.theme,
+          layoutProfile: resolvedProfile,
+        });
+        stepCards.forEach((entry, idx) => {
+          const step = flowLayout.steps[idx];
+          if (step) {
+            flowStepBoxes.set(entry.region, {
+              x: step.x,
+              y: step.y,
+              width: step.width,
+              height: step.height,
+            });
+          }
+        });
+        flowContext = {
+          stepBoxes: flowStepBoxes,
+          strokePt: profile.connectorStrokePt,
+          arrowSizePt: profile.connectorArrowSizePt,
+          layoutProfile: resolvedProfile,
+          profileExplicit: Boolean(explicitProfile),
+        };
+      }
+    }
     slideSpec.elements.forEach((rawElement, elementIndex) => {
       if (rawElement.type !== "node") {
         return;
@@ -209,7 +302,8 @@ export function prepareSlides(args: {
           ? String((element as { id?: unknown }).id)
           : `${element.type}-${slideIndex + 1}-${elementIndex + 1}`;
       const region = slideSpec.regions[element.region];
-      const bbox = computeRegionBBox(region, slideSpec.grid);
+      const baseBBox = computeRegionBBox(region, slideSpec.grid);
+      const bbox = flowStepBoxes.get(element.region) ?? baseBBox;
       if (!regionWithinSlide(bbox)) {
         throw new Error(`Slide ${slideIndex + 1} region '${element.region}' is out of slide bounds`);
       }
@@ -294,6 +388,20 @@ export function prepareSlides(args: {
             hardErrors: args.hardErrors,
           })
         );
+      } else if (element.type === "chevron_flow") {
+        preparedElements.push(
+          prepareChevronFlowElement({
+            slideIndex,
+            elementIndex,
+            element: element as ChevronFlowElement,
+            bbox,
+            z,
+            order,
+            id,
+            theme: args.theme,
+            hardErrors: args.hardErrors,
+          })
+        );
       } else if (element.type === "node") {
         preparedElements.push(
           prepareNodeElement({
@@ -354,6 +462,7 @@ export function prepareSlides(args: {
             id,
             bbox,
             theme: args.theme,
+            flow: flowContext,
             hardErrors: args.hardErrors,
           })
         );
@@ -392,8 +501,27 @@ export function prepareSlides(args: {
         throw new Error(`Slide ${slideIndex + 1} element ${elementIndex + 1}: unsupported element type`);
       }
     }
-    preparedElements.sort((a, b) => (a.z - b.z) || (a.order - b.order));
-    preparedSlides.push({ elements: preparedElements });
+    preparedElements.sort((a, b) => {
+      const bucketA = layerBucketForElementType(a.kind);
+      const bucketB = layerBucketForElementType(b.kind);
+      if (bucketA !== bucketB) {
+        return bucketA - bucketB;
+      }
+      const idCompare = a.id.localeCompare(b.id);
+      if (idCompare !== 0) {
+        return idCompare;
+      }
+      return a.order - b.order;
+    });
+    const diagramRegionId = slideSpec.regions["canvas"] ? "canvas" : undefined;
+    const diagramRegionBBox = diagramRegionId
+      ? computeRegionBBox(slideSpec.regions[diagramRegionId], slideSpec.grid)
+      : undefined;
+    preparedSlides.push({
+      elements: preparedElements,
+      diagramRegionId,
+      diagramRegionBBox,
+    });
   });
 
   return preparedSlides;

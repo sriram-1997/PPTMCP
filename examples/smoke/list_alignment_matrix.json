@@ -1,0 +1,54 @@
+{
+  "title": "List Alignment Matrix",
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "list-alignment-light",
+      "title": "List Alignment Light",
+      "grid": { "cols": 3, "rows": 2, "gutter": 0.2 },
+      "regions": {
+        "dot": { "col": 0, "row": 0, "colSpan": 1, "rowSpan": 2 },
+        "number": { "col": 1, "row": 0, "colSpan": 1, "rowSpan": 2 },
+        "icon": { "col": 2, "row": 0, "colSpan": 1, "rowSpan": 2 }
+      },
+      "elements": [
+        {
+          "type": "list",
+          "region": "dot",
+          "style": "dot",
+          "bullet": { "size": "md", "gap": 8, "color": "text" },
+          "indent": { "left": 0, "hanging": 18 },
+          "lineGap": 6,
+          "items": [
+            { "text": "**Bold lead** - supporting explanation wraps into a second line." },
+            { "text": "Second point with a longer sentence to demonstrate wrapping." }
+          ]
+        },
+        {
+          "type": "list",
+          "region": "number",
+          "style": "number",
+          "bullet": { "size": "md", "gap": 8, "color": "text" },
+          "indent": { "left": 0, "hanging": 18 },
+          "lineGap": 6,
+          "items": [
+            { "text": "**Step one** - align data definitions across teams." },
+            { "text": "Step two - validate the pipeline with sample inputs." }
+          ]
+        },
+        {
+          "type": "list",
+          "region": "icon",
+          "style": "icon",
+          "bullet": { "size": "md", "gap": 8, "color": "muted", "icon": "check" },
+          "indent": { "left": 0, "hanging": 18 },
+          "lineGap": 6,
+          "items": [
+            { "text": "**Icon bullet** - confirms completed work items." },
+            { "text": "Second item uses the same icon and spacing." }
+          ]
+        }
+      ]
+    }
+  ]
+}

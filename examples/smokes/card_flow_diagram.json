@@ -1,0 +1,123 @@
+{
+  "title": "Card Flow Diagram Smoke",
+  "theme": "consulting_light_v1",
+  "slides": [
+    {
+      "id": "slide-1",
+      "title": "Card Flow Diagram",
+      "grid": {
+        "cols": 12,
+        "rows": 8,
+        "gutter": 0.1
+      },
+      "regions": {
+        "title": { "col": 0, "row": 0, "colSpan": 12, "rowSpan": 1 },
+        "canvas": { "col": 0, "row": 1, "colSpan": 12, "rowSpan": 6 },
+        "step_1": { "col": 0, "row": 2, "colSpan": 3, "rowSpan": 3 },
+        "step_2": { "col": 3, "row": 2, "colSpan": 3, "rowSpan": 3 },
+        "step_3": { "col": 6, "row": 2, "colSpan": 3, "rowSpan": 3 },
+        "step_4": { "col": 9, "row": 2, "colSpan": 3, "rowSpan": 3 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "title",
+          "content": "Card-Based Flow Diagram",
+          "style": { "bold": true }
+        },
+        {
+          "type": "connector",
+          "region": "canvas",
+          "start": { "type": "region", "targetRegion": "step_1", "point": "e" },
+          "end": { "type": "region", "targetRegion": "step_2", "point": "w" },
+          "style": { "widthPt": 1, "endArrow": "triangle" },
+          "z": 2
+        },
+        {
+          "type": "connector",
+          "region": "canvas",
+          "start": { "type": "region", "targetRegion": "step_2", "point": "e" },
+          "end": { "type": "region", "targetRegion": "step_3", "point": "w" },
+          "style": { "widthPt": 1, "endArrow": "triangle" },
+          "z": 2
+        },
+        {
+          "type": "connector",
+          "region": "canvas",
+          "start": { "type": "region", "targetRegion": "step_3", "point": "e" },
+          "end": { "type": "region", "targetRegion": "step_4", "point": "w" },
+          "style": { "widthPt": 1, "endArrow": "triangle" },
+          "z": 2
+        },
+        {
+          "type": "card",
+          "region": "step_1",
+          "layoutProfile": "flow.card",
+          "variant": "surface",
+          "header": { "title": "Intake", "subtitle": "Spec input" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Region + template" },
+                { "text": "Strict schema" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "step_2",
+          "layoutProfile": "flow.card",
+          "variant": "elevated",
+          "header": { "title": "Compile", "subtitle": "Template v1" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Placeholder fills" },
+                { "text": "Region layout" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "step_3",
+          "layoutProfile": "flow.card",
+          "variant": "surface",
+          "header": { "title": "Validate", "subtitle": "Errors" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "No drift" },
+                { "text": "Deterministic" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "region": "step_4",
+          "layoutProfile": "flow.card",
+          "variant": "accent",
+          "header": { "title": "Render", "subtitle": "PPTX/PDF" },
+          "body": [
+            {
+              "type": "list",
+              "style": "dot",
+              "items": [
+                { "text": "Theme v2" },
+                { "text": "Stable output" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

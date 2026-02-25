@@ -1,0 +1,68 @@
+{
+  "title": "Chevron Width Stress",
+  "metadata": {
+    "author": "PPTMCP",
+    "created": "2026-02-20T00:00:00Z"
+  },
+  "theme": "consulting_dark_v1",
+  "slides": [
+    {
+      "id": "chevron-width-stress-dark",
+      "title": "Chevron Width Stress Dark",
+      "grid": {
+        "cols": 24,
+        "rows": 12,
+        "gutter": 0.05
+      },
+      "regions": {
+        "title": { "col": 0, "row": 0, "colSpan": 24, "rowSpan": 1 },
+        "wide": { "col": 1, "row": 2, "colSpan": 22, "rowSpan": 2 },
+        "medium": { "col": 4, "row": 5, "colSpan": 16, "rowSpan": 2 },
+        "narrow": { "col": 10, "row": 8, "colSpan": 4, "rowSpan": 2 }
+      },
+      "elements": [
+        {
+          "type": "text",
+          "region": "title",
+          "content": "Chevron Geometry Width Stress (Dark)",
+          "style": {
+            "fontSize": 24,
+            "bold": true,
+            "align": "center",
+            "verticalAlign": "middle"
+          }
+        },
+        {
+          "type": "chevron_flow",
+          "region": "wide",
+          "steps": [
+            { "label": "Discover" },
+            { "label": "Model" },
+            { "label": "Validate" },
+            { "label": "Decide" }
+          ]
+        },
+        {
+          "type": "chevron_flow",
+          "region": "medium",
+          "steps": [
+            { "label": "Plan" },
+            { "label": "Build" },
+            { "label": "Ship" },
+            { "label": "Scale" }
+          ]
+        },
+        {
+          "type": "chevron_flow",
+          "region": "narrow",
+          "steps": [
+            { "label": "A" },
+            { "label": "B" },
+            { "label": "C" },
+            { "label": "D" }
+          ]
+        }
+      ]
+    }
+  ]
+}

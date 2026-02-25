@@ -7,4 +7,7 @@ export declare function roundInches(value: number): number;
 export declare function ptToIn(valuePt: number): number;
 export declare function inToPt(valueIn: number): number;
 export declare function inchesToEmu(valueIn: number): number;
+export declare function emuToInches(valueEmu: number): number;
+export declare function quantizeInchesToEmuStep(valueIn: number): number;
+export declare function quantizePtToEmuStep(valuePt: number): number;
 //# sourceMappingURL=units.d.ts.map

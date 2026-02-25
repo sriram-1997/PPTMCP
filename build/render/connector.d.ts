@@ -40,6 +40,7 @@ export declare function computeLineWithArrowheads(args: {
     color: string;
     startArrow: "none" | "triangle";
     endArrow: "none" | "triangle";
+    arrowSizePt?: number;
     warnings?: string[];
     warnPrefix?: string;
 }): {
@@ -52,6 +53,7 @@ export declare function computeLineWithArrowheads(args: {
         y: number;
     };
     arrowHeads: ArrowHead[];
+    error: string | null;
 };
 export declare function renderArrowHeads(slide: any, shapeType: any, arrowHeads: ArrowHead[]): void;
 export declare function prepareConnectorElement(args: {
@@ -64,6 +66,11 @@ export declare function prepareConnectorElement(args: {
     id: string;
     bbox: BBox;
     theme: ConcreteTheme;
+    flow?: {
+        stepBoxes: Map<string, BBox>;
+        strokePt?: number;
+        arrowSizePt?: number;
+    };
     hardErrors: string[];
 }): PreparedConnectorElement;
 export declare function renderConnectorElement(slide: any, shapeType: any, element: PreparedConnectorElement): void;
