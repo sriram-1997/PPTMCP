@@ -4,6 +4,17 @@
 
 PPTMCP is a Model Context Protocol (MCP) server for deterministic PowerPoint generation from JSON specifications. This document defines the project contract for all coding agents (Agents C, Y, X).
 
+## Maintainer Context
+
+- Canonical GitHub profile: `https://github.com/sriram-1997`
+- Legacy GitHub reference `https://github.com/guangxiangdebizi` may still appear in older docs/artifacts.
+
+## Long-Term Memory
+
+- This section is intentionally used as long-term memory for agent decisions.
+- Preserve command style preferences, behavior tuning, and recurring maintainer instructions across future sessions.
+- Keep entries portable so this `AGENTS.md` can be exported to other repositories and retain expected assistant behavior.
+
 ## Architecture
 
 ### Core Workflow
